@@ -13,6 +13,7 @@ Welcome to py-ecaeropt's documentation!
 
    info
    install
+   use
 
 Indices and tables
 ==================

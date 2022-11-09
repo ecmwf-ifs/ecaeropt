@@ -1,0 +1,37 @@
+# AMMONIA FINE MODE
+#
+# Last update: 22-10-27
+# Contact:     ramiro.checa-garcia@ecmwf.int
+
+[distribution]
+# Properties of Size Distribution
+# Units:
+lognormal.r0      = 0.0355
+lognormal.sigma_g = 2.0
+lognormal.Ntot    = 1.0
+
+
+[bins]
+# Bins for final output
+# Units:
+min         = 0.005
+max         = 20.0
+
+[properties]
+# Physical and Chemical properties
+# Units: rho [kgm-3] | rh.tab [%] 
+rho         = 1.76e03
+rh.tab      = [0.0, 10.0, 20.0, 30.0, 40.0,  50.0, 60.0,  70.0,  80.0,  85.0,  90.0,  95.0]
+rh.growth   = [1.0, 1.0,  1.0,  1.0,  1.169, 1.22, 1.282, 1.363, 1.485, 1.581, 1.732, 2.085]
+
+[optical]
+# Optical Information
+ri_file     = "data/refr_idx/su_ri_table"
+wl_out_file = "data/wavelengths/wl_out_IFS.txt"
+ext_scaling = 1.0
+
+
+[tags]
+aer_type    = "ammonia_fine"
+ifs         = "CY48R1"
+revised     = 2022-10-27

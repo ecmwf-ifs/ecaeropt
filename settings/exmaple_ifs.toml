@@ -1,0 +1,185 @@
+
+##############################################################################################################################
+# Settings file for to create ifs netcdf for IFS CY48R1                                                                      #
+#                                                                                                                            #
+#                                                                                                                            #
+# INFO:  The file has an the following sections:                                                                             #
+#    1. default           => here few defaults values can be set up, but they could be overrided by later if needed.      #
+#    2. species           => core of the settings, each species has a config file, and engine and a ncname for the output #
+#                            if engine or ncname is set up as default the default section will be used.                   #
+#    3. Processing        => here is where we indicate the process for an specific calculation. It has to parts:          #
+#       3.1 process       => here we indicate which single aerosols should be processed and which mixed aerosols.         #
+#                            for this we will just use the names of the fields in [species]                               #
+#       3.2 info          => here we can add information to the final netcdfs as global attribute (metadata).             #
+#                                                                                                                            #
+# Version:                                                                                                                   #
+#    1.0.0    08-Oct-2022                                                                                                    #
+#                                                                                                                            #
+# Contact: Ramiro Checa-Garcia                                                                                               #
+#          ramiro.checa-garcia@ecmwf.int                                                                                     #
+##############################################################################################################################
+
+
+
+# DEFAULTs SECTION ===========================================================================================================
+# This section has the default settings, but if can be overrided by
+# specific information in the config files or in the process section
+
+[default]
+wavelengths = "data/wavelengths/wl_out_TEST_2.txt"  # indicates the default wavelengths for output files this
+                                                    # will override the value in the configuration files!!
+                                                    # if you want to keep conf. files value remove this.
+
+engine      = "mie_Boucher_Bozzo"                   # indicates the default code to calculate the optical properties
+
+nangle      = 12                                    # =0          -> no phase function calculated
+                                                    # =n          -> number of equistant angles for phase function
+                                                    # ="filename" -> read angles from file
+
+ncname      = ["C:aer_type",  "C:today",            # C: means that the string after C: will be find in config files
+               "optics_IFS"]                        # so  for config_du1.toml would be: dust_Dubovic_optics_IFS.nc
+                                                    # and for config_du2.toml would be: dust_Woodward_optics_IFS.nc
+                                                    # C:today will add date of running, between fields we have '_'
+                                                    # at the end if not present it is added .nc
+outncdir    = "outputnc"
+testdir     = "tests"
+
+# ============================================================================================================================
+
+
+# SPECIES section ============================================================================================================
+# Here we specify all the config files we could process
+
+[species]
+
+# These aerosols are not mixed
+du1          = { config = "data/config_toml/config_du1.toml"           ,engine="default", ncname='default', nangle='default'}
+du2          = { config = "data/config_toml/config_du2.toml"           ,engine="default", ncname='default', nangle='default'}
+du3          = { config = "data/config_toml/config_du3.toml"           ,engine="default", ncname='default', nangle='default'}
+
+bc1          = { config = "data/config_toml/config_bc1.toml"           ,engine="default", ncname='default', nangle='default'}
+bc2          = { config = "data/config_toml/config_bc2.toml"           ,engine="default", ncname='default', nangle='default'}
+bc3          = { config = "data/config_toml/config_bc3.toml"           ,engine="default", ncname='default', nangle='default'}
+
+su           = { config = "data/config_toml/config_su.toml"            ,engine="default", ncname='default', nangle='default'}
+ss           = { config = "data/config_toml/config_ss.toml"            ,engine="default", ncname='default', nangle='default'}
+
+ni_fine      = { config = "data/config_toml/config_ni_fine.toml"       ,engine="default", ncname='default', nangle='default'}
+ni_coarse    = { config = "data/config_toml/config_ni_coarse.toml"     ,engine="default", ncname='default', nangle='default'}
+NH3_fine     = { config = "data/config_toml/config_ammonia_fine.toml"  ,engine="default", ncname='default', nangle='default'}
+SOA1         = { config = "data/config_toml/config_SOA1.toml"          ,engine="default", ncname='default', nangle='default'}
+SOA2         = { config = "data/config_toml/config_SOA2.toml"          ,engine="default", ncname='default', nangle='default'}
+
+
+# Organic is a mixing of aerosols
+# Note: organic is designed to be a mixed aerosol with 3 components, however still it is possible to
+#       calculate individually in case we want to, for this reason ncname is still there. Note the structure
+#       for mixed species XXX.yyy. The mixed aerosol is XXX and the components are yyy. However by refering
+#       as XXX.yyy still it is possible to perform a calculation as an individual single specie.
+
+organic.waso = { config = "data/config_toml/config_organic_waso.toml"  ,engine="default", ncname='default' , nangle='default'}
+organic.inso = { config = "data/config_toml/config_organic_inso.toml"  ,engine="default", ncname='default' , nangle='default'}
+organic.soot = { config = "data/config_toml/config_organic_soot.toml"  ,engine="default", ncname='default' , nangle='default'}
+
+
+# ============================================================================================================================
+
+# PROCESS section  ===========================================================================================================
+# This is information that would be stored in the netcdf file.
+
+[process]
+
+skip=false
+
+# For processing single file you can add then here
+single = [ "ss", "du1", "du2", "du3", "bc1", "bc2", "bc3",
+           "su", "ni_fine", "ni_coarse", "NH3_fine", 
+           "SOA1", "SOA2"]                                   # This will process these single species
+                                                             # with default settings AT SPECIES
+
+# For mixing config files the syntax is more complex. First the elements are defined in [species] as usual config files but
+# we name them with the syntax xxxx.yyyy (yyyy is a component of the mixture xxxx)
+# Then in this section we use the notation
+# mixing.xxxx.conf and for options like ncname we can use mixing.xxxx.ncname
+
+mixing.organic.conf   = "organic"                             # This will process the composite species organic
+mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to specific the final name MANDATORY
+
+[ifs]
+# Now we give some rules to build a single IFS netcdf. This example is a test based in 3 different aerosols where one is used
+# for soluble and insoluble. We define here a table with the information needed. The aer.XX, XX is the tag of the aerosol.
+
+# Note that IFS code expect to find each type of aerosol in an specific position in array.
+# so we have to impose a number of phobic and philic species and indicate then with position
+# where to place them. All other should be filled with missing or nan.
+
+netcdfname = "ifs_cy48r1.nc"
+
+number     = { philic=10, phobic=14}
+
+rhphobic   = 3 # In some case the phobic is taken from philic at specific RH between 20 and 30%
+
+aer.ss     = { species="ss"        , type="philic", position= 1 , bin=3 }
+aer.dd1    = { species="du1"       , type="phobic", position= 1 , bin=3 }
+aer.dd2    = { species="du2"       , type="phobic", position= 4 , bin=3 }
+aer.dd3    = { species="du3"       , type="phobic", position= 7 , bin=3 }
+aer.om     = { species="organic"   , type="philic", position= 4 , bin=1 }
+aer.om_dry = { species="organic"   , type="phobic", position= 10, bin=1 }
+aer.bc1    = { species="bc1"       , type="phobic", position= 11, bin=1 }
+aer.bc2    = { species="bc2"       , type="phobic", position= 12, bin=1 }
+aer.bc3    = { species="bc3"       , type="phobic", position= 13, bin=1 }
+aer.su     = { species="su"        , type="philic", position= 5 , bin=1 }
+aer.su_dry = { species="su"        , type="phobic", position= 14, bin=1 }
+aer.soab   = { species="SOA1"      , type="philic", position= 6 , bin=1 }
+aer.soaa   = { species="SOA2"      , type="philic", position= 7 , bin=1 }
+aer.ammf   = { species="NH3_fine"  , type="philic", position= 8 , bin=1 }
+aer.nif    = { species="ni_fine"   , type="philic", position= 9 , bin=1 }
+aer.nic    = { species="ni_coarse" , type="philic", position= 10, bin=1 }
+
+
+
+[info]
+product_version = '48R1'
+comment_string = """
+This file provides aerosol scattering properties versus wavenumber for the aerosol \
+species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting \
+System. The aerosols are separated into hydrophobic and hydrophilic types (indicated by \
+suffixes _hydrophobic and _hydrophilic). Descriptions of these types are in the global \
+variables description_hydrophobic and description_hydrophilic. This version is for IFS \
+Cycle """
+
+# The information below can be in the configuration files. For example, in du1 we should have the 3 first lines.
+# There are species used for philic and phobic, so we need to write in configuration file.
+# description.philic = 
+# description.phobic = (even the phobic RH used)
+description_hydrophobic = """
+ 1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; \
+ 2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; \
+ 3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; \
+ 4: Desert dust, bin 1, 0.03-0.55 micron, Fouquart et al 1987 ; \
+ 5: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987 ; \
+ 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart et al 1987 ; \
+ 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2 ; \
+ 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2 ; \
+ 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2 ; \
+ 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%%) ; \
+ 11: Black carbon, OPAC ; \
+ 12: Black carbon, Bond and Bergstrom 2006 ; \
+ 13: Black carbon, Stier et al 2007 ; \
+ 14: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%%-30%%)"""
+
+description_hydrophilic = """
+ 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC ; \
+ 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC ; \
+ 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC ; \
+ 4: Hydrophilic organic matter, OPAC ; \
+ 5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ ; \
+ 6: Secondary organic aerosol - biogenic, Moise et al 2015 ; \
+ 7: Secondary organic aerosol - anthropogenic, Moise et al 2015 ; \
+ 8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ ; \
+ 9: Fine mode Nitrate, GLOMAP ; \
+ 10: Coarse mode Nitrate, GLOMAP"""
+
+contact      = 'ramiro.checa-garcia@ecmwf.int'
+institution  = 'ECMWF'
+experiment   = 'testing new software: ifs_aer_opt.jl'

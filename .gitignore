@@ -1,0 +1,7 @@
+
+aeropt/__pycache__/*
+docs/build/*
+engines/mie_Boucher_Bozzo/libs/*
+engines/mie_Boucher_Bozzo/src/dev/*
+pyecaeropt.pdf
+

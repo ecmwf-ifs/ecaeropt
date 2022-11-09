@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+
+import aeropt
+import argparse
+import logging
+from datetime import datetime as dt
+
+ecaeropt_version= "0.9"
+
+dtstr   = dt.now().strftime("%y%m%d%H%M%S")
+logfile ='tmp/'+dtstr+'.log'
+
+args  = aeropt.cmd.cli()
+
+rinfo = aeropt.cmd.fill_runinfo(ecaeropt_version, args.debug, logfile)
+
+if args.debug == True:
+    logging.basicConfig(filename='tmp/'+dtstr+'.log', filemode='w', level=logging.DEBUG)
+
+if args.info==True:
+    aeropt.modes.info_mode(rinfo)
+
+if args.test!=None:
+    aeropt.modes.test_mode(rinfo, args.test)
+
+if args.config!=None:
+    aeropt.modes.config_file_mode(rinfo, args.config[0], args.config[1])
+
+if args.setting!=None:
+    aeropt.modes.setting_file_mode(rinfo, args.setting)
+

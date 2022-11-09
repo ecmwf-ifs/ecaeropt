@@ -1,0 +1,4 @@
+output wavelengths (m)
+   0.340E-6
+   0.550E-6
+   1.024E-6

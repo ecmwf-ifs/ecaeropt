@@ -24,6 +24,40 @@
      v0.9     Updated the format for config files
 ```
 
+You need python3 with the following libraries:
+
+- numpy
+- toml
+- netcdf4
+
+
+in the server ATOS it is needed to use:
+```
+module load python3
+```
+other modules are used but they are part of standard library.
+
+
+# How to run
+
+You can access to the description of the run options with
+```
+./ecaeropt -h 
+```
+
+# Create documentation and how to contribute
+
+You can use the code and report any issue or propose any new feature. Please, check also
+the documentation:
+
+```
+cd docs
+make html
+```
+
+and you can open the file **docs/build/html/index.html**
+
+
 # Description
 
 Tool to calculate optical properties of different kind of aerosols
@@ -40,7 +74,6 @@ The tool is composed of several elements:
     - A testing environment 
 
 ## Folder Structure
-
 ```
 .
 ├── README.md             => this file
@@ -81,38 +114,3 @@ The tool is composed of several elements:
                              for future developments 
 
 ```
-
-# How to install
-
-You need python3 with the following libraries:
-
-- numpy
-- toml
-- netcdf4
-
-
-in the server ATOS it is needed to use:
-```
-module load python3
-```
-other modules are used but they are part of standard library.
-
-
-# How to run
-
-You can access to the description of the run options with
-```
-./ecaeropt -h 
-```
-
-# How to contribute
-
-You can use the code and report any issue or propose any new feature. Please, check also
-the documentation:
-
-```
-cd docs
-make html
-```
-
-and you can open the file **docs/build/html/index.html**

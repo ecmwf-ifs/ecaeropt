@@ -11,9 +11,12 @@ Welcome to py-ecaeropt's documentation!
    :caption: Contents:
 
 
+   news
    info
    install
    use
+   developer
+   engines
 
 Indices and tables
 ==================

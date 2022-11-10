@@ -26,6 +26,21 @@ from datetime import datetime
 
 
 class runinfo:
+    """
+    A class that represents the info of a run session with ecaeropt.
+    usually this information plus the data ensures reproducibility.
+
+    Attributes:
+        date    (str) : date of the run/calculation.
+        machine (str) : architecture where calculation is done.
+        gittag  (str) : git tag of code version 
+        runpath (str) : full path where code is run
+        version (str) : code version
+        user    (str) : username
+        debug   (str) : debug flag
+        logfile (str) : logfile if debug==True
+    """
+
     def __init__(self, date, machine, gittag, runpath, version, user, debug, logfile):
         self.date    = date
         self.machine = machine
@@ -38,6 +53,18 @@ class runinfo:
         return
 
 def fill_runinfo(codeversion, debug, logfile):
+    """
+    Function that creates a runinfo object with calculation run session data.
+
+    Args:
+        codeversion (str) : a string with code version of executable
+        debug       (   ) : debug flag specified at run time by user
+        logfile     (   ) : string with log filename
+
+    Return:
+        runinfo (class object)
+
+    """
     today   = datetime.today().strftime('%Y-%m-%d')
     machine = os.uname()[-1]
     user    = os.getlogin()
@@ -49,6 +76,23 @@ def fill_runinfo(codeversion, debug, logfile):
 
 
 def cli():
+    """
+    Creates a parser for the cli arguments given by user. Relies on argparse module of
+    standard python library.
+
+    Args:
+        none
+
+    Return:
+        args (object) : object with the user provided settings
+                        args.info
+                        args.debug
+                        args.setting
+                        args.test
+                        args.config
+
+
+    """
 
     str_prog    = "\033[1m ecaeropt v1.0 \033[0m"
     str_descrip = "\033[95m ECMWF tool to calculate aerosol optical properties (ecaeropt) \033[0m"

@@ -19,9 +19,10 @@
 
   - History:  check directory docs/ for further information 
 
+```
      v0.8     Translated from Julia version
      v0.9     Updated the format for config files
-
+```
 
 # Description
 
@@ -40,6 +41,7 @@ The tool is composed of several elements:
 
 ## Folder Structure
 
+```
 .
 ├── README.md             => this file
 ├── TODO.org              => todo items to improve code
@@ -76,9 +78,9 @@ The tool is composed of several elements:
 └── tests                 => folder to store tests
     ├── config_toml_tests => new config TOML files for quick tests
     └── references        => folder to have references of tested netcdf
-                            for future developments 
+                             for future developments 
 
-
+```
 
 # How to install
 
@@ -88,16 +90,29 @@ You need python3 with the following libraries:
 - toml
 - netcdf4
 
+
 in the server ATOS it is needed to use:
-
+```
 module load python3
-
+```
 other modules are used but they are part of standard library.
 
 
 # How to run
 
 You can access to the description of the run options with
-
+```
 ./ecaeropt -h 
+```
 
+# How to contribute
+
+You can use the code and report any issue or propose any new feature. Please, check also
+the documentation:
+
+```
+cd docs
+make html
+```
+
+and you can open the file **docs/build/html/index.html**

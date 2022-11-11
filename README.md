@@ -34,81 +34,39 @@ module load python3
 module load nco
 ```
 
+We recommend to run one the test to check everthing is working properly (this is just calculating for few wavelengths 3 cases: an externally mixed aerosol with 3 components, an soluble aerosol and an insolube aerosol.
+
+```
+make test
+```
+
 # How to run
 
+## Create standard IFS model netcdf files
 
 
-You can access to the description of the run options with
+To build ifs standard files you may just type
+```
+make ifs-CY48R1
+```
+
+## Custom calculations
+
+For this you can use directly the tool, you can access to the description of the run options with
 ```
 ./ecaeropt -h 
 ```
 
-# Create documentation and how to contribute
+remember that:
+
+-  a configuration file (CONFIG-FILE) describes a calculation of optical properties of a single aerosol species
+-  a setting files (SETTING-FILE) describes a more complex calculation: mixed aerosols, several single species and storage all in a single netcdf.
+-  you can create also setting files to perform automatic tests. Everthing will be described in documentation.
+
+# How to contribute
 
 You can use the code and report any issue or propose any new feature. Please, check also
-the documentation:
-
-```
-cd docs
-make html
-```
-
-and you can open the file **docs/build/html/index.html**
+the documentation you can open the file **docs/build/html/index.html**
 
 
-# Description
 
-Tool to calculate optical properties of different kind of aerosols
-and store the results as a netcdf file. It allows a calculation for single
-and mixed aerosols for size distributions and bins.
-
-## Approach for generating IFS aerosol optics
-
-The tool is composed of several elements:
-    - Read and parse configuration files and refractive index information.
-    - Interface to several engines that calculate optical properties based
-    on different codes (currently in fortran but extensible)
-    - Storage of calculations in netcdfs with full metadata
-    - A testing environment 
-
-## Folder Structure
-```
-.
-├── README.md             => this file
-├── TODO.org              => todo items to improve code
-├── ecaeropt              => main program executable [executable script]
-├── build.sh              => exectuable script to build the engine libraries
-│
-├── data                  => data-files
-│   ├── config_toml       => translation to TOML structured files
-│   ├── config_toml_tests => new config TOML files for quick tests
-│   ├── refr_idx          => refractive index files
-│   └── wavelengths       => wavelengths files
-│
-├── docs                  => documentation using sphinx
-│
-├── engines
-│   └── mie_Boucher_Bozzo => mie engine in Fortran code
-│
-├── outputnc              => default folder to store results
-│   │
-│   ├── dust_Dubovik_optics_IFS_2022-09-20.nc
-│   ├── ...
-│   └── sulfate_optics_IFS_2022-09-20.nc
-│
-├── settings              => complete settings files for calculations
-│   ├── test_ifs.toml
-│   └── test_single_mixing.toml
-│
-├── aeropt                => source code of tool (not engines)
-│  
-├── tmp                   => temporary files (testing)
-│  
-├── logs                  => log files (debug, building)
-│  
-└── tests                 => folder to store tests
-    ├── config_toml_tests => new config TOML files for quick tests
-    └── references        => folder to have references of tested netcdf
-                             for future developments 
-
-```

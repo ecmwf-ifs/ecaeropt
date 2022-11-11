@@ -1,4 +1,8 @@
 
+docs.html
+tmp
+logs
+outputnc
 aeropt/__pycache__/*
 docs/build/*
 engines/mie_Boucher_Bozzo/libs/*

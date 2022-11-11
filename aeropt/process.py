@@ -56,7 +56,6 @@ def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozz
        logging.debug(aer_conf)
     
     if aerengine=="mie_Boucher_Bozzo":
-        print(rinfo.logfile)
         aer_opt = engine.interface_mie_Boucher_Bozzo(aer_conf, rinfo.logfile, debug=rinfo.debug)
     else:
         print("---- ERROR ---- ", aerengine , " not yet implemented")

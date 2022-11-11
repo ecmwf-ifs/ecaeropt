@@ -111,6 +111,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
                     if steps["skip"]==True:
                        nc_iaer = dic_aersingle[aer]["ncname"]
                     else:
+                       # here we can add process to a thread pool
                        nc_iaer = run.single(rinfo,
                                             dic_aersingle[aer]["config"], 
                                             dic_aersingle[aer]["ncname"], 
@@ -120,7 +121,6 @@ def setting_file_mode(rinfo, fsetting, test=False):
                     if test==False:
                         dicnc_iaer[aer]=nc_iaer
                     else:
-                        print(nc_iaer)
                         print(runset["species"][aer]["ref"])
                         dicnc_iaer[aer]={ "nc_test":nc_iaer, 
                                          "nc_ref": runset["species"][aer]["ref"]}

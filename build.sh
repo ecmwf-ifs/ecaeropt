@@ -23,6 +23,25 @@ path_mie_BB=$path_ecaeropt"/engines/mie_Boucher_Bozzo"
 path_Tmatrx=$path_ecaeropt"/engines/tmatrix_mischenko"
 
 
+echo ""
+echo "..... Checking directories logs and libs"
+
+     if [ ! -d "logs" ]; then
+         echo "       -> directory logs not present."
+	 echo "       -> creating it."
+         mkdir logs
+     fi
+
+     if [ ! -d $path_mie_BB"/libs" ]; then
+         echo "       -> directory libs for mie_BB not present."
+         echo "       -> creating it."
+         mkdir $path_mie_BB"/libs/"
+     fi
+
+#mkdir $path_Tmatrx"/libs/"
+
+
+
 # (1) Mie-BB code
 
 function mieBB {

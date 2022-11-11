@@ -76,7 +76,7 @@ test_su.engine  = "default"
 test_su.ncname  = 'default'
 test_su.nangle  = 1201
 test_su.test    = true
-test_su.ref     = "tests/references/short_tests/original/sulfate_optics_IFS.nc"}
+test_su.ref     = "tests/references/short_tests/original/sulfate_optics_IFS.nc"
 
 # Organic is a mixing of aerosols
 # Note: organic is designed to be a mixed aerosol with 3 components, however still it is possible to

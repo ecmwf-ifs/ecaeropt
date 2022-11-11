@@ -3,10 +3,13 @@
 #+tags: @aerosols @ecmwf @ecrad @ifs @mie
 
 
+
 ** General info
    This is a org-mode file to keep track of changes/improvements. It might be changed in the
    future for a ticket system in Jira or Github.
 
+** Usability
+   *** Add make files: make install; make clean, make test, make ifs_version
 
 ** Reproducibility
 

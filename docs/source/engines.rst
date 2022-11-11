@@ -16,10 +16,9 @@ Interface
 
 The interface translate the language of aerosol configuration to the parameters needed by the actual engine. It is also required a flag that activated a debug.
 
-..  code-block:: python
-    caption: scheme of a new interface
+.. code-block:: python
 
-    def interface_new(aerconf, debug=False):
+   def interface_new(aerconf, debug=False):
 
         # (1) transform aerconf to information for engine
         # (2) calling to engine 

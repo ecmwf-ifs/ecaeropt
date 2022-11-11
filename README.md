@@ -2,43 +2,41 @@
 
 
 # License
-  - Probably the final license will be MIT or GPL. At this moment it is not
-    decided. 
-
+  - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE.txt
 
 # Contact Info
 
   - Purpose:  New code to create IFS aerosol optical information
-
   - Authors:  Ramiro Checa-Garcia
               contributions of other authors vie Mie Scattering Codes.
-
   - Contacts: ramiro.checa-garcia@ecmwf.int
-
   - TODO:     stored at TODO.org file
-
   - History:  check directory docs/ for further information 
 
 ```
      v0.8     Translated from Julia version
-     v0.9     Updated the format for config files
+     v0.9     Updated the format for config files, added makefile and testing framework.
 ```
 
-You need python3 with the following libraries:
+# How to install
 
-- numpy
-- toml
-- netcdf4
+To have a working version of this tool the steps are:
+
+```
+git clone ssh://git@git.ecmwf.int/~parc/ecaeropt.git
+make build
+```
 
 
-in the server ATOS it is needed to use:
+Note that need python3 with the standard library and following external libraries, numpy, toml and netcdf4 plus nco tools. In the server ATOS it is needed to use:
 ```
 module load python3
+module load nco
 ```
-other modules are used but they are part of standard library.
-
 
 # How to run
+
+
 
 You can access to the description of the run options with
 ```

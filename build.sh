@@ -43,7 +43,7 @@ function mieBB {
     case $status in
          0)
          echo "      -> Successfully built mie_BB in current computer."
-         mv mie_BB*.so ../libs/
+         mv mie_BB*.so $path_mie_BB/libs/
          ;;
          127)
          echo "      -> There was a problem."

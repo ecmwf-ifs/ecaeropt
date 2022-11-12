@@ -37,7 +37,8 @@ module load nco
 We recommend to run one the test to check everthing is working properly (this is just calculating for few wavelengths 3 cases: an externally mixed aerosol with 3 components, an soluble aerosol and an insolube aerosol.
 
 ```
-make test
+./ecaeropt -i  # this show simple checks of mie-scatt code for monodisperse case.
+make test      # tests including 3 kind of aerosols.
 ```
 
 # How to run

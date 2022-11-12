@@ -100,7 +100,7 @@ test_organic.soot = { config = "tests/config_toml_tests/config_organic_soot.toml
 skip=false # Most of the cases this will be false, unless you have already the netcdf files per species to test or join into an ifs.nc 
 
 # For processing single file you can add then here
-single = [ "test_du1" , "test_su"            ]               # This will process the specie du1_test and su
+single = [  "test_du1" , "test_su"            ]               # This will process the specie du1_test and su
                                                              # with default settings AT SPECIES
 
 

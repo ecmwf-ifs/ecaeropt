@@ -62,7 +62,7 @@ class aeropt:
 
 
 def mie_to_aeropt(aerconf, out, engine):
-        znr, zni, ext, omg, asy, lidar, mass, ph = out
+        znr, zni, ext, omg, asy, lidar, mass, ph, qval = out
 
         return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
                        ph, aerconf.angles, aerconf.nmumax, engine)
@@ -373,7 +373,7 @@ def mixing(mix_aer, mix_opt, mix_λtab, mix_ri_rtab, mix_ri_itab, num_components
     mass_mix  = mass_acc # think on that not in original code.
 
 
-    print("\n         Calculated mixed aerosol\n")
+    #print("\n         Calculated mixed aerosol\n")
 
     # Here we should create aer_mix_opt as an aerosol optics object
 

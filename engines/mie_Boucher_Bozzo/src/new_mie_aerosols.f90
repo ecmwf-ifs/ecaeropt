@@ -249,7 +249,6 @@ module mie_Boucher_Bozzo
     INTEGER(4) :: Nbin_points,Nlimit
     REAL(8) :: rmin,rmax,r_0(Ndis)
 
-    character*72 cblabla
 
     COMPLEX(KIND=JPRB) :: m           !--- refractive index m=n_r-i*n_i
     INTEGER(4) :: Nmax,Nstart !--- number of iterations for the Wiscombe algorithm
@@ -263,7 +262,7 @@ module mie_Boucher_Bozzo
     !-- additional variables and arrays for computation of the
     !-- phase function and lidar ratio
     REAL(8) :: volume, surface, rgv, rgn, tot_num_concentration, radius, radius2, mass, pfun_angle,ang
-    REAL(8) :: sigma_abs, ss, tt, mu, rho1, rho2, Q_abs
+    REAL(8) :: sigma_abs, ss, tt, rho1, rho2, Q_abs
     REAL(8) :: wist(1:210000), wisp(0:210000)
     COMPLEX(KIND=JPRB) :: s1, s2
     INTEGER(4) :: Nmu!, Nmumax

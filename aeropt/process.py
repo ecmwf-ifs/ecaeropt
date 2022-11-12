@@ -61,9 +61,9 @@ def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozz
         print("---- ERROR ---- ", aerengine , " not yet implemented")
         sys.exit()
    
-    print("    =>   Optical prop. calculated")
-    print("            Storing results as netcdf with path:")
-    print("           ",ncoutname," \n")
+    print("                     =>   optical prop. calculated")
+    print("               Storing results as netcdf with path:")
+    print("               ",ncoutname," \n")
 
     store.store_nc_single(aer_conf, aer_opt, rinfo, ncname=ncoutname)
 
@@ -114,7 +114,7 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
             print("---- ERROR ---- ", component_engine , " not yet implemented")
             sys.exit()
 
-        print("         => component calculated")
+        print("                     => component calculated")
 
         mix_aer_obj.append(aer_conf)
         mix_aer_opt.append(aer_opt)
@@ -134,7 +134,7 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
 
     store.store_nc_mixture(mix_aer, aer_mix_opt, rinfo, ncname=ncoutname)
 
-    print("\n         Total Cpu Time used: ")
+    #print("\n         Total Cpu Time used: ")
 
     return ncoutname
 

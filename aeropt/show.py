@@ -27,6 +27,7 @@
  #########################################################################################################
 
 
+import aeropt.engine as engine 
 
 def add_footer():
 
@@ -38,13 +39,18 @@ def add_footer():
 def add_info():
 
     mie_BB="""
-           - Mie-Boucher-Bonzo:
-               Engine based in Fortran 90 code. It assumed log-normal distribution. It estimates
-               the aerosol opt. per bin based on an integral with 999 intervals between bin-min
-               and bin-max (and function is the log-normal distribution). The number of maximum
-               terms for the sum of mie scattering is set as: ...
-           """
-    print("Engines:\n\n", mie_BB)
+  - Mie-Boucher-Bonzo:
+     Engine based in Fortran 90 code. It assumed log-normal distribution. It estimates
+     the aerosol opt. per bin based on an integral with 999 intervals between bin-min
+     and bin-max (and function is the log-normal distribution). The number of maximum
+     terms for the sum of mie scattering is set as: ...
+     """
+    print("\n Engines implemented:\n", mie_BB)
+    print("     Quick tests of Mie Code")
+    
+    engine.test_engine("MieBB")
+
+
     return
 
 

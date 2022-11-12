@@ -10,6 +10,7 @@ rm logs/*
 echo "     Cleaning previous compiled engine libs"
 rm engines/*/libs/*
 echo "     For security reasons outputnc should be cleaned manually."
-echo "**** DONE"
-echo """:
+echo ""
+echo "**************************************************************"
+echo ""
 

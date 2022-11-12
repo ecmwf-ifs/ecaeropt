@@ -121,16 +121,16 @@ def setting_file_mode(rinfo, fsetting, test=False):
                     if test==False:
                         dicnc_iaer[aer]=nc_iaer
                     else:
-                        print(runset["species"][aer]["ref"])
+                        #print(runset["species"][aer]["ref"])
                         dicnc_iaer[aer]={ "nc_test":nc_iaer, 
-                                         "nc_ref": runset["species"][aer]["ref"]}
+                                          "nc_ref": runset["species"][aer]["ref"]}
 
             if ifs_flag:
                 print("\n Creating a IFS netcdf file with all aerosols ..........\n")
                 ifs.process_ifs(dicnc_iaer, runset, fsetting, rinfo)
 
                 print("\n================================================================================\n")
-            else:
+            elif test==False:
                 print(show.bcolor.WARN+show.bcolor.BOLD+"   WARNING: "+show.bcolor.ENDC)
                 print(" IFS section not in setting file. Code ends here. \n")
 
@@ -144,7 +144,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
         show.add_footer()
    else:
         print("\n   Calculations with ecaerrad done. Proceeding with comparison. \n")
-        show.add_footer()
+        #show.add_footer()
    return dicnc_iaer, runset
                   
 
@@ -158,11 +158,11 @@ def test_mode(rinfo, fsetting="settings/test_single_mixing.toml"):
            pathncref  = aer["nc_ref"]
            nctest     = os.path.basename(pathnctest)
            ncref      = os.path.basename(pathncref)
-           diffcmd    = "aeropt/compare.sh "+pathnctest+" "+pathncref
-           print(diffcmd)
-           print("\n     Estimating diff between "+pathnctest+" and "+pathncref)
+           #print("\n     Estimating diff between "+pathnctest+" and "+pathncref)
+           diffcmd    = "aeropt/compare_secure.sh "+pathnctest+" "+pathncref 
+           #print(diffcmd)
            subprocess.Popen("aeropt/compare_secure.sh "+pathnctest+" "+pathncref, shell=True).wait()
-           print(os.getcwd())
+           #print(os.getcwd())
            ncdiff = "tmp/"+nctest.replace(".nc","")+"_minus_"+ncref
            check_vars_nc(ncdiff, iaer, pathnctest, pathncref)
     show.add_footer()

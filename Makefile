@@ -14,7 +14,8 @@ test :
 docum :
 	scripts/build_docs.sh 
 
-ifs48R1:
+IFS-CY48R1:
+	./ecaeropt -s settings/IFS_CY48R1.toml
 
 ifs48R2:
 

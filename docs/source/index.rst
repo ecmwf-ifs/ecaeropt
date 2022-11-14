@@ -17,6 +17,7 @@ Welcome to py-ecaeropt's documentation!
    use
    developer
    engines
+   ifs
 
 Indices and tables
 ==================

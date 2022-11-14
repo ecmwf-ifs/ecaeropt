@@ -1,8 +1,7 @@
 
 
  #########################################################################################################
- #                                                                                                       #
- # run_modes.jl                                                                                          #
+ # aeropt/modes.py                                                                                       #
  #                                                                                                       #
  # author: Ramiro Checa-Garcia                                                                           #
  # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
@@ -14,15 +13,11 @@
  #    | 26-Oct-2022   | R. Checa-Garcia     | Translated from Julia                                   |  #
  #                                                                                                       #
  #                                                                                                       #
- # tested with:                                                                                          #
- #    - Julia v1.8.0                                                                                     #
+ # tested with: python 3.8                                                                               #
  #                                                                                                       #
- # info:                                                                                                 #
+ # info: define the different kind of run modes in which the code can be used                            #
  #                                                                                                       #
  # how to use:                                                                                           #
- #                                                                                                       #
- #                                                                                                       #
- #                                                                                                       #
  #                                                                                                       #
  #########################################################################################################
 
@@ -38,7 +33,18 @@ import aeropt.parsetoml  as parse
 import aeropt.ifs        as ifs
 
 def config_file_mode(rinfo, config_file, outname):
+    """
+    Perform a calculation with the information of a configuration file
+    (that provides the information of an aerosol configuration).
 
+    Args:
+        rinfo       (object) : run info of calculation
+        config_file (str)    : configuration file path
+        outname     (str)    : filename for output netcdf
+
+    Return:
+        None
+    """
     show.add_header(rinfo, config_file)
     print("\n   RUN in CONFIG FILE MODE: \n")
     angles = np.linspace(180.0,0.0,180)
@@ -49,6 +55,16 @@ def config_file_mode(rinfo, config_file, outname):
 
 
 def info_mode(rinfo):
+    """
+    Show info about the current engines installed and
+    perform basic tests about their consistency.
+
+    Args:
+        rinfo       (object) : run info of calculation
+
+    Return:
+        None
+    """
     show.add_header(rinfo, "info")
     show.add_info()
     show.add_footer()
@@ -57,7 +73,19 @@ def info_mode(rinfo):
 
 
 def setting_file_mode(rinfo, fsetting, test=False):
+   """
+   Perfom a set of calculations described in a setting file
 
+   Args:
+       rinfo    (object): run info object 
+       fsetting (str)   : path to setting file
+       test     (bool)  : flag to know if called for testing.
+   Return:
+       dicnc_iaer (dic) : dictionary with reference and calculated 
+                          netcdf for each aerosol
+       runset
+
+   """
    show.add_header(rinfo, fsetting)
 
    if os.path.isfile(fsetting):
@@ -133,10 +161,8 @@ def setting_file_mode(rinfo, fsetting, test=False):
             elif test==False:
                 print(show.bcolor.WARN+show.bcolor.BOLD+"   WARNING: "+show.bcolor.ENDC)
                 print(" IFS section not in setting file. Code ends here. \n")
-
-        
+ 
    else:
-
         print(show.bcolor.FAIL+show.bcolor.BOLD+"   ERROR: "+show.bcolor.ENDC)
         print(" Setting file $fsetting not found in filesystem. \n")
 
@@ -149,7 +175,20 @@ def setting_file_mode(rinfo, fsetting, test=False):
                   
 
 
-def test_mode(rinfo, fsetting="settings/test_single_mixing.toml"):
+def test_mode(rinfo, fsetting):
+    """ 
+    Perfom a calculation of a setting file prepared for a test mode
+    Note: after calling the setting mode, it creates temporal netcdf
+          with the difference between calculation and reference netcdf
+          using nco cli-tool
+
+    Args:
+        rinfo  (object): run info object  
+        fsetting  (str): path to settting file
+
+    Return:
+        None
+    """
 
 
     list_nc, dict_fset = setting_file_mode(rinfo, fsetting, test=True)
@@ -171,7 +210,20 @@ def test_mode(rinfo, fsetting="settings/test_single_mixing.toml"):
 
 
 def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
+    """
+    Perform comparison between variables in two netcdf files.
 
+    Args: 
+        ncdiff     (str): path to nc difference between calc and ref.
+        iaer       (int): just an integer of the aerosol compared
+        pathnctest (str): path to the calculated netcdf
+        pathncref  (str): path to the reference netcdf
+    
+    Return:
+        passing   (bool): indicates if test has been passed or not
+                          a test is passed if all variables are the 
+                          same within a tolerance value.
+    """
     cpass = (show.bcolor.GREEN+show.bcolor.BOLD,show.bcolor.ENDC)
     cwarn = (show.bcolor.WARN +show.bcolor.BOLD,show.bcolor.ENDC)
     cfail = (show.bcolor.FAIL +show.bcolor.BOLD,show.bcolor.ENDC)

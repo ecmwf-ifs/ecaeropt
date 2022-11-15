@@ -1,9 +1,7 @@
 
-
-
  #########################################################################################################
  #                                                                                                       #
- # process.jl                                                                                            #
+ # aeropt/process.py                                                                                     #
  #                                                                                                       #
  # author: Ramiro Checa-Garcia                                                                           #
  # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
@@ -24,17 +22,34 @@ import os
 import os.path
 import logging
 
+import numpy as np
+from netCDF4 import Dataset as NCDataset
+from datetime import datetime
+
+
 import aeropt.engine   as engine
 import aeropt.store_nc as store
 import aeropt.aer      as aer
 
 
-import numpy as np
-from netCDF4 import Dataset as NCDataset
-from datetime import datetime
-
 def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozzo", wl_out="none"):          
+    """
+    Process a configuration file to create a netcdf file for a single aerosol the arguments wl_out,
+    and angles can overrride specific aspect of the configuration file (usually using a setting
+    file)
 
+    Args:
+        rinfo            (object) : run info object
+        path_config_file    (str) : path to configuration file
+        ncoutname           (str) : final ncoutname of netcdf file
+        aerengine           (str) : str with the name of the engine
+        wl_out              (str) : path of the file with final wavelengths
+
+    Return:
+       ncoutname            (str) : as input confirming that store has been working.
+
+
+    """
     if os.path.isfile(ncoutname):
         print("********** File with name: ", ncoutname )
         print("           is already on your disk.")
@@ -71,8 +86,23 @@ def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozz
 
 
 def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"):
+    """
+    Process a set configuration files that define an externally mixed aerosol and 
+    store  a netcdf file. Again nangle and wl_out  can overrride specific aspect 
+    of the configuration file (usually using a setting file)
 
+    Args:
+        rinfo            (object) : run info object
+        path_config_files   (list): list of strings with path to configuration files
+        ncoutname           (str) : final ncoutname of netcdf file
+        nangle              (list): list with angles
+        aerengine           (list): list of str with the name of the engines
+        wl_out              (str) : path of the common file with final wavelengths
 
+    Return:
+       ncoutname            (str) : as input confirming that store has been working.
+
+    """
     print("\n   Processing mixing aerosols.........\n")
 
     # Reading first component to fix array sizes

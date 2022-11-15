@@ -2,7 +2,7 @@
 
 
 # License
-  - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE.txt
+  - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE file in main directory.
 
 # Contact Info
 

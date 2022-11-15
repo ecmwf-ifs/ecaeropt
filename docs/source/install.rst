@@ -25,6 +25,7 @@ Installation
 The most easy way to install is use:
 
 .. code-block:: bash
+
    make build
 
 which create all needed directories, compile engine libraries and documentation. Log files about the process are stored in logs folder.
@@ -34,7 +35,8 @@ Clean
 
 
 .. code-block:: bash
-   make cean
+
+   make clean
 
 It delete files in `tmp`, `logs` directories and the compiled libraries as well.
 

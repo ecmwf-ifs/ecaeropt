@@ -27,7 +27,6 @@ git clone ssh://git@git.ecmwf.int/~parc/ecaeropt.git
 make build
 ```
 
-
 Note that need python3 with the standard library and following external libraries, numpy, toml and netcdf4 plus nco tools. In the server ATOS it is needed to use:
 ```
 module load python3
@@ -45,15 +44,16 @@ make test      # tests including 3 kind of aerosols.
 
 ## Create standard IFS model netcdf files
 
-
 To build ifs standard files you may just type
+
 ```
-make ifs-CY48R1
+make ifs-CY46R1
 ```
 
 ## Custom calculations
 
 For this you can use directly the tool, you can access to the description of the run options with
+
 ```
 ./ecaeropt -h 
 ```
@@ -63,6 +63,11 @@ remember that:
 -  a configuration file (CONFIG-FILE) describes a calculation of optical properties of a single aerosol species
 -  a setting files (SETTING-FILE) describes a more complex calculation: mixed aerosols, several single species and storage all in a single netcdf.
 -  you can create also setting files to perform automatic tests. Everthing will be described in documentation.
+
+# Documentation
+
+You can have access to a more detailed documentation, by default `make build` will create a documentation and a link in the main folder named docs.html which you can open with any browser (ex. ` > firefox docs.html`)
+You can also build documentation directly with `make docum`.
 
 # How to contribute
 

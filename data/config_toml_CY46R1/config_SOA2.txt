@@ -1,0 +1,38 @@
+# SECONDARY ORGANIC AEROSOLS SOA2
+#
+# Last update: 22-10-27
+# Contact:     ramiro.checa-garcia@ecmwf.int
+
+[distribution]
+# Properties 
+# Units:
+lognormal.r0          = 0.09
+lognormal.sigma_g     = 1.6
+lognormal.Ntot        = 1.0
+
+[bins]
+# Bins for final output
+# Units:
+min    = 0.005
+max    = 20.0
+
+[properties]
+# Physical and Chemical properties
+# Units: rho [kgm-3] | rh.tab [%] 
+rho         = 1.8e03
+rh.tab      = [0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 85.0, 90.0, 95.0]
+rh.growth   = [1.0, 1.0,  1.0,  1.0,  1.0,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8]
+
+
+[optical]
+# Optical Information
+ri_file     = "data/refr_idx/soa_a_ri_table_mix"
+wl_out_file = "data/wavelengths/wl_out_IFS.txt"
+ninp        = 158
+ext_scaling = 1.0
+
+
+[tags]
+aer_type = "soa_anthropogenic"
+ifs      = "CY46R1"
+revised  = 2022-11-15

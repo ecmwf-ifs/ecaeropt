@@ -4,8 +4,6 @@
 How to install
 ==============
 
-
-
 Dependencies
 ------------
 
@@ -24,9 +22,21 @@ Because **ecaeropt** is a python program which uses calculation engines or backe
 Installation
 ------------
 
-If you have all the dependencies you only need to run **./build.sh**
+The most easy way to install is use:
+
+.. code-block:: bash
+   make build
+
+which create all needed directories, compile engine libraries and documentation. Log files about the process are stored in logs folder.
+
+Clean
+-----
 
 
+.. code-block:: bash
+   make cean
+
+It delete files in `tmp`, `logs` directories and the compiled libraries as well.
 
 
 

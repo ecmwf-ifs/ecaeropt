@@ -4,6 +4,9 @@
 check :
 	scripts/check_dependencies.sh	
 
+docum :
+	scripts/build_docs.sh 
+
 build : check docum
 	scripts/build.sh
 clean : 
@@ -11,11 +14,9 @@ clean :
 test :
 	scripts/tests.sh
 	
-docum :
-	scripts/build_docs.sh 
+IFS-CY46R1:
+	./ecaeropt -s settings/IFS_CY46R1.toml
 
-IFS-CY48R1:
-	./ecaeropt -s settings/IFS_CY48R1.toml
 
 ifs48R2:
 

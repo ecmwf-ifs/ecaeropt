@@ -4,7 +4,7 @@ echo ""
 echo "... Building the documentation ..."
 cd docs
 echo "    * documentation in html "
-make html &> ../tmp/build_docum.log 
+make html &> ../logs/build_docum.log 
 cd ..
 rm docs.html
 ln -s docs/build/html/index.html docs.html

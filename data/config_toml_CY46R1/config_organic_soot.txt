@@ -1,0 +1,33 @@
+# ORGANIC AEROSOLS SOOT
+#
+# Last update: 22-10-27
+# Contact:     ramiro.checa-garcia@ecmwf.int
+
+[distribution]
+# Properties of Size Distribution
+# Units:
+lognormal.r0          = 0.0118
+lognormal.sigma_g     = 2.00
+lognormal.Ntot        = 1.0e6
+
+[mixture]
+Ntot_mix    = 8300e6
+
+[bins]
+min    = 0.005
+max    = 20.0
+
+[properties]
+rho         = 1.0e03
+rh.tab      = [0.0 , 10.0 , 20.0 , 30.0 , 40.0 , 50.0 , 60.0 , 70.0 , 80.0 , 85.0 , 90.0 , 95.0]
+rh.growth   = [1.0 , 1.0  , 1.0  ,  1.0 ,  1.0 ,  1.0 ,  1.0 ,  1.0 ,  1.0 ,  1.0 ,  1.0 ,  1.0]
+
+[optical]
+ri_file     = "data/refr_idx/soot_ri_table"
+wl_out_file = "data/wavelengths/wl_out_IFS.txt"
+ext_scaling = 1.0
+
+[tags]
+aer_type = "organic_mix"
+ifs      = "CY46R1"
+revised  = 2022-11-15

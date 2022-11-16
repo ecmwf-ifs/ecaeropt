@@ -1,16 +1,15 @@
 
 
-
  #########################################################################################################
  #                                                                                                       #
- # parsetoml.jl                                                                                          #
+ # aeropt/parsetoml.py                                                                                   #
  #                                                                                                       #
  # author: Ramiro Checa-Garcia                                                                           #
  # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
  #                                                                                                       #
  # history:                                                                                              #
  #                                                                                                       #
- #    19-Sep-2022    1st working version                                                                 #
+ #          Nov-2022   R. Checa-Garcia   Translated from Julia. Tested                                   #
  #                                                                                                       #
  #                                                                                                       #
  #                                                                                                       #
@@ -24,6 +23,17 @@ import toml
 from datetime import datetime
 
 def nangle(nangle):
+     """
+     Creates a numpy array of angles based on input
+
+     Args:
+         nangle (int) : create a linear spaced array of nangles between 0 and 180.
+         nangle (str) : read the file with path nangle with the given angles.
+
+     Return:
+         angles (numpy array) with angles for phase function calculation.
+
+     """
 
      if isinstance(nangle, int) and nangle==0:
         angles = np.array([])
@@ -42,7 +52,20 @@ def nangle(nangle):
  
 
 def ncname(aer_conf, ncname,  outncdir,  mix=False, skip=False):
+    """
+    Ascertain the ncname given an list with the rules.
 
+    Args:
+        aer_conf
+        ncname
+        outncdir
+        mix
+        skip
+
+    Return:
+       outncname (str): path with outncname 
+
+    """
     for sname in ncname:
         if sname=="C:today":
             ncname = [a for a in ncname if a != sname] 
@@ -75,6 +98,9 @@ def ncname(aer_conf, ncname,  outncdir,  mix=False, skip=False):
 
 
 def select_ncname(iaer, aerconfig, defaultnc, outncdir, mix=False, skip=False):
+    """
+    
+    """
 
     if "ncname" in iaer.keys():
          if iaer["ncname"]=="default":
@@ -90,7 +116,16 @@ def select_ncname(iaer, aerconfig, defaultnc, outncdir, mix=False, skip=False):
 
 
 def check_toml(runset, goal="settings"):
+    """
+    Perform a basic check of setting file
 
+    Args:
+
+
+    Return:
+
+
+    """
     tomlkeys = runset.keys()
     if goal == "settings":
         if "main" in tomlkeys and len(tomlkeys)<=2:
@@ -125,6 +160,10 @@ def check_toml(runset, goal="settings"):
 
 
 def toml_single(runset):
+    """
+    
+    
+    """
 
     skip = runset["process"]["skip"]
     defaultnc= runset["default"]["ncname"]

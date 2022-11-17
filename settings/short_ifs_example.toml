@@ -152,7 +152,7 @@ Cycle """
 # There are species used for philic and phobic, so we need to write in configuration file.
 # description.philic = 
 # description.phobic = (even the phobic RH used)
-description_hydrophobic = """
+description_hydrophobic.1 = """
  1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; \
  2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; \
  3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; \

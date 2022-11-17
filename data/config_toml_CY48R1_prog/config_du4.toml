@@ -1,0 +1,38 @@
+# MIneral Dust 4 (Info provided by HYGEOS/Samuel Remy)
+#
+# Last update: 2022-11-16
+# Contact:     ramiro.checa-garcia@ecmwf.int
+#              Samuel Rémy <sr@hygeos.com>
+
+[distribution]
+# Properties of Size Distribution
+# Units:
+lognormal.r0      = [ 0.05  , 0.42 , 0.79 , 16.2]
+lognormal.sigma_g = [ 2.2   , 1.18 , 1.93 , 1.53]
+lognormal.Ntot    = [ 391.0 , 8.39 , 11.6 , 0.000138]
+
+[bins]
+# Bins for final output
+# Units:
+min = [0.03, 0.55, 0.90]
+max = [0.55, 0.90,  20.0]
+
+[properties]        
+# Physical and Chemical properties
+# Units: rho [kgm-3] | rh.tab [%] 
+rho         = 2.61e03
+rh.tab      = 0.0
+rh.growth   = 1.0
+
+[optical]
+# Optical Information
+ri_file     = "data/refr_idx/du_ri_table_composite"
+wl_out_file = "data/wavelengths/wl_out_IFS.txt"
+ext_scaling = 1.0
+
+[tags]
+aer_type = "dust_CYR481_prog"
+ifs      = "CY48R1"
+revised  = 2022-11-15
+
+

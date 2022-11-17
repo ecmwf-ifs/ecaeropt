@@ -14,8 +14,8 @@ clean :
 test :
 	scripts/tests.sh
 	
-IFS-CY46R1:
-	./ecaeropt -s settings/IFS_CY46R1.toml
+IFS-CY46R1-clim:
+	./ecaeropt -s settings/IFS_CY46R1_clim.toml
 
 
 ifs48R2:

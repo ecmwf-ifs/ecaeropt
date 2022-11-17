@@ -114,7 +114,7 @@ mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to 
 # so we have to impose a number of phobic and philic species and indicate then with position
 # where to place them. All other should be filled with missing or nan.
 
-netcdfname = "ifs_CY46R1.nc"
+netcdfname = "ifs_CY46R1_clim.nc"
 
 number     = { philic=10, phobic=14}
 

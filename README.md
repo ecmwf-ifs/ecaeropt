@@ -1,6 +1,4 @@
 
-
-
 # License
   - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE file in main directory.
 
@@ -11,7 +9,7 @@
               contributions of other authors vie Mie Scattering Codes.
   - Contacts: ramiro.checa-garcia@ecmwf.int
   - TODO:     stored at TODO.org file
-  - History:  check directory docs/ for further information 
+  - History:  open file docs.html for further information (after make build)
 
 ```
      v0.8     Translated from Julia version
@@ -37,17 +35,18 @@ We recommend to run one the test to check everthing is working properly (this is
 
 ```
 ./ecaeropt -i  # this show simple checks of mie-scatt code for monodisperse case.
-make test      # tests including 3 kind of aerosols.
+make test      # tests including 3 kind of aerosols (about 10 minutes)
 ```
 
 # How to run
 
 ## Create standard IFS model netcdf files
 
-To build ifs standard files you may just type
+To build ifs standard files you may just type (script using SBATCH and openmp is still not implemented.)
 
 ```
 make ifs-CY46R1
+make ifs-CY48R1
 ```
 
 ## Custom calculations

@@ -157,7 +157,6 @@ def setting_file_mode(rinfo, fsetting, test=False):
                 print("\n Creating a IFS netcdf file with all aerosols ..........\n")
                 ifs.process_ifs(dicnc_iaer, runset, fsetting, rinfo)
 
-                print("\n================================================================================\n")
             elif test==False:
                 print(show.bcolor.WARN+show.bcolor.BOLD+"   WARNING: "+show.bcolor.ENDC)
                 print(" IFS section not in setting file. Code ends here. \n")

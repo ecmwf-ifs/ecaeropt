@@ -31,5 +31,6 @@ ext_scaling = 1.0
 
 [tags]
 aer_type    = "black_carbon_Hess"
-ifs         = "CY46R1"
+opt_info    = "OPAC"
+ifs         = [ "CY46R1", "CY48R1" ]
 revised     = 2022-11-15

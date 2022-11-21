@@ -7,9 +7,9 @@
 [distribution]
 # Properties of Size Distribution
 # Units:
-r0 = 0.09
-sigma_g = 1.6
-Ntot = 1.0
+lognormal.r0 = 0.09
+lognormal.sigma_g = 1.6
+lognormal.Ntot = 1.0
 
 [bins]
 min    = 0.005
@@ -26,6 +26,6 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
-aer_type = "organic_CY48R1_proh"
-ifs      = "CY48R1_prog"
+aer_type = "organic_CY48R1"
+ifs      = "CY48R1"
 revised  = 2022-11-15

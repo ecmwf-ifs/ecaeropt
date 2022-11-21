@@ -57,7 +57,10 @@ def ifs_testdim(dic_nciaer, runset):
         out=0 if x=="philic" else 1
         return out
 
-    ifs          = runset["ifs"]
+
+    #=========================================================================
+    
+    ifs = runset["ifs"]
 
     # From the dimensions of netcdf files are created the dimensions of nc_ifs
     # -> there are 3 categories, those that should be equal
@@ -457,7 +460,14 @@ def process_ifs(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     ds.contact                 = metainfo["contact"]
     ds.institution             = metainfo["institution"]
     ds.comment                 = metainfo["comment_string"]+metainfo["product_version"]
-    ds.description_hydrophilic = metainfo["description_hydrophilic"]
-    ds.description_hydrophobic = metainfo["description_hydrophobic"]
+    description_hydrophilic = []
+    for ihydro in range(ifsphilic):
+        description_hydrophilic.append(metainfo["description_hydrophilic"][str(ihydro+1)])
+    ds.description_hydrophilic = " ; ".join(description_hydrophilic)
+
+    description_hydrophobic = []
+    for ihydro in range(ifsphobic):
+        description_hydrophobic.append(metainfo["description_hydrophobic"][str(ihydro+1)])
+    ds.description_hydrophobic = " ; ".join(description_hydrophobic) 
 
     ds.close()

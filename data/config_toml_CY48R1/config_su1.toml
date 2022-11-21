@@ -1,14 +1,16 @@
-# SULFATE AEROSOL (updated distribution for CY48R1)
+# SULFATE AEROSOL 
 #
-# Last update: 22-11-18
+# info: identical to config_su.toml but scaling is now 1.0
+#
+# Last update: 22-10-26
 # Contact:     ramiro.checa-garcia@ecmwf.int
-#              
+
 
 [distribution]
 # Properties of Size Distribution
 # Units:
-lognormal.r0          = 0.11
-lognormal.sigma_g     = 1.6
+lognormal.r0          = 0.0355
+lognormal.sigma_g     = 2.0
 lognormal.Ntot        = 1.0
 
 [bins]
@@ -26,12 +28,12 @@ rh.growth   = [1.0 ,  1.0,  1.0,  1.0,  1.169,  1.22,  1.282,  1.363,  1.485,  1
 [optical]
 # Optical information
 ri_file     = "data/refr_idx/su_ri_table"
-wl_out_file = "data/wavelengths/wl_out_IFS.txt"
-ext_scaling = 1.0
+wl_out_file = "data/wavelengths/wl_out_TEST_2.txt"
+ext_scaling = 1.000
 
 [tags]
-aer_type    = "sulfate_CY48R1_newdistribution"
-model       = "Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ modified size ditribution (no scaling)"
+aer_type    = "sulfate_noscaling"
+model       = "Sulfate GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/"
 ifs         = "CY48R1"
-revised     = 2022-11-18
+revised     = 2022-11-15
 

@@ -67,7 +67,10 @@ def fill_runinfo(codeversion, debug, logfile):
     """
     today   = datetime.today().strftime('%Y-%m-%d')
     machine = os.uname()[-1]
-    user    = os.getlogin()
+    try:
+        user    = os.getlogin()
+    except: 
+        user   = "----"
     version = codeversion
     runpath = os.getcwd()
     gittag  = os.popen("git tag").read()

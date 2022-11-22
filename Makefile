@@ -15,26 +15,27 @@ test :
 	scripts/tests.sh
 	
 IFS-example:
+	@echo ""
+	@echo " Example of calculation of IFS aerosol optical properties (few wavelengths)"
+	@echo " -> submitted with sbatch: "
+	@echo "    1. Check status with squeue -u username"
+	@echo "    2. Output stored in a logs/calc.short_ifs_example.JOBID.out file."
+	@echo ""
 	sbatch scripts/create_shortifs.sh
 
-IFS-CY46R1:
+IFS-sbatch:
 	@echo ""
-	@echo " Calculation of aerosol optical properties for CY48R1 high-resolution spectral"
+	@echo " Calculation of IFS aerosol optical properties at high-resolution spectral"
 	@echo " -> submitted with sbatch: "
 	@echo "    1. Check status with squeue -u username"
-	@echo "    2. Output stored in a slurm-JOBID.log file."
+	@echo "    2. Output stored in a logs/calc.IFS-version.JOBID.out file."
 	@echo ""
+	
+IFS-CY46R1: IFS-sbatch
+	@echo " === IFS-CY46R1 ==="
 	sbatch scripts/create_ifs-cy46r1.sh
 
-IFS-CY48R1:
-	@echo ""
-	@echo " Calculation of aerosol optical properties for CY48R1 high-resolution spectral"
-	@echo " -> submitted with sbatch: "
-	@echo "    1. Check status with squeue -u username"
-	@echo "    2. Output stored in a slurm-JOBID.log file."
-	@echo ""
+IFS-CY48R1: IFS-sbatch
+	@echo " === IFS-CY46R1 ==="
 	sbatch scripts/create_ifs-cy48r1.sh
 
-ifs48R2:
-
-ifs49R1:

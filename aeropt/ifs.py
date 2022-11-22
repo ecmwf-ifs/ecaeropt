@@ -241,7 +241,7 @@ def process_ifs(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     dim_rh, dim_wl, ifsphobic, ifsphilic, rev_species = ifs_testdim(dic_nciaer, runset)
     str_today = datetime.today().strftime('%Y-%m-%d')
 
-    outifsnc="test_ifs.nc"
+    outifsnc=ifs["netcdfname"]
     print("\n === Storing all the processed aerosols in a single netcdf \n")
 
     # Opening NC dataset  ======================================================
@@ -471,3 +471,8 @@ def process_ifs(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     ds.description_hydrophobic = " ; ".join(description_hydrophobic) 
 
     ds.close()
+
+
+    print("\n   IFS aerosol optical file stored at ", outifsnc)
+
+    return

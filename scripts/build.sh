@@ -58,7 +58,7 @@ function mieBB {
     #       $2=path_ecaeropt
     #       $3=date string for log file
     
-    logfile=$2"/logs/install_mieBB"$3".log"
+    logfile=$2"/logs/build_mieBB"$3".log"
     
     cd $1"/src"
 

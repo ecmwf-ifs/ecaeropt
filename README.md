@@ -42,12 +42,14 @@ make test      # tests including 3 kind of aerosols (about 10 minutes)
 
 ## Create standard IFS model netcdf files
 
-To build ifs standard files you may just type (script using SBATCH and openmp is still not implemented.)
+To build ifs standard files you may just type (script using SBATCH is implemented (openmp is a work in progress for mieBB),
 
 ```
 make ifs-CY46R1
 make ifs-CY48R1
 ```
+in both cases the log files with be stored in logs/ directory. The final netcdf will be stored at: outputnc/store_ifsnc/ 
+
 
 ## Custom calculations
 

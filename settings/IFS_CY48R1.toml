@@ -27,7 +27,7 @@
 # specific information in the config files or in the process section
 
 [default]
-wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wavelengths for output files this
+  wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wavelengths for output files this
                                                     # will override the value in the configuration files!!
                                                     # if you want to keep conf. files value remove this.
 
@@ -124,7 +124,7 @@ mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to 
 # so we have to impose a number of phobic and philic species and indicate then with position
 # where to place them. All other should be filled with missing or nan.
 
-netcdfname = "ifs_CY48R1.nc"
+netcdfname = "outputnc/store_ifsnc/ifs_CY48R1.nc"
 
 number     = { philic=13, phobic=18}
 
@@ -189,6 +189,7 @@ description_hydrophobic.17 = " 17: Black carbon, Stier et al 2007  "
 description_hydrophobic.18 = " 18: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%%-30%%)"
 
 description_hydrophilic.1  = " 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC "
+
 description_hydrophilic.2  = " 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC "
 description_hydrophilic.3  = " 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC "
 description_hydrophilic.4  = " 4: Hydrophilic organic matter, OPAC "

@@ -5,13 +5,27 @@ How to use
 ==========
 
 
-The tool is an executable script **./ecaeropt**, you see the options with **./ecaeropt -h**
+The tool is an executable script **./ecaeropt**, you see the options with `./ecaeropt -h`
+
+Automatic calculations
+----------------------
+
+After build the tool using make build you can use make for specific prescribed calculations,
+this calculations are using the submission sbatch for ECMWF-ATOS supercomputer. User of
+other environments can easily run the equivalent scripts included in the scripts folder as:
+`bash scripts/create_XXXX.sh`
+
+.. code-block:: bash
+
+   make IFS-example  # runs a short calculation of IFS file with only two wavelengths for testing purposes.
+   make IFS-CY46R1   # creates the standard IFS netcdf for IFS model cycle CY46R1
+   make IFS-CY48R1   # creates the standard IFS netcdf for IFS model cycle CY48R1
 
 
-Concepts
---------
-
-To understand the use of **ecaeropt** you should be familiar with 3 concepts:
+Custom Calculations
+-------------------
+   
+To prepare custom calculations usign ecaeropt you need to understand the use of **ecaeropt** you should be familiar with 3 concepts:
 
 - configuration file
 - setting file

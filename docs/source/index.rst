@@ -8,9 +8,7 @@ Welcome to py-ecaeropt's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
-
+   
    news
    info
    install
@@ -18,6 +16,8 @@ Welcome to py-ecaeropt's documentation!
    developer
    engines
    ifs
+
+   api/modules
 
 Indices and tables
 ==================

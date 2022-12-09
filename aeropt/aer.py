@@ -62,6 +62,21 @@ class aeropt:
 
 
 def mie_to_aeropt(aerconf, out, engine):
+    """
+    Given the output of the mie-scatteting engine, and the aerosols configuration
+    it returns a aerosol optical properties object.
+
+    Args:
+      aerconf (object) : aerosol configuration obj.
+      out     (tuple)  : output of mie-scattering engine is a tuple of different 
+                        arrays.
+      engine   (string): string with the name of the tuple.
+
+    Returns:
+
+      aeropt  (object) : returns an aerosols optical properties object.
+
+    """
         znr, zni, ext, omg, asy, lidar, mass, ph, qval = out
 
         return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
@@ -177,6 +192,21 @@ class aerosol:
 
 
 def readconf(config_file, angles, wl_out="none", debug=False):
+    """
+     Return an aerosol configuration object given a configuration file,
+     scattering angles and list of wavelengths.
+
+     Args:
+        config_file (string): file path with configuration toml file.
+        angles      (array) : array of angles or file path with them.
+        wl_out      (string): name of wl_out file with wavelengths
+        debug       (bool)  : True shows debug info.
+
+     Return:
+        aerosol     (object): aerosol configuration object
+
+    """
+
 
     def as_farray(value):
 

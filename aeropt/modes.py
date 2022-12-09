@@ -44,7 +44,10 @@ def config_file_mode(rinfo, config_file, outname):
 
     Return:
         None
+
     """
+
+
     show.add_header(rinfo, config_file)
     print("\n   RUN in CONFIG FILE MODE: \n")
     angles = np.linspace(180.0,0.0,180)
@@ -80,12 +83,14 @@ def setting_file_mode(rinfo, fsetting, test=False):
        rinfo    (object): run info object 
        fsetting (str)   : path to setting file
        test     (bool)  : flag to know if called for testing.
+
    Return:
        dicnc_iaer (dic) : dictionary with reference and calculated 
                           netcdf for each aerosol
-       runset
-
+       runset           : extra-info
    """
+
+
    show.add_header(rinfo, fsetting)
 
    if os.path.isfile(fsetting):
@@ -177,7 +182,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
 def test_mode(rinfo, fsetting):
     """ 
     Perfom a calculation of a setting file prepared for a test mode
-    Note: after calling the setting mode, it creates temporal netcdf
+          Note: after calling the setting mode, it creates temporal netcdf
           with the difference between calculation and reference netcdf
           using nco cli-tool
 
@@ -187,6 +192,7 @@ def test_mode(rinfo, fsetting):
 
     Return:
         None
+
     """
 
 
@@ -222,7 +228,10 @@ def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
         passing   (bool): indicates if test has been passed or not
                           a test is passed if all variables are the 
                           same within a tolerance value.
+    
     """
+
+
     cpass = (show.bcolor.GREEN+show.bcolor.BOLD,show.bcolor.ENDC)
     cwarn = (show.bcolor.WARN +show.bcolor.BOLD,show.bcolor.ENDC)
     cfail = (show.bcolor.FAIL +show.bcolor.BOLD,show.bcolor.ENDC)

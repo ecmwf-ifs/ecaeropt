@@ -3,6 +3,7 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import sys
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -10,14 +11,18 @@ project = 'py-ecaeropt'
 copyright = '2022, Ramiro Checa-Garcia'
 author = 'Ramiro Checa-Garcia'
 release = 'beta'
+master_doc = 'index'
+source_suffix = '.rst'
+sys.path.append("/home/parc/_ecmwf/codes/ecaeropt/")
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-#    'sphinx.ext.autodoc',
-#    'sphinx.ext.napoleon',
-#    'sphinx.ext.viewcode',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.mathjax'
 ]
 
 
@@ -31,3 +36,15 @@ exclude_patterns = []
 
 html_theme = 'nature'
 #html_static_path = ['_static']
+
+
+# -- Options for LaTeX output -------------------------------------------------
+
+latex_engine = 'pdflatex'
+latex_theme  = 'manual'
+latex_table_style = 'booktabs'
+
+latex_documents = [
+    (master_doc, 'main.tex', 'Tool ecaeropt',
+     'Ramiro Checa-Garcia', 'report')
+]

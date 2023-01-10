@@ -141,13 +141,12 @@ aer.nic    = { species="ni_coarse" , type="philic", position= 10, bin=1 }
 
 [info]
 product_version = '48R1'
-comment_string = """
-This file provides aerosol scattering properties versus wavenumber for the aerosol \
-species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting \
-System. The aerosols are separated into hydrophobic and hydrophilic types (indicated by \
-suffixes _hydrophobic and _hydrophilic). Descriptions of these types are in the global \
-variables description_hydrophobic and description_hydrophilic. This version is for IFS \
-Cycle """
+comment_string = ("This file provides aerosol scattering properties versus wavenumber for the aerosol \n"
+"species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting \n"
+"System. The aerosols are separated into hydrophobic and hydrophilic types (indicated by \n"
+"suffixes _hydrophobic and _hydrophilic). Descriptions of these types are in the global \n"
+"variables description_hydrophobic and description_hydrophilic. This version is for IFS \n"
+"Cycle ")
 
 # The information below can be in the configuration files. For example, in du1 we should have the 3 first lines.
 # There are species used for philic and phobic, so we need to write in configuration file.

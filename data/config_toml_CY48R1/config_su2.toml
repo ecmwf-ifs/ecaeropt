@@ -30,6 +30,7 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
+opt_model   = "GACP-newPSD"
 aer_type    = "sulfate_CY48R1_newdistribution"
 model       = "Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ modified size ditribution (no scaling)"
 ifs         = "CY48R1"

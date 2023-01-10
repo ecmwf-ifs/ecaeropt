@@ -9,8 +9,7 @@ Welcome to py-ecaeropt's documentation!
 .. toctree::
    :maxdepth: 2
    
-   news
-   info
+   news_info
    install
    use
    developer

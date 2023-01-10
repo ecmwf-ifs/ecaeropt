@@ -2,6 +2,7 @@
 
 from netCDF4 import Dataset as NCDataset
 from datetime import datetime
+import toml
 
 def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCDF4"):
 
@@ -40,6 +41,9 @@ def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCD
     ds.createDimension("angle"     , aeropt.nmux)
 
     # Global attributes   =================================================
+
+    opticalmodel=toml.load(aer.config_file, _dict=dict)["tags"]["opt_model"]
+
     str_config = "Aerosol Config.  file: "+aer.config_file
     str_refind = "Refractive index file: "+aer.ri_file
 
@@ -54,6 +58,7 @@ def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCD
     ds.source_config             = str_config
     ds.source_refidx             = str_refind
     ds.source_size_distribution  = str_radii+str_sigma+str_densi+str_ntot
+    ds.optical_model             = opticalmodel
 
     s2 = ("wavelength","rel_hum",)
     s3 = ("wavelength","rel_hum","size_bin",)
@@ -189,7 +194,7 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
     ds.description = ("Aerosol Optical Properties of a mixed aerosol with "
                      + str(num_components)+" components")
     ds.history     = "Created "+str_today
-
+    ds.optical_model = "External-Mixing"
 
     str_config       = "Configuration files   : "+",".join([aer.config_file for aer in laer_conf])
     str_refidx       = "Refractive index files: "+",".join([aer.ri_file for aer in laer_conf])

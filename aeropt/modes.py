@@ -67,7 +67,9 @@ def info_mode(rinfo):
 
     Return:
         None
+
     """
+
     show.add_header(rinfo, "info")
     show.add_info()
     show.add_footer()
@@ -85,11 +87,10 @@ def setting_file_mode(rinfo, fsetting, test=False):
        test     (bool)  : flag to know if called for testing.
 
    Return:
-       dicnc_iaer (dic) : dictionary with reference and calculated 
-                          netcdf for each aerosol
+       dicnc_iaer (dic) : dictionary with reference and calculated netcdf for each aerosol
        runset           : extra-info
-   """
 
+   """
 
    show.add_header(rinfo, fsetting)
 
@@ -159,9 +160,12 @@ def setting_file_mode(rinfo, fsetting, test=False):
                                           "nc_ref": runset["species"][aer]["ref"]}
 
             if ifs_flag:
+                ifs_vers = runset["ifs"]["ifs_cycle"]
                 print("\n Creating a IFS netcdf file with all aerosols ..........\n")
-                ifs.process_ifs(dicnc_iaer, runset, fsetting, rinfo)
-
+                if ifs_vers < "49R1":
+                   ifs.process_ifs(dicnc_iaer, runset, fsetting, rinfo)
+                else:
+                   ifs.process_ifs_49R1(dicnc_iaer, runset, fsetting, rinfo)
             elif test==False:
                 print(show.bcolor.WARN+show.bcolor.BOLD+"   WARNING: "+show.bcolor.ENDC)
                 print(" IFS section not in setting file. Code ends here. \n")

@@ -16,7 +16,7 @@ Because **ecaeropt** is a python program which uses calculation engines or backe
   + f2py3    (usually installed with numpy)
 
 - nco  (it's used for comparing netcdf between versions)
-- fortran 90 compiler
+- fortran 90 compiler (currently only tested/used gfortran)
 
 
 Installation
@@ -28,7 +28,7 @@ The most easy way to install is use:
 
    make build
 
-which create all needed directories, compile engine libraries and documentation. Log files about the process are stored in logs folder.
+which create all needed directories, compile engine libraries and prepare documentation in html. Log files about the process are stored in logs folder.
 
 Clean
 -----

@@ -26,6 +26,7 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
+opt_model= "Brown2018"
 aer_type = "organic_CY48R1"
 ifs      = "CY48R1"
 revised  = 2022-11-15

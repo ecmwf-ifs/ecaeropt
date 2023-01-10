@@ -99,7 +99,13 @@ def ncname(aer_conf, ncname,  outncdir,  mix=False, skip=False):
 
 def select_ncname(iaer, aerconfig, defaultnc, outncdir, mix=False, skip=False):
     """
-    
+    Create the output ncname based on inputs and rules
+
+    Args:
+
+
+    Return:
+       outncname (string) : filename for output netcdf
     """
 
     if "ncname" in iaer.keys():

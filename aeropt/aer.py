@@ -37,10 +37,10 @@ class aeropt:
        ext   (np.array): extinction 
        ssa   (np.array): single scattering albedo
        asy   (np.array): asysmetry factor
-       mass  (np.array):
+       mass  (np.array): 
        lidar (np.array):
-       pfun  (np.array): phase function
-       angle (np.array):
+       pfun  (np.array): phase function 
+       angle (np.array): angles used for phase function
        nmux  (int)     :
 
     """
@@ -77,26 +77,45 @@ def mie_to_aeropt(aerconf, out, engine):
       aeropt  (object) : returns an aerosols optical properties object.
 
     """
-        znr, zni, ext, omg, asy, lidar, mass, ph, qval = out
+    znr, zni, ext, omg, asy, lidar, mass, ph, qval = out
 
-        return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
+    return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
                        ph, aerconf.angles, aerconf.nmumax, engine)
 
 class aerosol:
     """Class to store a complete aerosol configuration
 
     Attributes:
-       kind  (str)     : lognormal
-       ri_r  (np.array): real      part refractive index 
-       ri_i  (np.array): imaginary part refractive index 
-       ext   (np.array): extinction 
-       ssa   (np.array): single scattering albedo
-       asy   (np.array): asysmetry factor
-       mass  (np.array):
-       lidar (np.array):
-       pfun  (np.array): phase function
-       angle (np.array):
-       nmux  (int)     :
+
+       kind         (string)  : kind
+       r0           (array)   : r0
+       sigma_g      (array)   : sigma_g
+       Ntot         (array)   : Ntot
+       rho          (float)   : rho
+       bins_min     (array)   : bins_min
+       bins_max     (array)   : bins_max
+       rh_tab       (list)    : rh_tab
+       rh_growth    (list)    : rh_growth
+       ri_file      (string)  : ri_file
+       aer_type     (string)  : aer_type
+       ext_scaling  (float)   : ext_scaling
+       lambda_out   (array)   : output wavelenghts
+       ri_nrh       (       ) : ri_nrh
+       NInp         (       ) : NInp
+       Ntot_mix     (       ) : Ntot_mix
+       nb_lambda    (integer) : number of output wavelenghts
+       Ndis         (       ) : Ndis
+       size_bins    (float)   : size_bins
+       rh_int       (integer) : size relative humidity arrays
+       config_file  (string)  : filepath of config file
+       wl_file      (string)  : filepath of output wavelenghts
+       nmumax       (      )  : nmumax
+       angles       (array)   : angles for phase function calc.
+       ri_lambdatab (array)   : tabulated wavelengths of refr.i.
+       znr_tab      (array)   : tabulated real  refractive index
+       zni_tab      (array)   : tabulated imag. refractive index
+
+
 
     """
 

@@ -535,8 +535,11 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     # Tuples with dimensions to define variables later on ======================
 
     s1rh = ("relative_humidity",)
-    s2phi= ("relative_humidity","hydrophilic",)
-    s3phi= ("wavenumber","relative_humidity","hydrophilic",)
+    #s2phi= ("relative_humidity","hydrophilic",)
+    s2phi= ("hydrophilic", "relative_humidity",)
+    #s3phi= ("wavenumber","relative_humidity","hydrophilic",)
+    s3phi= ("hydrophilic","relative_humidity","wavenumber",)
+    s2pho = ("hydrophobic","wavenumber",)
 
     # Dimension variables  =====================================================
 
@@ -581,10 +584,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     
     code_philic               = ds.createVariable("code_hydrophilic",'S1', ("hydrophilic","code_str",))
     code_philic.longname      = "Hydrophilic aerosol code"
-    code_philic.description   = """SS: Sea salt \n OM: Hydrophilic organic matter \n 
-                                   SU: Sulfate  \n OB: Secondary organic biogenic \n
-                                   OA: Secondary organic anthropogenic \n
-                                   AM: Fine-mode ammonium sulfate \n NI: Nitrate """
+    code_philic.description   = """SS: Sea salt \n OM: Hydrophilic organic matter \n SU: Sulfate  \n OB: Secondary organic biogenic \n OA: Secondary organic anthropogenic \n AM: Fine-mode ammonium sulfate \n NI: Nitrate """
     optmod_philic             = ds.createVariable("optical_model_hydrophilic",'S1', ("hydrophilic","optical_model_str",))
     optmod_philic.long_name   = "Hydrophilic aerosol optical model"
     
@@ -625,16 +625,13 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
 
     # Hydrophobic Variables ====================================================
 
-    s2pho = ("wavenumber","hydrophobic",)
-
     bin_hydrophobic           = ds.createVariable("bin_hydrophobic", 'f4', ("hydrophobic",))
     bin_hydrophobic.long_name = "Hydrophobic aerosol size bin" ;
     bin_hydrophobic.comment   = "A value of zero indicates that this aerosol type is not partitioned into bins." 
 
     code_phobic               = ds.createVariable("code_hydrophobic",'S1', ("hydrophobic","code_str",))
     code_phobic.longname      = "Hydrophobic aerosol code"
-    code_phobic.description   = """DD: Desert dust \n OM: Hydrophobic organic matter
-                                \n BC: Black carbon \n SU: Stratospheric sulfate """
+    code_phobic.description   = """DD: Desert dust \n OM: Hydrophobic organic matter  \n BC: Black carbon \n SU: Stratospheric sulfate """
 
     optmod_phobic             = ds.createVariable("optical_model_hydrophobic",'S1', ("hydrophobic","optical_model_str",))
     optmod_phobic.long_name   = "Hydrophobic aerosol optical model"
@@ -684,14 +681,10 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
 
     species_nc = dic_nciaer.keys()
 
-    #print(species_nc)
-    #print(dd_pho[1])
-    #print(dd_phi)
-
-    asy_pho[:,:]   = np.zeros( (dim_wl, ifsphobic))
-    mme_pho[:,:]   = np.zeros( (dim_wl, ifsphobic))
-    ssa_pho[:,:]   = np.zeros( (dim_wl, ifsphobic))
-    lid_pho[:,:]   = np.zeros( (dim_wl, ifsphobic))
+    asy_pho[:,:]   = np.zeros( (ifsphobic, dim_wl))
+    mme_pho[:,:]   = np.zeros( (ifsphobic, dim_wl))
+    ssa_pho[:,:]   = np.zeros( (ifsphobic, dim_wl))
+    lid_pho[:,:]   = np.zeros( (ifsphobic, dim_wl))
     min_rad_phi[:] = np.zeros( ifsphilic)
     max_rad_phi[:] = np.zeros( ifsphilic)
     min_rad_pho[:] = np.zeros( ifsphobic)
@@ -699,7 +692,6 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
 
     for ipho in range(ifsphobic):
 
-        print(to_arr(dd_pho[ipho][0].getncattr("optical_model"),26,'S'))
         optmod_phobic[ipho] = to_arr(dd_pho[ipho][0].getncattr("optical_model"),26,'S') 
 
         code_phobic[ipho]=to_arr(dd_pho[ipho][2],2,'S')
@@ -713,63 +705,60 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
 
         if dd_pho[ipho][0]["rel_hum"][:].size==1:
             if "component" in dd_pho[ipho][0]["ref_idx_real"]:
-                ri_real_pho[:, ipho]  = np.mean(dd_pho[ipho][0]["ref_idx_real"][:, 0, :], axis=1)
-                ri_imag_pho[:, ipho]  = np.mean(dd_pho[ipho][0]["ref_idx_img" ][:, 0, :], axis=1)
+                ri_real_pho[ipho, :]  = np.mean(dd_pho[ipho][0]["ref_idx_real"][:, 0, :], axis=1)
+                ri_imag_pho[ipho, :]  = np.mean(dd_pho[ipho][0]["ref_idx_img" ][:, 0, :], axis=1)
 
             else:
-                ri_real_pho[:, ipho]  = dd_pho[ipho][0]["ref_idx_real"][:, 0]
-                ri_imag_pho[:, ipho]  = dd_pho[ipho][0]["ref_idx_img" ][:, 0]
+                ri_real_pho[ipho, :]  = dd_pho[ipho][0]["ref_idx_real"][:, 0]
+                ri_imag_pho[ipho, :]  = dd_pho[ipho][0]["ref_idx_img" ][:, 0]
 
-            asy_pho[:, ipho] = dd_pho[ipho][0]["asymmetry_factor"     ][:, 0, dd_pho[ipho][1]]
-            mme_pho[:, ipho] = dd_pho[ipho][0]["extinction"           ][:, 0, dd_pho[ipho][1]]
-            ssa_pho[:, ipho] = dd_pho[ipho][0]["single_scatter_albedo"][:, 0, dd_pho[ipho][1]]
-            lid_pho[:, ipho] = dd_pho[ipho][0]["lidar_ratio"          ][:, 0, dd_pho[ipho][1]]
+            asy_pho[ipho, :] = dd_pho[ipho][0]["asymmetry_factor"     ][:, 0, dd_pho[ipho][1]]
+            mme_pho[ipho, :] = dd_pho[ipho][0]["extinction"           ][:, 0, dd_pho[ipho][1]]
+            ssa_pho[ipho, :] = dd_pho[ipho][0]["single_scatter_albedo"][:, 0, dd_pho[ipho][1]]
+            lid_pho[ipho, :] = dd_pho[ipho][0]["lidar_ratio"          ][:, 0, dd_pho[ipho][1]]
         else:
             if "component" in dd_pho[ipho][0]["ref_idx_real"].dimensions:
-                ri_real_pho[:, ipho]  = np.mean(dd_pho[ipho][0]["ref_idx_real"][:,3,:], axis=1)
-                ri_imag_pho[:, ipho]  = np.mean(dd_pho[ipho][0]["ref_idx_img" ][:,3,:], axis=1)
+                ri_real_pho[ipho, :]  = np.mean(dd_pho[ipho][0]["ref_idx_real"][:,3,:], axis=1)
+                ri_imag_pho[ipho, :]  = np.mean(dd_pho[ipho][0]["ref_idx_img" ][:,3,:], axis=1)
             else:
-                ri_real_pho[:, ipho]  = dd_pho[ipho][0]["ref_idx_real"][:,1]
-                ri_imag_pho[:, ipho]  = dd_pho[ipho][0]["ref_idx_img" ][:,1]
+                ri_real_pho[ipho, :]  = dd_pho[ipho][0]["ref_idx_real"][:,1]
+                ri_imag_pho[ipho, :]  = dd_pho[ipho][0]["ref_idx_img" ][:,1]
 
-            asy_pho[:, ipho] = dd_pho[ipho][0]["asymmetry_factor"     ][:, 3, dd_pho[ipho][1]]
-            mme_pho[:, ipho] = dd_pho[ipho][0]["extinction"           ][:, 3, dd_pho[ipho][1]]
-            ssa_pho[:, ipho] = dd_pho[ipho][0]["single_scatter_albedo"][:, 3, dd_pho[ipho][1]]
-            lid_pho[:, ipho] = dd_pho[ipho][0]["lidar_ratio"          ][:, 3, dd_pho[ipho][1]]
+            asy_pho[ipho, :] = dd_pho[ipho][0]["asymmetry_factor"     ][:, 3, dd_pho[ipho][1]]
+            mme_pho[ipho, :] = dd_pho[ipho][0]["extinction"           ][:, 3, dd_pho[ipho][1]]
+            ssa_pho[ipho, :] = dd_pho[ipho][0]["single_scatter_albedo"][:, 3, dd_pho[ipho][1]]
+            lid_pho[ipho, :] = dd_pho[ipho][0]["lidar_ratio"          ][:, 3, dd_pho[ipho][1]]
 
-    asy_phi[:,:,:] = np.zeros( (dim_wl, dim_rh, ifsphilic))
-    mme_phi[:,:,:] = np.zeros( (dim_wl, dim_rh, ifsphilic))
-    ssa_phi[:,:,:] = np.zeros( (dim_wl, dim_rh, ifsphilic))
-    lid_phi[:,:,:] = np.zeros( (dim_wl, dim_rh, ifsphilic))
+    asy_phi[:,:,:] = np.zeros( (ifsphilic, dim_rh, dim_wl))
+    mme_phi[:,:,:] = np.zeros( (ifsphilic, dim_rh, dim_wl))
+    ssa_phi[:,:,:] = np.zeros( (ifsphilic, dim_rh, dim_wl))
+    lid_phi[:,:,:] = np.zeros( (ifsphilic, dim_rh, dim_wl))
 
     for iphi in range(ifsphilic):
-
        
-        print(dd_phi[iphi][0].getncattr("optical_model"))
-        print(to_arr(dd_phi[iphi][0].getncattr("optical_model"),26,'S'))
         optmod_philic[iphi] = to_arr(dd_phi[iphi][0].getncattr("optical_model"),26,'S') 
         code_philic[iphi]=to_arr(dd_phi[iphi][2], 2, 'S')
         if "component" in dd_phi[iphi][0]["size_bin_min"].dimensions:
             min_rad_phi[iphi]  = np.mean(dd_phi[iphi][0]["size_bin_min"][dd_phi[iphi][1], :])
             max_rad_phi[iphi]  = np.mean(dd_phi[iphi][0]["size_bin_max"][dd_phi[iphi][1], :])
-            growth_f_phi[:, iphi] = np.mean(dd_phi[iphi][0]["rel_hum_growth"][:,:], axis=1)
+            growth_f_phi[iphi, :] = np.mean(dd_phi[iphi][0]["rel_hum_growth"][:,:], axis=1)
         else:
             min_rad_phi[iphi]  = dd_phi[iphi][0]["size_bin_min"][dd_phi[iphi][1]]
             max_rad_phi[iphi]  = dd_phi[iphi][0]["size_bin_max"][dd_phi[iphi][1]]
-            growth_f_phi[:, iphi] = dd_phi[iphi][0]["rel_hum_growth"][:]
+            growth_f_phi[iphi, :] = dd_phi[iphi][0]["rel_hum_growth"][:]
 
 
         if "component" in dd_phi[iphi][0]["ref_idx_real"].dimensions:
-            ri_real_phi[:, :, iphi] = np.mean(dd_phi[iphi][0]["ref_idx_real"][:,:,:], axis=2)
-            ri_imag_phi[:, :, iphi] = np.mean(dd_phi[iphi][0]["ref_idx_img" ][:,:,:], axis=2)
+            ri_real_phi[iphi, :, :] = np.transpose(np.mean(dd_phi[iphi][0]["ref_idx_real"][:,:,:], axis=2))
+            ri_imag_phi[iphi, :, :] = np.transpose(np.mean(dd_phi[iphi][0]["ref_idx_img" ][:,:,:], axis=2))
         else:
-            ri_real_phi[:, :, iphi] = dd_phi[iphi][0]["ref_idx_real"][:,:]
-            ri_imag_phi[:, :, iphi] = dd_phi[iphi][0]["ref_idx_img" ][:,:]
+            ri_real_phi[iphi, :, :] = np.transpose(dd_phi[iphi][0]["ref_idx_real"][:,:])
+            ri_imag_phi[iphi, :, :] = np.transpose(dd_phi[iphi][0]["ref_idx_img" ][:,:])
 
-        asy_phi[:, :, iphi] = dd_phi[iphi][0]["asymmetry_factor"     ][:, :, dd_phi[iphi][1]]
-        mme_phi[:, :, iphi] = dd_phi[iphi][0]["extinction"           ][:, :, dd_phi[iphi][1]]
-        ssa_phi[:, :, iphi] = dd_phi[iphi][0]["single_scatter_albedo"][:, :, dd_phi[iphi][1]]
-        lid_phi[:, :, iphi] = dd_phi[iphi][0]["lidar_ratio"          ][:, :, dd_phi[iphi][1]]
+        asy_phi[iphi, :, :] = np.transpose(dd_phi[iphi][0]["asymmetry_factor"     ][:, :, dd_phi[iphi][1]])
+        mme_phi[iphi, :, :] = np.transpose(dd_phi[iphi][0]["extinction"           ][:, :, dd_phi[iphi][1]])
+        ssa_phi[iphi, :, :] = np.transpose(dd_phi[iphi][0]["single_scatter_albedo"][:, :, dd_phi[iphi][1]])
+        lid_phi[iphi, :, :] = np.transpose(dd_phi[iphi][0]["lidar_ratio"          ][:, :, dd_phi[iphi][1]])
 
 
     metainfo                   = runset["info"]

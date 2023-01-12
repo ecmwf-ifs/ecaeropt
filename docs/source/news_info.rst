@@ -14,6 +14,9 @@ Last news!
 *ecaeropt* python version is ready for use. Please report any issue to developers.
 
 
+**2023-Jan-10**  (CY49R1)
+    Added support to create CY49R1 files for ecRad 1.5 with new varibles in netcdf indicating
+    code-string, optical_model and bins.
 **2022-Nov-22**  (Documentation)
     Added API of the code to the documentation
 **2022-Nov-21**  (ATOS, feature)

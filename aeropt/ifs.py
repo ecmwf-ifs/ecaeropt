@@ -411,10 +411,15 @@ def process_ifs(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     max_rad_pho[:] = np.zeros( ifsphobic)
 
     for ipho in range(ifsphobic):
+        print(ipho, ifsphobic)
         if "component" in dd_pho[ipho][0]["size_bin_min"].dimensions:
            min_rad_pho[ipho] = np.mean(dd_pho[ipho][0]["size_bin_min"][dd_pho[ipho][1], :])
            max_rad_pho[ipho] = np.mean(dd_pho[ipho][0]["size_bin_max"][dd_pho[ipho][1], :])
         else:
+           print(ipho, min_rad_pho)
+           print(dd_pho.keys())
+           print(dd_pho[ipho][0]["size_bin_min"][:])
+           print(dd_pho[ipho][1])
            min_rad_pho[ipho] = dd_pho[ipho][0]["size_bin_min"][dd_pho[ipho][1]]
            max_rad_pho[ipho] = dd_pho[ipho][0]["size_bin_max"][dd_pho[ipho][1]]
     
@@ -519,7 +524,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     ds = NCDataset(outifsnc,"w", format=ncformat)
 
     dim_code     = 2
-    dim_optmodel = 26
+    dim_optmodel = 15
 
     # Defining dimensions ======================================================
     ds.createDimension("wavenumber"        , dim_wl)
@@ -691,8 +696,8 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     max_rad_pho[:] = np.zeros( ifsphobic)
 
     for ipho in range(ifsphobic):
-
-        optmod_phobic[ipho] = to_arr(dd_pho[ipho][0].getncattr("optical_model"),26,'S') 
+        print(dd_pho[ipho][0])
+        optmod_phobic[ipho] = to_arr(dd_pho[ipho][0].getncattr("optical_model"),15,'S') 
 
         code_phobic[ipho]=to_arr(dd_pho[ipho][2],2,'S')
         if "component" in dd_pho[ipho][0]["size_bin_min"].dimensions:
@@ -736,7 +741,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
 
     for iphi in range(ifsphilic):
        
-        optmod_philic[iphi] = to_arr(dd_phi[iphi][0].getncattr("optical_model"),26,'S') 
+        optmod_philic[iphi] = to_arr(dd_phi[iphi][0].getncattr("optical_model"),15,'S') 
         code_philic[iphi]=to_arr(dd_phi[iphi][2], 2, 'S')
         if "component" in dd_phi[iphi][0]["size_bin_min"].dimensions:
             min_rad_phi[iphi]  = np.mean(dd_phi[iphi][0]["size_bin_min"][dd_phi[iphi][1], :])

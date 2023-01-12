@@ -30,6 +30,7 @@ wl_out_file = "data/wavelengths/wl_out_TEST_2.txt"
 ext_scaling = 1.375
 
 [tags]
+opt_model   = "GACP"
 aer_type    = "sulfate"
 model       = "Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/"
 ifs         = "CY48R1"

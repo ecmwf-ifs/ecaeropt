@@ -26,10 +26,16 @@ code that creates the input for an external tool. The outputs have to be also in
 
 .. IMPORTANT::
   
-   We recommend/request to create tests example to validate the engine inside the tool, and ideally incorporate to the info
-   mode which informs about the engines. For example, the mie scattering code is testing that a monodisperse distribution of spheres
+   We recommend/request to create tests example to validate the engine inside the tool, and ideally incorporate to the ``info
+   mode`` which informs about the engines. For example, the mie scattering code is testing that a monodisperse distribution of spheres
    is providing right values (for absorbing and not absorbing spheres).
 
+.. TODO::
+  
+   We are currently working in:
+   (a) parallel and more structured version of Mie Code
+   (b) new engine based on T-matrix code
+   (c) Check and improve the legendre expansion calculations
 
 Methods
 -------

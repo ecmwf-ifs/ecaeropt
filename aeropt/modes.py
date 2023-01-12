@@ -175,7 +175,15 @@ def setting_file_mode(rinfo, fsetting, test=False):
         print(" Setting file $fsetting not found in filesystem. \n")
 
    if test==False:
-        show.add_footer()
+
+       if "nc_ref" in runset["ifs"].keys():
+           if runset["ifs"]["nc_ref"]!=None:
+              compare_ifsnc(runset, "IFS final netcdf")
+              show.add_footer()
+           else: 
+              show.add_footer()
+       else:
+           show.add_footer()
    else:
         print("\n   Calculations with ecaerrad done. Proceeding with comparison. \n")
         #show.add_footer()
@@ -206,17 +214,30 @@ def test_mode(rinfo, fsetting):
            pathncref  = aer["nc_ref"]
            nctest     = os.path.basename(pathnctest)
            ncref      = os.path.basename(pathncref)
-           #print("\n     Estimating diff between "+pathnctest+" and "+pathncref)
            diffcmd    = "aeropt/compare_secure.sh "+pathnctest+" "+pathncref 
-           #print(diffcmd)
            subprocess.Popen("aeropt/compare_secure.sh "+pathnctest+" "+pathncref, shell=True).wait()
-           #print(os.getcwd())
            ncdiff = "tmp/"+nctest.replace(".nc","")+"_minus_"+ncref
            check_vars_nc(ncdiff, iaer, pathnctest, pathncref)
+
+    runset = toml.load(fsetting)
+    if "ifs" in runset.keys():
+        if runset["ifs"]["nc_ref"] != None:
+           compare_ifsnc(runset,"IFS-netcdf")
+
     show.add_footer()
     
     return
 
+
+def compare_ifsnc(runset, iaer):
+    pathnctest = runset["ifs"]["netcdfname"]
+    pathncref  = runset["ifs"]["nc_ref"]
+    nctest     = os.path.basename(pathnctest)
+    ncref      = os.path.basename(pathncref)
+    subprocess.Popen("aeropt/compare_secure.sh "+pathnctest+" "+pathncref, shell=True).wait()
+    ncdiff = "tmp/"+nctest.replace(".nc","")+"_minus_"+ncref
+    check_vars_nc(ncdiff, iaer, pathnctest, pathncref)
+    return
 
 def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
     """
@@ -246,27 +267,28 @@ def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
     print("            netcdf to test   : ", pathnctest)
     print("            netcdf reference : ", pathncref,"\n")
     print("")
-    
+    str_vars = ["code_hydrophilic", "code_hydrophobic", "optical_model_hydrophilic", "optical_model_hydrophobic"]
     passing=True
     for varname in ds.variables:
-       if varname in ds.dimensions:
-           mydim=varname
-       else:
-           vmin = np.amin(ds[varname][:])
-           vmax = np.amax(ds[varname][:])
-           print(cbold[0]+"       "+varname+cbold[1]+"\n")
-           print(         "             minimum difference: ", vmin)
-           print(         "             maximum difference: ", vmax)
-           if abs(vmin)<=1e-10 and abs(vmax)<= 1e-10:
-               print(cpass[0]+"             Test passed "+cpass[1]+" (threshold 1.e-10) \n")
+        if varname not in str_vars:
+           if varname in ds.dimensions:
+              mydim=varname
            else:
-               if varname in ["rel_hum_growth", "ref_idx_real", "ref_idx_img"]:
-                   print(cwarn[0]+"             Test unclear "+cwarn[1]+"\n")
-                   print(    "                    ... for externally mixed aerosols this variable ", varname)
-                   print(    "                    ... because new version stores all components not only 1st")
-               else:
-                   print(cfail[0]+"             Test not passed "+cfail[1]+"\n")
-                   passing=False
+              vmin = np.amin(ds[varname][:])
+              vmax = np.amax(ds[varname][:])
+              print(cbold[0]+"       "+varname+cbold[1]+"\n")
+              print(         "             minimum difference: ", vmin)
+              print(         "             maximum difference: ", vmax)
+              if abs(vmin)<=1e-10 and abs(vmax)<= 1e-10:
+                 print(cpass[0]+"             Test passed "+cpass[1]+" (threshold 1.e-10) \n")
+              else:
+                 if varname in ["rel_hum_growth", "ref_idx_real", "ref_idx_img"]:
+                    print(cwarn[0]+"             Test unclear "+cwarn[1]+"\n")
+                    print(    "                    ... for externally mixed aerosols this variable ", varname)
+                    print(    "                    ... because new version stores all components not only 1st")
+                 else:
+                    print(cfail[0]+"             Test not passed "+cfail[1]+"\n")
+                    passing=False
                
     return passing
 

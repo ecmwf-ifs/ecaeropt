@@ -426,7 +426,7 @@ def mixing(mix_aer, mix_opt, mix_λtab, mix_ri_rtab, mix_ri_itab, num_components
 
     # Here we should create aer_mix_opt as an aerosol optics object
 
-    aer_mix_opt = aeropt("mixing-logn", ri_r_mix, ri_r_mix,
+    aer_mix_opt = aeropt("mixing-logn", ri_r_mix, ri_i_mix,
                          ext_mix, ssa_mix, asy_mix, mass_mix,
                          lidr_mix, pfun_mix, pfun_ang_mix, nmux_mix, mix_opt[0].engine)
 

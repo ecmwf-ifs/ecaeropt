@@ -1,0 +1,163 @@
+
+
+
+
+##############################################################################################################################
+# Settings file for ifs_aer_optics                                                                                           #
+#                                                                                                                            #
+#                                                                                                                            #
+# INFO:  The file has an the following sections:                                                                             #
+#    1. defaults section     => here few defaults values can be set up, but they could be overrided by later if needed.      #
+#    2. species config files => core of the settings, each species has a config file, and engine and a ncname for the output #
+#                               if engine or ncname is set up as default the default section will be used.                   #
+#    3. Processing section   => here is where we indicate the process for an specific calculation. It has to parts:          #
+#       3.1 process          => here we indicate which single aerosols should be processed and which mixed aerosols.         #
+#                               for this we will just use the names of the fields in [species]                               #
+#       3.2 info             => here we can add information to the final netcdfs as global attribute (metadata).             #
+#                                                                                                                            #
+# Version:                                                                                                                   #
+#    1.0.0    19-Sep-2022                                                                                                    #
+#                                                                                                                            #
+# Contact: Ramiro Checa-Garcia                                                                                               #
+#          ramiro.checa-garcia@ecmwf.int                                                                                     #
+##############################################################################################################################
+
+
+
+# DEFAULTs SECTION ===========================================================================================================
+# This section has the default settings, but if can be overrided by
+# specific information in the config files or in the process section
+
+default.wavelengths = "data/wavelengths/wl_out_TEST_10.txt"  # indicates the default wavelengths for output files this
+                                                             # will override the value in the configuration files!!
+                                                            # if you want to keep conf. files value remove this.
+
+default.engine      = "mie_Boucher_Bozzo"                # indicates the default code to calculate the optical properties
+
+
+# add option of bands (in a future)
+
+default.nangle      = 1201                               # =0          -> no phase function calculated
+                                                         # =n          -> number of equistant angles for phase function
+                                                         # ="filename" -> read angles from file
+
+default.ncname      = ["C:aer_type",  "C:today",         # C: means that the string after C: will be find in config files
+                       "optics_IFS"]                     # so  for config_du1.toml would be: dust_Dubovic_optics_IFS.nc
+                                                         # and for config_du2.toml would be: dust_Woodward_optics_IFS.nc
+                                                         # C:today will add date of running, between fields we have '_'
+                                                         # at the end if not present it is added .nc
+default.outncdir    = "outputnc"
+default.testdir     = "tests"
+
+# ============================================================================================================================
+
+
+# SPECIES section ============================================================================================================
+
+# Here we specify all the config files we could process
+
+[species]
+
+# Testing config-files ========================================================================================================
+
+# For non final config files please place here the information and in config_toml_test the config files, some of them
+# are just used for quick tests.
+
+
+test_du1.config = "tests/config_toml_tests/config_du1.toml"
+test_du1.engine = "default"
+test_du1.ncname = 'default'
+test_du1.nangle = 1201
+test_du1.test   = true
+test_du1.ref    = "tests/references/short_tests/original/dust_Dubovik_optics_IFS.nc"
+
+test_su.config  = "tests/config_toml_tests/config_su.toml" 
+test_su.engine  = "default"
+test_su.ncname  = 'default'
+test_su.nangle  = 1201
+test_su.test    = true
+test_su.ref     = "tests/references/short_tests/original/sulfate_optics_IFS.nc"
+
+# Organic is a mixing of aerosols
+# Note: organic is designed to be a mixed aerosol with 3 components, however still it is possible to
+#       calculate individually in case we want to, for this reason ncname is still there. Note the structure
+#       for mixed species XXX.yyy. The mixed aerosol is XXX and the components are yyy. However by refering
+#       as XXX.yyy still it is possible to perform a calculation as an individual single specie.
+
+
+test_organic.waso = { config = "tests/config_toml_tests/config_organic_waso.toml"  , engine="default", ncname='default', nangle=10, test=true }
+test_organic.inso = { config = "tests/config_toml_tests/config_organic_inso.toml"  , engine="default", ncname='default', nangle=10, test=true }
+test_organic.soot = { config = "tests/config_toml_tests/config_organic_soot.toml"  , engine="default", ncname='default', nangle=10, test=true }
+
+# ============================================================================================================================
+
+# PROCESS section  ===========================================================================================================
+# This is information that would be stored in the netcdf file.
+
+
+[process]
+
+skip=false # Most of the cases this will be false, unless you have already the netcdf files per species to test or join into an ifs.nc 
+
+# For processing single file you can add then here
+single = [  "test_du1" , "test_su"            ]               # This will process the specie du1_test and su
+                                                             # with default settings AT SPECIES
+
+
+# For mixing config files the syntax is more complex. First the elements are defined in [species] as usual config files but
+# we name them with the syntax xxxx.yyyy (yyyy is a component of the mixture xxxx)
+# Then in this section we use the notation
+# mixing.xxxx.conf and for options like ncname we can use mixing.xxxx.ncname
+
+mixing.test_organic.conf   = "test_organic"                            # This will process the composite species organic
+mixing.test_organic.ncname = ["organictest", "optics_IFS", "C:today"]  # here we have to specific the final name MANDATORY
+mixing.test_organic.ref    = "tests/references/short_tests/original/organic_mix_optics_IFS.nc"
+mixing.test_organic.test   = true
+
+
+
+[ifs]
+# Now we give some rules to build a single IFS netcdf. This example is a test based in 3 different aerosols where one is used
+# for soluble and insoluble. We define here a table with the information needed. The aer.XX, XX is the tag of the aerosol.
+
+# Note that IFS code expect to find each type of aerosol in an specific position in array.
+# so we have to impose a number of phobic and philic species and indicate then with position
+# where to place them. All other should be filled with missing or nan.
+
+netcdfname = "ifs_short_example.nc"
+ifs_cycle  = "48R1"
+number     = { philic=2, phobic=3}
+
+rhphobic   = 3 # In some case the phobic is taken from philic at specific RH between 20 and 30%
+
+aer.dd1    = { species="test_du1"       , type="phobic", position= 1 , bin=2 }
+aer.om     = { species="test_organic"   , type="philic", position= 1 , bin=1 }
+aer.su     = { species="test_su"        , type="philic", position= 2 , bin=1 }
+aer.su_dry = { species="test_su"        , type="phobic", position= 3 , bin=1 }
+
+[info]
+product_version = '48R1'
+comment_string = """
+This file provides aerosol scattering properties versus wavenumber for the aerosol
+species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting
+System. The aerosols are separated into hydrophobic and hydrophilic types (indicated by
+suffixes _hydrophobic and _hydrophilic). Descriptions of these types are in the global
+variables description_hydrophobic and description_hydrophilic. This version is from IFS
+Cycle """
+
+
+# The information below can be in the configuration files. For example, in du1 we should have the 3 first lines.
+# There are species used for philic and phobic, so we need to write in configuration file.
+# description.philic = 
+# description.phobic = (even the phobic RH used)
+description_hydrophobic.1  = " 1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; "
+description_hydrophobic.2  = " 2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; "
+description_hydrophobic.3  = " 3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; "
+description_hydrophobic.4  = " 4: Desert dust, bin 1, 0.03-0.55 micron, Fouquart et al 1987 ; "
+description_hydrophilic.1  = " 5: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987 ; "
+description_hydrophilic.2  = " 6: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987 ; "
+
+institution  = "ECMWF"
+date         = 'TODAY'
+contact      = 'ramiro.checa-garcia@ecmwf.int'
+experiment   = 'testing new software: ifs_aer_opt.jl'

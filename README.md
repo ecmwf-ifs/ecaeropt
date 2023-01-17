@@ -47,6 +47,8 @@ To build ifs standard files you may just type (script using SBATCH is implemente
 ```
 make ifs-CY46R1
 make ifs-CY48R1
+make ifs-CY49R1     # which same optical models that CY48R1 but metadata compatible with CY49R1
+make ifs-CY49R1_v2  # like CY49R12 but this has additional optical modes 
 ```
 in both cases the log files with be stored in logs/ directory. The final netcdf will be stored at: outputnc/store_ifsnc/ 
 

@@ -244,6 +244,7 @@ module mie_Boucher_Bozzo
     REAL(8),INTENT(OUT)   :: mass_stored(rh_int,size_bins)
     REAL(8),INTENT(OUT)   :: lidar_ratio_stored(nb_lambda,rh_int,size_bins)
     REAL(8),INTENT(OUT)   :: ph_stored(nb_lambda,rh_int,size_bins,Nmumax)
+    REAL(8),INTENT(OUT)   :: test_single_sphere(4)
     REAL(8),INTENT(INOUT) :: ph_ang(Nmumax)
 
     INTEGER(4) :: Nbin_points,Nlimit
@@ -274,7 +275,7 @@ module mie_Boucher_Bozzo
     REAL(8) :: x  !--size parameter
     REAL(8) :: r  !--radius
     REAL(8) :: sigma_sca, sigma_ext, omegatot,  gtot !--averaged parameters
-    REAL(8) :: number, deltar
+    REAL(8) :: number, deltar, mu
 
     !-- interpolation of refractive indices on output wavelengths
 
@@ -308,7 +309,7 @@ module mie_Boucher_Bozzo
 
 
     Nbin_points=999
-
+    test_single_sphere(:)=0.0
 
     !! refractve index input file
     !! expected 3 columns: wl(m), real part, im part

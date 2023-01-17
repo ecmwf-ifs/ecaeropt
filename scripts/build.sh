@@ -67,8 +67,8 @@ function mieBB {
     # new_mie_aerosols_struc.f90      => new version structured
     # new_mie_aerosols_openmp_vec.f90 => dev version with OpemMP
 
-    #f2py3 -c -m mie_BB parkind1.F90 new_mie_aerosols.f90 interp_ri.f90 &> $logfile
-    f2py3 -c -m mie_BB parkind1.F90 new_mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
+    f2py3 -c -m mie_BB parkind1.F90 new_mie_aerosols.f90 interp_ri.f90 &> $logfile
+    #f2py3 -c -m mie_BB parkind1.F90 new_mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
     #f2py3 --f90flags=-fopenmp -lgomp -c -m mie_BB parkind1.F90 new_mie_aerosols_openmp_dev.f90 interp_ri.f90 &> $logfile
 
     status=$?

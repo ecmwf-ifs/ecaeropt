@@ -139,7 +139,7 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
             logging.debug(aer_conf)
 
         if component_engine=="mie_Boucher_Bozzo":
-            aer_opt = engine.interface_mie_Boucher_Bozzo(aer_conf, rinfo.logfile)
+            aer_opt = engine.interface_mie_Boucher_Bozzo(aer_conf, rinfo.logfile, mix=len(laerengine))
         else:
             print("---- ERROR ---- ", component_engine , " not yet implemented")
             sys.exit()
@@ -164,7 +164,6 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
 
     store.store_nc_mixture(mix_aer, aer_mix_opt, rinfo, ncname=ncoutname)
 
-    #print("\n         Total Cpu Time used: ")
 
     return ncoutname
 

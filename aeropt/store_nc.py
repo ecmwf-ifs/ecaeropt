@@ -1,35 +1,59 @@
 
 
+ #########################################################################################################
+ #                                                                                                       #
+ # aeropt/store_nc.py                                                                                    #
+ #                                                                                                       #
+ # author: Ramiro Checa-Garcia                                                                           #
+ # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
+ #                                                                                                       #
+ # history:                                                                                              #
+ #                                                                                                       #
+ #     26-Oct-2022     Translated from Julia to Python                                                   #
+ #                                                                                                       #
+ # info:                                                                                                 #
+ #    There are two functions that process a given aerosol either single or mixed                        #
+ #                                                                                                       #
+ #                                                                                                       #
+ #########################################################################################################
+
+
 from netCDF4 import Dataset as NCDataset
 from datetime import datetime
 import toml
 
 def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCDF4"):
+    """
+    Creates a netcdf with the optical properties of a single aerosol specie based on
+    aer and aeropt objects (usually derived from config files)
 
-    # Dimensions:
-    #   wavelength -> nb_lambda
-    #   size_bin   -> size_bins
-    #   rel_hum    -> ri_nhr
-    #   angle      -> mux
-    #   leg_coeff  -> nmom
+    Properties of the netcdf
+    Dimensions:
+       wavelength -> nb_lambda
+       size_bin   -> size_bins
+       rel_hum    -> ri_nhr
+       angle      -> mux
+       leg_coeff  -> nmom
 
-    # Variables
-    #   ref_ind_real
-    #   ref_ind_img
-    #   lidar_radio
-    #   asymmetry_factor
-    #   single_scatter_albedo
-    #   extinction
-    #   phase_function
-    #   legendre_coeff
-    #   wavelength
-    #   rel_hum
-    #   rel_hum_growth
-    #   size_bin_min
-    #   size_bim_max
-    #   angle
+     Variables
+       ref_ind_real
+       ref_ind_img
+       lidar_radio
+       asymmetry_factor
+       single_scatter_albedo
+       extinction
+       phase_function
+       (legendre_coeff)
+       wavelength
+       rel_hum
+       rel_hum_growth
+       size_bin_min
+       size_bim_max
+       angle
+    """
 
     str_today = rinfo.date
+    
     # Opening NC dataset  =================================================
     ds = NCDataset(ncname,"w", format=ncformat)
 
@@ -153,29 +177,35 @@ def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCD
 
 
 def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCDF4"):
+    """
+    Creates a netcdf with the optical properties of a mixture aerosol species based on
+    aer and aeropt objects (usually derived from config files)
 
-    # Dimensions:
-    #   wavelength -> nb_lambda
-    #   size_bin   -> size_bins
-    #   rel_hum    -> ri_nhr
-    #   angle      -> mux
-    #   leg_coeff  -> nmom
+    Properties of the netcdf
+    Dimensions:
+       wavelength -> nb_lambda
+       size_bin   -> size_bins
+       rel_hum    -> ri_nhr
+       angle      -> mux
+       (leg_coeff  -> nmom)
+
+     Variables
+       ref_ind_real
+       ref_ind_img
+       lidar_radio
+       asymmetry_factor
+       single_scatter_albedo
+       extinction
+       phase_function
+       (legendre_coeff)
+       wavelength
+       rel_hum
+       rel_hum_growth
+       size_bin_min
+       size_bim_max
+       angle
+    """
     
-    # Variables
-    #   ref_ind_real
-    #   ref_ind_img
-    #   lidar_radio
-    #   asymmetry_factor
-    #   single_scatter_albedo
-    #   extinction
-    #   phase_function
-    #   legendre_coeff
-    #   wavelength
-    #   rel_hum
-    #   rel_hum_growth
-    #   size_bin_min
-    #   size_bim_max
-    #   angle
     aer = laer_conf[0]
 
     num_components = len(laer_conf)

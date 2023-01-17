@@ -14,7 +14,7 @@
 #          3.2 info          => here we can add information to the final netcdfs as global attribute (metadata).             #
 #                                                                                                                            #
 # Version:                                                                                                                   #
-#    1.0.0    15-Nov-2022                                                                                                    #
+#    1.2.0    17-Jan-2022                                                                                                    #
 #                                                                                                                            #
 # Contact: Ramiro Checa-Garcia                                                                                               #
 #          ramiro.checa-garcia@ecmwf.int                                                                                     #
@@ -27,7 +27,7 @@
 # specific information in the config files or in the process section
 
 [default]
-wavelengths = "data/wavelengths/wl_out_TEST_2.txt"   # indicates the default wavelengths for output files this
+wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wavelengths for output files this
                                                     # will override the value in the configuration files!!
                                                     # if you want to keep conf. files value remove this.
 
@@ -99,14 +99,13 @@ organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , 
 skip=false
 
 # For processing single aerosols you can add them here (we are adding the names in species section)
-single = [ "ss", 
-           "du1", "du2", "du3", "du4", 
-           "bc1", "bc2", "bc3",
-           "su", "su1", "su2",
-           "ni_fine", "ni_coarse",
-           "NH3_fine", 
-           "SOA1", "SOA2", "om"      ]                       # This will process these single species
-                                                             # with default settings AT SPECIES
+single = [ "ss",                            # Sea-Salt
+           "du1", "du2", "du3", "du4",      # Mineral-Dust
+           "bc1", "bc2", "bc3",             # Black-Carbon
+           "su", "su1", "su2",              # Sulfate
+           "ni_fine", "ni_coarse",          # Nitrate
+           "NH3_fine",                      # Ammonium
+           "SOA1", "SOA2", "om"      ]      # Secondary Organics       
 
 # For mixing config files the syntax is more complex. First the elements are defined in [species] as usual config files but
 # we name them with the syntax xxxx.yyyy (yyyy is a component of the mixture xxxx)
@@ -125,7 +124,7 @@ mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to 
 # where to place them. All other should be filled with missing or nan.
 
 ifs_cycle  = "49R1"
-netcdfname = "outputnc/store_ifsnc/ifs_CY49R1_withRemiUpdates.nc"
+netcdfname = "outputnc/store_ifsnc/ifs_CY49R1_v2.nc"
 
 number     = { philic=13, phobic=18}
 
@@ -135,12 +134,12 @@ aer.dd1     = { species="du1"       , type="phobic", position= 1 , bin=3 }
 aer.dd2     = { species="du2"       , type="phobic", position= 4 , bin=3 }
 aer.dd3     = { species="du3"       , type="phobic", position= 7 , bin=3 }
 aer.dd4     = { species="du4"       , type="phobic", position= 10, bin=3 }
-aer.org_dry = { species="organic"   , type="phobic", position= 13, bin=1 }
-aer.om_dry  = { species="om"        , type="phobic", position= 14, bin=1 }
+aer.org_dry = { species="organic"   , type="phobic", position= 13, bin=1 , rhphobic=2}
+aer.om_dry  = { species="om"        , type="phobic", position= 14, bin=1 , rhphobic=2} # Check
 aer.bc1     = { species="bc1"       , type="phobic", position= 15, bin=1 }
 aer.bc2     = { species="bc2"       , type="phobic", position= 16, bin=1 }
 aer.bc3     = { species="bc3"       , type="phobic", position= 17, bin=1 }
-aer.su_dry  = { species="su"        , type="phobic", position= 18, bin=1 }
+aer.su_dry  = { species="su"        , type="phobic", position= 18, bin=1 , rhphobic=3} 
 
 aer.ss      = { species="ss"        , type="philic", position= 1 , bin=3 }
 aer.org     = { species="organic"   , type="philic", position= 4 , bin=1 }
@@ -157,7 +156,7 @@ aer.nic     = { species="ni_coarse" , type="philic", position= 13, bin=1 }
 
 
 [info]
-product_version = '48R1'
+product_version = '49R1'
 comment_string = """
 This file provides aerosol scattering properties versus wavenumber for the aerosol \
 species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting \
@@ -179,9 +178,9 @@ description_hydrophobic.6  = " 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart
 description_hydrophobic.7  = " 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2  "
 description_hydrophobic.8  = " 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2  "
 description_hydrophobic.9  = " 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2  " 
-description_hydrophobic.10 = " 10: Desert dust, bin 1, 0.03-0.55 micron, Composite  "
-description_hydrophobic.11 = " 11: Desert dust, bin 2, 0.55-0.90 micron, Composite  "
-description_hydrophobic.12 = " 12: Desert dust, bin 3, 0.90-20.0 micron, Composite  "
+description_hydrophobic.10 = " 10: Desert dust, bin 1, 0.03-0.55 micron, Balkanski et 2007 , Di Baigo 2017 "
+description_hydrophobic.11 = " 11: Desert dust, bin 2, 0.55-0.90 micron, Balkanski el 2007 , Di Baigo 2017 "
+description_hydrophobic.12 = " 12: Desert dust, bin 3, 0.90-20.0 micron, Balkanski el 2007 , Di Baigo 2017 "
 description_hydrophobic.13 = " 13: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%%)  "
 description_hydrophobic.14 = " 14: Hydrophobic organic matter, Brown et al 2018 (hydrophilic at RH=20%)  "
 description_hydrophobic.15 = " 15: Black carbon, OPAC  "
@@ -205,4 +204,4 @@ description_hydrophilic.13 = " 13: Coarse mode Nitrate, GLOMAP"
 
 contact      = 'Ramiro Checa-Garcia: ramiro.checa-garcia at ecmwf.int'
 institution  = 'European Centre for Medium-Range Weather Forecasts (ECMWF)'
-experiment   = 'using the sofware tool: ecaeropt'
+experiment   = 'using the sofware tool: ecaeropt v1.0'

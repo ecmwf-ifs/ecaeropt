@@ -87,33 +87,33 @@ class aerosol:
 
     Attributes:
 
-       kind         (string)  : kind
-       r0           (array)   : r0
-       sigma_g      (array)   : sigma_g
-       Ntot         (array)   : Ntot
-       rho          (float)   : rho
-       bins_min     (array)   : bins_min
-       bins_max     (array)   : bins_max
-       rh_tab       (list)    : rh_tab
-       rh_growth    (list)    : rh_growth
-       ri_file      (string)  : ri_file
-       aer_type     (string)  : aer_type
-       ext_scaling  (float)   : ext_scaling
-       lambda_out   (array)   : output wavelenghts
+       kind         (string)  : kind or family distribution (at this moment only lognormal)
+       r0           (array)   : r0 : mean radius such as mu=ln r0 (one value per mode)
+       sigma_g      (array)   : sigma_g : standard deviation of distribution (one value per mode)
+       Ntot         (array)   : Ntot : Total number concentration (one value per mode)
+       rho          (float)   : rho : density of particles in [kg m-3] (same for all modes)
+       bins_min     (array)   : bins_min : lower bounds of bins 
+       bins_max     (array)   : bins_max : upper bounds of bins
+       rh_tab       (list)    : rh_tab   : relative humidity values
+       rh_growth    (list)    : rh_growth : growth of particles for the relative humidity values (rh_tab)
+       ri_file      (string)  : ri_file : plain text file (csv with spaces as delimiters) with refractive index per wave lenght.
+       aer_type     (string)  : aer_type : aerosol type
+       ext_scaling  (float)   : ext_scaling : scaling introduced in extinction after calculation
+       lambda_out   (array)   : output wavelenghts : wavelength for optical properties (can be different from ri file)
        ri_nrh       (       ) : ri_nrh
        NInp         (       ) : NInp
        Ntot_mix     (       ) : Ntot_mix
-       nb_lambda    (integer) : number of output wavelenghts
-       Ndis         (       ) : Ndis
-       size_bins    (float)   : size_bins
-       rh_int       (integer) : size relative humidity arrays
-       config_file  (string)  : filepath of config file
-       wl_file      (string)  : filepath of output wavelenghts
+       nb_lambda    (integer) : number of output wavelenghts (it would be the length of lambda_out)
+       Ndis         (       ) : Ndis (number of modes in the lognormal distribution)
+       size_bins    (float)   : size_bins (number of size bins)
+       rh_int       (integer) : size relative humidity arrays 
+       config_file  (string)  : filepath of config file : where info and rules for optical properties are detailed
+       wl_file      (string)  : filepath of output wavelenghts : lambda_out and nb_lambda are taken from this file.
        nmumax       (      )  : nmumax
-       angles       (array)   : angles for phase function calc.
-       ri_lambdatab (array)   : tabulated wavelengths of refr.i.
-       znr_tab      (array)   : tabulated real  refractive index
-       zni_tab      (array)   : tabulated imag. refractive index
+       angles       (array)   : angles for phase function calculations
+       ri_lambdatab (array)   : tabulated wavelengths of refr.i. : input wavelenghts for species 
+       znr_tab      (array)   : tabulated real  refractive index : input real refractive index for species
+       zni_tab      (array)   : tabulated imag. refractive index : input imaginary refractive index for species.
 
 
 
@@ -338,6 +338,22 @@ def readconf(config_file, angles, wl_out="none", debug=False):
 
 
 def mixing(mix_aer, mix_opt, mix_λtab, mix_ri_rtab, mix_ri_itab, num_components):
+    """
+    Calculates the mixture optical properties given the optical properties of the components
+
+    Args:
+       mix_aer
+       mix_opt
+       mix_λtab
+       mix_ri_rtab
+       mix_ri_itab    ()
+       num_components (integer)
+
+
+    Return:
+       aer_mix_opt (aeropt) : aeropt object with optical properties of the mixture
+
+    """
 
 
     aer = mix_aer[1] # This aerconf object

@@ -16,8 +16,6 @@
  #      FUNCTIONS                                                                          #
  #        * readconf        : creates an aerosol object based in configuration file        #
  #        * mie_to_aeropt   : creates an aeropt object from outputs of a mie code          #
- #        * mixing          : calculates an external mixing aerosol given the aeropt of    #
- #                            the components                                               #
  ###########################################################################################
 
 
@@ -127,12 +125,12 @@ def interface_mie_Boucher_Bozzo(aerconf, logfile, debug=False, mix=0, verbose=0)
 
     # This part of the code is unclear in the original code, why this is done. So cutoff_radius=7.5 is
     # hard-coded
-    if mix > 3:
+    if mix >= 3:
         cutoff_radius = 7.5
     else:
         cutoff_radius = np.array(aerconf.bins_max) + 100.0  # at this point I don't understand well this statement
 
-    cutoff_radius = 7.5
+    #cutoff_radius = 7.5
 
     print("                     calculation of optical properties")
     print("                     engine: [Boucher-Bozzo code]")
@@ -143,21 +141,12 @@ def interface_mie_Boucher_Bozzo(aerconf, logfile, debug=False, mix=0, verbose=0)
     else:
         idebug = 2
 
-    #print(logfile)
     logdate = int(logfile.split("/")[1].split(".")[0][0:6])
     logtime = int(logfile.split("/")[1].split(".")[0][6:13])
-
-    #print(logdate)
-    #print(logtime)
 
     # With this two number is possible to reconstruct the filename in Fortran.
     # Rather than add to the default log file we can create
     # tmp/datetime_mieBB.log
-
-    #print('\n\n\n*********************')
-    #print(aerconf.ri_lambdatab)
-    #print(aerconf.znr_tab)
-    #print('\n\n\n*********************')
 
     sys.stdout.flush()
     out = mieBB.main_mie_aerosols(aerconf.lambda_out, aerconf.bins_min,

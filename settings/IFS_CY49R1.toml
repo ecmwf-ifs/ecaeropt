@@ -14,7 +14,7 @@
 #          3.2 info          => here we can add information to the final netcdfs as global attribute (metadata).             #
 #                                                                                                                            #
 # Version:                                                                                                                   #
-#    1.0.0    15-Nov-2022                                                                                                    #
+#    1.1.0    15-Jan-2022                                                                                                    #
 #                                                                                                                            #
 # Contact: Ramiro Checa-Garcia                                                                                               #
 #          ramiro.checa-garcia@ecmwf.int                                                                                     #
@@ -98,15 +98,15 @@ organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , 
 
 skip=false
 
+
 # For processing single aerosols you can add them here (we are adding the names in species section)
-single = [ "ss", 
-           "du1", "du2", "du3", 
-           "bc1", "bc2", "bc3",
-           "su", 
-           "ni_fine", "ni_coarse",
-           "NH3_fine", 
-           "SOA1", "SOA2"     ]                              # This will process these single species
-                                                             # with default settings AT SPECIES
+single = [ "ss",                     # Sea-salt
+           "du1", "du2", "du3",      # Mineral dust
+           "bc1", "bc2", "bc3",      # Black-Carbon
+           "su",                     # Sulfate
+           "ni_fine", "ni_coarse",   # Nitrate
+           "NH3_fine",               # Ammonium
+           "SOA1", "SOA2"     ]      # Secondary Organics           
 
 # For mixing config files the syntax is more complex. First the elements are defined in [species] as usual config files but
 # we name them with the syntax xxxx.yyyy (yyyy is a component of the mixture xxxx)
@@ -130,16 +130,15 @@ nc_ref     = "tests/references/ifs_nc/aerosol_ifs_49R1.nc"
 
 number     = { philic=10, phobic=14}
 
-rhphobic   = 3 # In some case the phobic is taken from philic at specific RH between 20 and 30%
 
 aer.dd1     = { species="du1"       , type="phobic", position= 1 , bin=3 }
 aer.dd2     = { species="du3"       , type="phobic", position= 4 , bin=3 }
 aer.dd3     = { species="du2"       , type="phobic", position= 7 , bin=3 }
-aer.org_dry = { species="organic"   , type="phobic", position= 10, bin=1 }
+aer.org_dry = { species="organic"   , type="phobic", position= 10, bin=1 , rhphobic=2}
 aer.bc1     = { species="bc1"       , type="phobic", position= 11, bin=1 }
 aer.bc3     = { species="bc3"       , type="phobic", position= 12, bin=1 }
 aer.bc2     = { species="bc2"       , type="phobic", position= 13, bin=1 }
-aer.su_dry  = { species="su"        , type="phobic", position= 14, bin=1 }
+aer.su_dry  = { species="su"        , type="phobic", position= 14, bin=1 , rhphobic=3}
 
 aer.ss      = { species="ss"        , type="philic", position= 1 , bin=3 }
 aer.org     = { species="organic"   , type="philic", position= 4 , bin=1 }
@@ -176,7 +175,7 @@ description_hydrophobic.6  = " 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart
 description_hydrophobic.7  = " 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2  "
 description_hydrophobic.8  = " 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2  "
 description_hydrophobic.9  = " 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2  " 
-description_hydrophobic.10 = " 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%%)  "
+description_hydrophobic.10 = " 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%)  "
 description_hydrophobic.11 = " 11: Black carbon, OPAC  "
 description_hydrophobic.12 = " 12: Black carbon, Bond and Bergstrom 2006  "
 description_hydrophobic.13 = " 13: Black carbon, Stier et al 2007  "
@@ -195,4 +194,4 @@ description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMAP"
 
 contact      = 'Ramiro Checa-Garcia: ramiro.checa-garcia at ecmwf.int'
 institution  = 'European Centre for Medium-Range Weather Forecasts (ECMWF)'
-experiment   = 'using the sofware tool: ecaeropt'
+experiment   = 'using the sofware tool: ecaeropt v1.0'

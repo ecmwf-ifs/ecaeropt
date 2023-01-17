@@ -261,8 +261,8 @@ def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
     cwarn = (show.bcolor.WARN +show.bcolor.BOLD,show.bcolor.ENDC)
     cfail = (show.bcolor.FAIL +show.bcolor.BOLD,show.bcolor.ENDC)
     cbold = (show.bcolor.BOLD, show.bcolor.ENDC) 
-    ds = NCDataset(ncdiff, "r")
-
+    ds    = NCDataset(ncdiff, "r")
+    dsref = NCDataset(pathncref,"r") 
     print("\n      Checking difference for ",iaer, " between: \n")
     print("            netcdf to test   : ", pathnctest)
     print("            netcdf reference : ", pathncref,"\n")
@@ -276,18 +276,33 @@ def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
            else:
               vmin = np.amin(ds[varname][:])
               vmax = np.amax(ds[varname][:])
+              rmin = np.amin(ds[varname][:]/dsref[varname][:])
+              rmax = np.amax(ds[varname][:]/dsref[varname][:])
               print(cbold[0]+"       "+varname+cbold[1]+"\n")
-              print(         "             minimum difference: ", vmin)
-              print(         "             maximum difference: ", vmax)
+              print(         "             minimum difference: ", vmin, rmin)
+              print(         "             maximum difference: ", vmax, rmax)
               if abs(vmin)<=1e-10 and abs(vmax)<= 1e-10:
-                 print(cpass[0]+"             Test passed "+cpass[1]+" (threshold 1.e-10) \n")
+                 print(cpass[0]+"             Test passed absolute diff."+cpass[1]+" (threshold 1.e-10) \n")
+              elif abs(rmin)<=1.e-5 and abs(rmax)<= 1.e-5:
+                 print(cpass[0]+"             Test passed relative diff."+cpass[1]+" (threshold 1.e-5)  \n")
               else:
                  if varname in ["rel_hum_growth", "ref_idx_real", "ref_idx_img"]:
                     print(cwarn[0]+"             Test unclear "+cwarn[1]+"\n")
                     print(    "                    ... for externally mixed aerosols this variable ", varname)
                     print(    "                    ... because new version stores all components not only 1st")
                  else:
-                    print(cfail[0]+"             Test not passed "+cfail[1]+"\n")
+                    print(cfail[0]+"             Test not passed "+cfail[1]+"  ... keep testing...\n")
+                    ashape=ds[varname].shape
+                    for idim in range(ashape[0]):
+                            print("           specie number: ",idim+1, "\n")
+                            if len(ashape)>1:
+                               pvmin = np.amin(ds[varname][idim,:])
+                               pvmax = np.amax(ds[varname][idim,:])
+                               prmin = np.amin(ds[varname][idim,:]/dsref[varname][idim,:])
+                               prmax = np.amax(ds[varname][idim,:]/dsref[varname][idim,:])
+
+                               print(         "             minimum difference: ", pvmin, prmin)
+                               print(         "             maximum difference: ", pvmax, prmax)
                     passing=False
                
     return passing

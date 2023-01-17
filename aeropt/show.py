@@ -2,7 +2,7 @@
 
  #########################################################################################################
  #                                                                                                       #
- # show_info.jl                                                                                          #
+ # aeropt/show.py                                                                                        #
  #                                                                                                       #
  # author: Ramiro Checa-Garcia                                                                           #
  # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
@@ -11,11 +11,8 @@
  #                                                                                                       #
  #    | Date          | Authors             | Short info                                              |  #
  #    |---------------|---------------------|---------------------------------------------------------|  #
- #    | 12-Oct-2022   | R. Checa-Garcia     | Functions moved to a new file show_info.jl              |  #
+ #    | 26-Oct-2022   | R. Checa-Garcia     | Translated from Julia to Python                         |  #
  #                                                                                                       #
- #                                                                                                       #
- # tested with:                                                                                          #
- #    - Julia v1.8.0                                                                                     #
  #                                                                                                       #
  # info:                                                                                                 #
  #                                                                                                       #

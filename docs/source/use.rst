@@ -4,14 +4,14 @@
 How to use
 ==========
 
-
-The tool is an executable script **./ecaeropt**, you see the options with `./ecaeropt -h`
+The tool is an executable script **./ecaeropt**, you see the options with `./ecaeropt -h`. Around this tool we have also
+created a set of automatic calculations using *make*.
 
 Automatic calculations
 ----------------------
 
 After build the tool using make build you can use make for specific prescribed calculations,
-this calculations are using the submission sbatch for ECMWF-ATOS supercomputer. User of
+this calculations are using the submission `sbatch` for ECMWF-ATOS supercomputer. User of
 other environments can easily run the equivalent scripts included in the scripts folder as:
 `bash scripts/create_XXXX.sh`
 
@@ -20,7 +20,7 @@ other environments can easily run the equivalent scripts included in the scripts
    make IFS-example  # runs a short calculation of IFS file with only two wavelengths for testing purposes.
    make IFS-CY46R1   # creates the standard IFS netcdf for IFS model cycle CY46R1
    make IFS-CY48R1   # creates the standard IFS netcdf for IFS model cycle CY48R1
-
+   make IFS-CY49R1   # creates the standard IFS netcdf for IFS model cycle CY49R1
 
 Custom Calculations
 -------------------
@@ -49,7 +49,7 @@ The setting file file, when we include information about reference and testing f
 Engines
 +++++++
 
-
+Engines are the part of the code that according to configuration/setting files perform the actual calculations. They are expected to be wrappers to code in Fortran/C for faster calculations.
 
 
 

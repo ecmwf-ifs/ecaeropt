@@ -4,23 +4,24 @@
 IFS calculations
 ================
 
-For each IFS cycle we are preparing setting files based on configuration files to create a reproducible
-enviroment for aerosol optical properties in the IFS model. Here it is described the main information
-contained in setting files and configuration files per cycle.
+For each IFS cycle we are preparing **setting files** based on **configuration files** to create a 
+reproducible enviroment for aerosol optical properties in the IFS model. Here we describe the main
+information contained in setting files and configuration files per cycle. The generated optical
+properties file have informative important metadata.
 
-
-
-
-
-+------------------------+--------------------------+-------------------------+-----------------+
-| IFS cycle              | Setting file             | Config files            | Notes           |
-+========================+==========================+=========================+=================+
-| CY46R1                 | settings/IFS_CY46R1.toml | data/config_toml_CY46R1 | make IFS-CY46R1 |
-+------------------------+--------------------------+-------------------------+-----------------+
-| CY47R1                 |                          |                         |                 |
-+------------------------+--------------------------+-------------------------+-----------------+
-| CY48R1                 | settings/IFS_CY48R1.toml | data/config_toml_CY48R1 | make IFS-CY48R1 |
-+------------------------+--------------------------+-------------------------+-----------------+
++-------------------+----------------------------+-------------------------+----------------------+
+| IFS cycle         | Setting file               | Config files            | Notes                |
++===================+============================+=========================+======================+
+| CY46R1            | settings/IFS_CY46R1.toml   | data/config_toml_CY46R1 | make IFS-CY46R1      |
++-------------------+----------------------------+-------------------------+----------------------+
+| CY47R1            |                            |                         |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+| CY48R1            | settings/IFS_CY48R1.toml   | data/config_toml_CY48R1 | make IFS-CY48R1      |
++-------------------+----------------------------+-------------------------+----------------------+
+| CY49R1            | settings/IFS_CY49R1.toml   | data/config_toml_CY48R1 | make IFS-CY49R1      |
++-------------------+----------------------------+-------------------------+----------------------+
+| CY49R1 _v2        | settings/IFS_CY49R1_v2.toml| data/config_toml_CY48R1 | make IFS-CY49R1-v2   |
++-------------------+----------------------------+-------------------------+----------------------+
 
 
 IFS CY46R1
@@ -63,8 +64,6 @@ Summary table
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
 
 
-
-
 Mineral Dust
 ++++++++++++
 
@@ -88,54 +87,29 @@ properties.
 | large      | 0.9                | 20.0                 |
 +------------+--------------------+----------------------+
 
-Mineral dust optical models:
-
-- du_ri_Dubovik   =>
-- du_ri_Fouquart  =>
-- du_ri_Woodward  =>
-- du_ri_composite =>
-
 
 IFS CY47R1
 ----------
 
-
-Summary table
-+++++++++++++
-
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Aerosol                  | Modes            | Output bins     | Refrac. Ind.        | Soluble   | Mixed    | Config-files             |
-+==========================+==================+=================+=====================+===========+==========+==========================+
-| Mineral Dust             | 1 logn modes     | 3 bins          |  3 optical models   | No        | No       | config_du1.toml          |
-|                          |                  |                 |                     |           |          | config_du2.toml          |
-|                          |                  |                 |                     |           |          | config_du3.toml          |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Organic Aerosols         | mixture          |                 |                     | Yes       | External | config_organic_inso.toml |
-|                          |                  |                 |                     |           |          | config_organic_waso.toml |
-|                          |                  |                 |                     |           |          | config_organic_soot.toml |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Black carbon             | 1 logn mode      | 1 bins          |  3 optical models   |           | No       | config_bc1.toml          |
-|                          |                  |                 |                     |           |          | config_bc2.toml          |
-|                          |                  |                 |                     |           |          | config_bc3.toml          |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Sea Salt                 | 2 logn modes     | 3 bins          |  1 optical models   | Yes       | No       | config_ss.toml           |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Sulfate                  | 1 logn mode      | 1 bins          |  1 optical model    | Yes       | No       | config_su.toml           |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Secondary Organic A      | 1 logn mode      | 1 bins          |  1 optical model    |           | No       | config_SOA1.toml         |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Secondary Organic B      | 1 logn mode      | 1 bins          |  1 optical model    |           | No       | config_SOA2.toml         |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Nitrate fine             | 1 logn mode      | 1 bins          |  1 optical model    | Yes       | No       | config_ni_fine.toml      |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Nitrate coarse           | 1 logn mode      | 1 bins          |  1 optical models   | Yes       | No       | config_ni_coarse.toml    |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| NH3                      | 1 logn mode      | 1 bin           |  1 optical model    | Yes       | External | config_ammonia_fine.toml |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
+No differences with CY46R1
 
 
 IFS CY48R1
 ----------
+
+During this cycle there are new optical models, these optical models are not included by the setting file for CY48R1 althought the
+configuration files are developed during this cycle. These new optical models are included in the aerosols optical properties `CY49R1_v2`.
+For this reason we summarize the new optical models in the next IFS CY49R1 but here we are considering no differences with previous
+versions.
+
+IFS CY49R1 and IFS CY49R1_v2
+----------------------------
+
+The CY49R1 is equivalent to CY48R1 in terms of optical models, but the netcdf files have additional metadata.
+
+- CY49R1    -> identical to CY48R1 but with new metadata
+- CY49R1_v2 -> new metadata and also new optical models
+
 
 Summary Table
 +++++++++++++
@@ -185,7 +159,8 @@ Mineral Dust New
 
 
 The mineral dust is defined by 1 lognormal mode and then translated into 3 bins for the calculation of optical
-properties.
+properties. The refractive index is a combination of different sources: Remy, Balkanski-2007 and Di Biaggio-2017,
+the size distribution is derived from Ryder et al. (which is mostly derived from air-craft measurements).
 
 +------------+--------------------+---------------------+------------------+------------+---------------+ 
 | Modes      | N                  | :math:`\sigma_{g}`  | :math:`r_{0}`    | Density    | Refrac. Ind.  |
@@ -207,9 +182,3 @@ Sulfate II
 
 Sulfate III
 +++++++++++
-
-
-Setting file
-~~~~~~~~~~~~
-Configuration files
-~~~~~~~~~~~~~~~~~~~

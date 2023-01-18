@@ -130,7 +130,7 @@ nc_ref     = "tests/references/ifs_nc/aerosol_ifs_49R1.nc"
 
 number     = { philic=10, phobic=14}
 
-
+# === HYDROPHOBIC ===
 aer.dd1     = { species="du1"       , type="phobic", position= 1 , bin=3 }
 aer.dd2     = { species="du3"       , type="phobic", position= 4 , bin=3 }
 aer.dd3     = { species="du2"       , type="phobic", position= 7 , bin=3 }
@@ -140,6 +140,8 @@ aer.bc3     = { species="bc3"       , type="phobic", position= 12, bin=1 }
 aer.bc2     = { species="bc2"       , type="phobic", position= 13, bin=1 }
 aer.su_dry  = { species="su"        , type="phobic", position= 14, bin=1 , rhphobic=3}
 
+
+# === HYDROPHILIC ===
 aer.ss      = { species="ss"        , type="philic", position= 1 , bin=3 }
 aer.org     = { species="organic"   , type="philic", position= 4 , bin=1 }
 aer.su      = { species="su"        , type="philic", position= 5 , bin=1 }
@@ -190,7 +192,7 @@ description_hydrophilic.6  = " 6: Secondary organic aerosol - biogenic, Moise et
 description_hydrophilic.7  = " 7: Secondary organic aerosol - anthropogenic, Moise et al 2015  "
 description_hydrophilic.8  = " 8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
 description_hydrophilic.9  = " 9: Fine mode Nitrate, GLOMAP  "
-description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMAP"
+description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMAP "
 
 contact      = 'Ramiro Checa-Garcia: ramiro.checa-garcia at ecmwf.int'
 institution  = 'European Centre for Medium-Range Weather Forecasts (ECMWF)'

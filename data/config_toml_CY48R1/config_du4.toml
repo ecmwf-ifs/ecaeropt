@@ -31,9 +31,9 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
-opt_model= "Balkanski2007"
+opt_model= "Composite"
 aer_type = "dust_CYR481_prog"
-ifs      = "CY48R1"
+ifs      = "CY49R1"
 revised  = 2022-11-15
 
 

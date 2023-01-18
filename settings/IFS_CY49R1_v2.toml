@@ -128,32 +128,35 @@ netcdfname = "outputnc/store_ifsnc/ifs_CY49R1_v2.nc"
 
 number     = { philic=13, phobic=18}
 
-rhphobic   = 3 # In some case the phobic is taken from philic at specific RH between 20 and 30%
-
+# === HYDROPHOBIC ===
 aer.dd1     = { species="du1"       , type="phobic", position= 1 , bin=3 }
-aer.dd2     = { species="du2"       , type="phobic", position= 4 , bin=3 }
-aer.dd3     = { species="du3"       , type="phobic", position= 7 , bin=3 }
-aer.dd4     = { species="du4"       , type="phobic", position= 10, bin=3 }
-aer.org_dry = { species="organic"   , type="phobic", position= 13, bin=1 , rhphobic=2}
-aer.om_dry  = { species="om"        , type="phobic", position= 14, bin=1 , rhphobic=2} # Check
-aer.bc1     = { species="bc1"       , type="phobic", position= 15, bin=1 }
-aer.bc2     = { species="bc2"       , type="phobic", position= 16, bin=1 }
-aer.bc3     = { species="bc3"       , type="phobic", position= 17, bin=1 }
-aer.su_dry  = { species="su"        , type="phobic", position= 18, bin=1 , rhphobic=3} 
+aer.dd2     = { species="du3"       , type="phobic", position= 4 , bin=3 }
+aer.dd3     = { species="du2"       , type="phobic", position= 7 , bin=3 }
+aer.org_dry = { species="organic"   , type="phobic", position= 10, bin=1 , rhphobic=2}
+aer.bc1     = { species="bc1"       , type="phobic", position= 11, bin=1 }
+aer.bc3     = { species="bc3"       , type="phobic", position= 12, bin=1 }
+aer.bc2     = { species="bc2"       , type="phobic", position= 13, bin=1 }
+aer.su_dry  = { species="su"        , type="phobic", position= 14, bin=1 , rhphobic=3}
 
+# New optical models
+aer.dd4     = { species="du4"       , type="phobic", position= 15, bin=3 }
+aer.om_dry  = { species="om"        , type="phobic", position= 18, bin=1 , rhphobic=2} # Check
+
+
+# === HYDROPHILIC ===
 aer.ss      = { species="ss"        , type="philic", position= 1 , bin=3 }
 aer.org     = { species="organic"   , type="philic", position= 4 , bin=1 }
-aer.om      = { species="om"        , type="philic", position= 5 , bin=1 }
-aer.su      = { species="su"        , type="philic", position= 6 , bin=1 }
-aer.su1     = { species="su1"       , type="philic", position= 7,  bin=1 }
-aer.su2     = { species="su2"       , type="philic", position= 8,  bin=1 }
-aer.soab    = { species="SOA1"      , type="philic", position= 9 , bin=1 }
-aer.soaa    = { species="SOA2"      , type="philic", position= 10, bin=1 }
-aer.ammf    = { species="NH3_fine"  , type="philic", position= 11, bin=1 }
-aer.nif     = { species="ni_fine"   , type="philic", position= 12, bin=1 }
-aer.nic     = { species="ni_coarse" , type="philic", position= 13, bin=1 }
+aer.su      = { species="su"        , type="philic", position= 5 , bin=1 }
+aer.soab    = { species="SOA1"      , type="philic", position= 6 , bin=1 }
+aer.soaa    = { species="SOA2"      , type="philic", position= 7 , bin=1 }
+aer.ammf    = { species="NH3_fine"  , type="philic", position= 8 , bin=1 }
+aer.nif     = { species="ni_fine"   , type="philic", position= 9 , bin=1 }
+aer.nic     = { species="ni_coarse" , type="philic", position= 10, bin=1 }
 
-
+# New optical models
+aer.om      = { species="om"        , type="philic", position= 11, bin=1 }
+aer.su1     = { species="su1"       , type="philic", position= 12, bin=1 }
+aer.su2     = { species="su2"       , type="philic", position= 13, bin=1 }
 
 [info]
 product_version = '49R1'
@@ -178,29 +181,29 @@ description_hydrophobic.6  = " 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart
 description_hydrophobic.7  = " 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2  "
 description_hydrophobic.8  = " 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2  "
 description_hydrophobic.9  = " 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2  " 
-description_hydrophobic.10 = " 10: Desert dust, bin 1, 0.03-0.55 micron, Balkanski et 2007 , Di Baigo 2017 "
-description_hydrophobic.11 = " 11: Desert dust, bin 2, 0.55-0.90 micron, Balkanski el 2007 , Di Baigo 2017 "
-description_hydrophobic.12 = " 12: Desert dust, bin 3, 0.90-20.0 micron, Balkanski el 2007 , Di Baigo 2017 "
-description_hydrophobic.13 = " 13: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%%)  "
-description_hydrophobic.14 = " 14: Hydrophobic organic matter, Brown et al 2018 (hydrophilic at RH=20%)  "
-description_hydrophobic.15 = " 15: Black carbon, OPAC  "
-description_hydrophobic.16 = " 16: Black carbon, Bond and Bergstrom 2006  "
-description_hydrophobic.17 = " 17: Black carbon, Stier et al 2007  "
-description_hydrophobic.18 = " 18: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%%-30%%)"
+description_hydrophobic.10 = " 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%)  "
+description_hydrophobic.11 = " 11: Black carbon, OPAC  "
+description_hydrophobic.12 = " 12: Black carbon, Bond and Bergstrom 2006  "
+description_hydrophobic.13 = " 13: Black carbon, Stier et al 2007  "
+description_hydrophobic.14 = " 14: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%%-30%%)"
+description_hydrophobic.15 = " 15: Desert dust, bin 1, 0.03-0.55 micron, Composite (Balkanski et 2007 , Di Baigo 2017, Ryder et al 2019) "
+description_hydrophobic.16 = " 16: Desert dust, bin 2, 0.55-0.90 micron, Composite (Balkanski el 2007 , Di Baigo 2017, Ryder et al 2019) "
+description_hydrophobic.17 = " 17: Desert dust, bin 3, 0.90-20.0 micron, Composite (Balkanski el 2007 , Di Baigo 2017, Ryder et al 2019) "
+description_hydrophobic.18 = " 18: Hydrophobic organic matter, Brown et al 2018 (hydrophilic at RH=20%)  "
 
 description_hydrophilic.1  = " 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC "
 description_hydrophilic.2  = " 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC "
 description_hydrophilic.3  = " 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC "
 description_hydrophilic.4  = " 4: Hydrophilic organic matter, OPAC "
-description_hydrophilic.5  = " 5: Hydrophilic organic matter, Brown et al 2018 "
-description_hydrophilic.6  = " 6: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
-description_hydrophilic.7  = " 7: Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
-description_hydrophilic.8  = " 8: Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ with modified size distribution  "
-description_hydrophilic.9  = " 9: Secondary organic aerosol - biogenic, Moise et al 2015  "
-description_hydrophilic.10 = " 10: Secondary organic aerosol - anthropogenic, Moise et al 2015  "
-description_hydrophilic.11 = " 11: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
-description_hydrophilic.12 = " 12: Fine mode Nitrate, GLOMAP  "
-description_hydrophilic.13 = " 13: Coarse mode Nitrate, GLOMAP"
+description_hydrophilic.5  = " 5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
+description_hydrophilic.6  = " 6: Secondary organic aerosol - biogenic, Moise et al 2015  "
+description_hydrophilic.7  = " 7: Secondary organic aerosol - anthropogenic, Moise et al 2015  "
+description_hydrophilic.8  = " 8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
+description_hydrophilic.9  = " 9: Fine mode Nitrate, GLOMAP  "
+description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMAP "
+description_hydrophilic.11 = " 11: Hydrophilic organic matter, Brown et al 2018 "
+description_hydrophilic.12 = " 12: Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
+description_hydrophilic.13 = " 13: Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ with modified size distribution  "
 
 contact      = 'Ramiro Checa-Garcia: ramiro.checa-garcia at ecmwf.int'
 institution  = 'European Centre for Medium-Range Weather Forecasts (ECMWF)'

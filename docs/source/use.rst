@@ -13,15 +13,16 @@ Automatic calculations
 After build the tool using make build you can use make for specific prescribed calculations,
 this calculations are using the submission `sbatch` for ECMWF-ATOS supercomputer. User of
 other environments can easily run the equivalent scripts included in the scripts folder as:
-`bash scripts/create_XXXX.sh`
+`bash scripts/create_XXXX.sh`. Remember that many environments allow the use of tab after make 
+to see all the options.
 
 .. code-block:: bash
 
-   make IFS-example  # runs a short calculation of IFS file with only two wavelengths for testing purposes.
-   make IFS-CY46R1   # creates the standard IFS netcdf for IFS model cycle CY46R1
-   make IFS-CY48R1   # creates the standard IFS netcdf for IFS model cycle CY48R1
-   make IFS-CY49R1   # creates the standard IFS netcdf for IFS model cycle CY49R1
-
+   make IFS-example    # runs a short calculation of IFS file with only two wavelengths for testing purposes.
+   make IFS-CY46R1     # creates the standard IFS netcdf for IFS model cycle CY46R1
+   make IFS-CY48R1     # creates the standard IFS netcdf for IFS model cycle CY48R1
+   make IFS-CY49R1     # creates the standard IFS netcdf for IFS model cycle CY49R1
+   make IFS-CY49R1_v2  # creates the standard IFS netcdf for IFS model cycle CY49R1 with new optical models
 Custom Calculations
 -------------------
    

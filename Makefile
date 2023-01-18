@@ -43,3 +43,8 @@ IFS-CY48R1: IFS-sbatch
 IFS-CY49R1: IFS-sbatch
 	@echo " === IFS-CY49R1 ==="
 	sbatch scripts/create_ifs-cy49r1.sh
+
+IFS-CY49R1-v2: IFS-sbatch
+	@echo " === IFS-CY49R1-v2 ==="
+	sbatch scripts/create_ifs-cy49r1_v2.sh
+

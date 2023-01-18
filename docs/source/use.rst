@@ -23,6 +23,15 @@ to see all the options.
    make IFS-CY48R1     # creates the standard IFS netcdf for IFS model cycle CY48R1
    make IFS-CY49R1     # creates the standard IFS netcdf for IFS model cycle CY49R1
    make IFS-CY49R1_v2  # creates the standard IFS netcdf for IFS model cycle CY49R1 with new optical models
+
+.. warning::
+   We recommend NOT run two of these make cases as the same time. Currently, they will both store single species
+   on the same folder, *outputnc*, and files can be overwritten. You can safely run several instances at the same
+   time by changing output folder entry in the setting files manually if needed (before use make). The correspoding
+   setting files for each make are easy to figure out but also there is table in section **IFS Calculations** of 
+   this documentation.
+ 
+   
 Custom Calculations
 -------------------
    

@@ -32,7 +32,7 @@ wl_out_file = "data/wavelengths/wl_out_TEST_2.txt"
 ext_scaling = 1.000
 
 [tags]
-opt_model   = "GACP-noscaling"
+opt_model   = "GACP-NoScaling"
 aer_type    = "sulfate_noscaling"
 model       = "Sulfate GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/"
 ifs         = "CY48R1"

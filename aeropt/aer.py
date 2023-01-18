@@ -337,14 +337,14 @@ def readconf(config_file, angles, wl_out="none", debug=False):
 
 
 
-def mixing(mix_aer, mix_opt, mix_λtab, mix_ri_rtab, mix_ri_itab, num_components):
+def mixing(mix_aer, mix_opt, mix_lbtab, mix_ri_rtab, mix_ri_itab, num_components):
     """
     Calculates the mixture optical properties given the optical properties of the components
 
     Args:
        mix_aer
        mix_opt
-       mix_λtab
+       mix_lbtab
        mix_ri_rtab
        mix_ri_itab    ()
        num_components (integer)

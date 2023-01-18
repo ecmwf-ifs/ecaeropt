@@ -115,26 +115,24 @@ Summary Table
 +++++++++++++
 
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Aerosol                  | Modes            | Output bins     | Refrac. Ind.        | Soluble   | Mixed    | Config-files             |
+| Aerosol                  | Modes            | Output          | Refrac. Ind.        | Soluble   | Mixed    | Config-files             |
 +==========================+==================+=================+=====================+===========+==========+==========================+
-| Mineral Dust             | 1 logn modes     | 3 bins          |  3 optical models   | No        | No       | config_du1.toml          |
-|                          |                  |                 |                     |           |          | config_du2.toml          |
+| Mineral Dust             | 1 logn           | 3 bins          |  3 optical models   | No        | No       | du1                      |
+|                          |                  |                 |                     |           |          | du2                      |
 |                          |                  |                 |                     |           |          | config_du3.toml          |
-|                          | 4 logn modes     | 3 bins          |  1 optical model    |           |          | config_du4.toml          |
-+--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Mineral Dust new         | 3 logn modes(new)| 3 bins          |  3 optical models   | No        | No       | config_du4.toml          |
+|                          | 4 logn           | 3 bins          |  1 optical model    |           |          | config_du4.toml          |
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
 | Organic Aerosols         | mixture          |                 |                     | Yes       | External | config_organic_inso.toml |
 |                          |                  |                 |                     |           |          | config_organic_waso.toml |
 |                          |                  |                 |                     |           |          | config_organic_soot.toml |
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Organic Matter           | 1 logn mode      | 1 bin           |                     | Yes       | No       | config_om.toml           |
+| Organic Matter           | 1 logn           | 1 bin           |                     | Yes       | No       | config_om.toml           |
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Black carbon             | 1 logn mode      | 1 bins          |  3 optical models   |           | No       | config_bc1.toml          |
+| Black carbon             | 1 logn           | 1 bins          |  3 optical models   |           | No       | config_bc1.toml          |
 |                          |                  |                 |                     |           |          | config_bc2.toml          |
 |                          |                  |                 |                     |           |          | config_bc3.toml          |
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
-| Sea Salt                 | 2 logn modes     | 3 bins          |  1 optical models   | Yes       | No       | config_ss.toml           |
+| Sea Salt                 | 2 logn           | 3 bins          |  1 optical models   | Yes       | No       | config_ss.toml           |
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
 | Sulfate  I               | 1 logn mode      | 1 bins          |  1 optical model    | Yes       | No       | config_su.toml           |
 +--------------------------+------------------+-----------------+---------------------+-----------+----------+--------------------------+
@@ -177,8 +175,66 @@ the size distribution is derived from Ryder et al. (which is mostly derived from
 Organic Matter
 ++++++++++++++
 
+Described in `config_om.toml` is using the reference Brown et al 2018 for the refractive index, and it is not anymore a mixture of aerosols species like organics aerosols before The optical model is named `Brown2018`
+
 Sulfate II
 ++++++++++
 
+Sulfate II which is described in `config_su1.toml` is like Sulfate I (`config_su.toml`) but without scaling of extinction (in other words, scaling=1.0)
+The optical model is named `GACP-noscaling`.
+
 Sulfate III
 +++++++++++
+
+This new sulfate has an updated distribution but same refractive index. Note that scaling is also equal to 1.0. The optical model is named `GACP-newPSD`
+
+
+List of Optical Models
+----------------------
+
++-------------------+----------------------------+-------------------------+----------------------+
+| IFS cycle         | Config file                | Optical model           | Notes                |
++===================+============================+=========================+======================+
+|CY48R1             | config_bc1.toml            | "OPAC"                  | OPAC==Hess1988(?)    |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_bc2.toml            | "Stier2007"             |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_bc3.toml            | "Bond2006"              |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_du1.toml            | "Dubovik2002"           |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_ni_coarse.toml      | "GLOMAP"                | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_su1.toml            | "GACP-NoScaling"        |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_du3.toml            | "Fouquart1987"          |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_ni_fine.toml        | "GLOMAP"                | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_organic_inso.toml   | "OPAC"                  | NWP Climat.          |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_organic_soot.toml   | "OPAC"                  | NWP Climat.          |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_organic_waso.toml   | "OPAC"                  | NWP Climat.          |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_SOA1.toml           | "Moise2015"             | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_SOA2.toml           | "Moise2015"             | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_ss.toml             | "OPAC"                  | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_su.toml             | "GACP"                  |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_su2.toml            | "GACP-NewPSD"           | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_ammonia_fine.toml   | "GACP"                  | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_du4.toml            | "Composite"             | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_om.toml             | "Brown2018"             | Default CAMS         |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_du1_test.toml       | "Dubovik2002"           |                      |
++-------------------+----------------------------+-------------------------+----------------------+
+|CY48R1             | config_du2.toml            | "Woodward2001"          | NWP Climat.          |
++-------------------+----------------------------+-------------------------+----------------------+
+

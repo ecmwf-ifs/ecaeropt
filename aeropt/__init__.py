@@ -16,3 +16,4 @@ import aeropt.process    as run
 import aeropt.show       as show
 import aeropt.engine     as engine
 import aeropt.parsetoml  as parse
+import aeropt.plt        as plt

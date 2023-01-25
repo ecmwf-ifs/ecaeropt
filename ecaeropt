@@ -6,7 +6,7 @@ import argparse
 import logging
 from datetime import datetime as dt
 
-ecaeropt_version= "0.9"
+ecaeropt_version= "1.1"
 
 dtstr   = dt.now().strftime("%y%m%d%H%M%S")
 logfile ='tmp/'+dtstr+'.log'

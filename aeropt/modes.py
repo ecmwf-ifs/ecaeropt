@@ -31,6 +31,7 @@ import aeropt.show       as show
 import aeropt.process    as run
 import aeropt.parsetoml  as parse
 import aeropt.ifs        as ifs
+import aeropt.plt        as plt
 
 def config_file_mode(rinfo, config_file, outname):
     """
@@ -108,6 +109,10 @@ def setting_file_mode(rinfo, fsetting, test=False):
    dicnc_iaer = {}
    if os.path.isfile(fsetting):
         ifs_flag = "ifs" in runset.keys()
+        if "plt" in runset["process"].keys():
+            plt_flag = runset["process"]["plt"]
+        else:
+            plt_flag = False
         if "wavelengths" in runset["default"].keys():
             wl_out_default = runset["default"]["wavelengths"]
         else:
@@ -158,6 +163,14 @@ def setting_file_mode(rinfo, fsetting, test=False):
                         #print(runset["species"][aer]["ref"])
                         dicnc_iaer[aer]={ "nc_test":nc_iaer, 
                                           "nc_ref": runset["species"][aer]["ref"]}
+
+            if plt_flag:
+
+                print("\n Plotting refractive index and optical properties ..........\n")
+                for specie in dicnc_iaer.keys():
+                    print("\n      Aerosol Specie netcdf: ",specie)
+                    plt.aerplt("refindex", dicnc_iaer[specie])
+                    plt.aerplt("optical",  dicnc_iaer[specie])
 
             if ifs_flag:
                 ifs_vers = runset["ifs"]["ifs_cycle"]

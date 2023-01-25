@@ -14,6 +14,9 @@
 ```
      v0.8     Translated from Julia version
      v0.9     Updated the format for config files, added makefile and testing framework.
+     v1.0     Added IFS-CY49R1 with updated optical models from S. Remy
+     v1.1     Added optical automatic plot functionality per specie of optical properties 
+              in the setting files. 
 ```
 
 # How to install

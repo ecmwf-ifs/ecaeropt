@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=ecaeropt-ifs-test
-#SBATCH --output=logs/calc.ifs_CY49R1.%j.out
+#SBATCH --output=logs/calc.ifs_CY49R1v2.%j.out
 
 module load python3
 module load nco

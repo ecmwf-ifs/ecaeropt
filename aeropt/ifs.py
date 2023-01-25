@@ -19,6 +19,7 @@
  #                                                                                                       #
  #########################################################################################################
 
+from pprint import pprint
 import numpy as np
 from netCDF4 import Dataset as NCDataset
 from netCDF4 import stringtochar as to_char
@@ -208,7 +209,7 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
     dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD'
                , 'org_dry': 'OM', 'om_dry': 'OM'
-               , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC'
+               , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC', 'bc4': 'BC'
                , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
                , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
                , 'soab': 'OB', 'soaa': 'OA'
@@ -217,7 +218,9 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
     d_cdf_hydro={}
 
     for ii in range(nhydro+1):
+        print(ii)
         for ikey in ifs["aer"].keys():
+            print(ikey)
             if ifs["aer"][ikey]["position"]==ii and ifs["aer"][ikey]["type"]==hydro:
                if "rhphobic" in ifs["aer"][ikey].keys():
                     rhphobic=ifs["aer"][ikey]["rhphobic"]
@@ -229,7 +232,7 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
                    for jj in range(ifs["aer"][ikey]["bin"]): 
                        n = ii+jj-1
                        d_cdf_hydro[n]=(NCDataset(dic_nciaer[rev_species[ikey]]), jj, dic_code[ikey], "binned", rhphobic)
-                  
+
     return d_cdf_hydro
 
 
@@ -324,11 +327,11 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
 
     rh1           = ds.createVariable("relative_humidity1", 'f4', s1rh )
     rh1.units     = "1"
-    rh1.long_name = "Lower bounds of relative humidity"
+    rh1.long_name = "Lower bounds of relative humidity bins"
 
     rh2           = ds.createVariable("relative_humidity2", 'f4', s1rh )
     rh2.units     = "1"
-    rh2.long_name = "Upper bounds of relative humidity"
+    rh2.long_name = "Upper bounds of relative humidity bins"
 
 
     # Hydrophilic Variables ====================================================
@@ -339,44 +342,44 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
     
     code_philic               = ds.createVariable("code_hydrophilic",'S1', ("hydrophilic","code_str",))
     code_philic.longname      = "Hydrophilic aerosol code"
-    code_philic.description   = """SS: Sea salt \n OM: Hydrophilic organic matter \n SU: Sulfate  \n OB: Secondary organic biogenic \n OA: Secondary organic anthropogenic \n AM: Fine-mode ammonium sulfate \n NI: Nitrate """
+    code_philic.description   = """SS: Sea salt \nOM: Hydrophilic organic matter \nSU: Sulfate  \nOB: Secondary organic biogenic \nOA: Secondary organic anthropogenic \nAM: Fine-mode ammonium sulfate \nNI: Nitrate """
     optmod_philic             = ds.createVariable("optical_model_hydrophilic",'S1', ("hydrophilic","optical_model_str",))
     optmod_philic.long_name   = "Hydrophilic aerosol optical model"
     
     min_rad_phi            = ds.createVariable( "min_radius_hydrophilic", 'f4', ("hydrophilic",))
     min_rad_phi.units      = "m",
-    min_rad_phi.long_name  = "Minimum radius of distribution of each hydrophilic aerosol"
+    min_rad_phi.long_name  = "Minimum radius of distribution of hydrophilic aerosols"
 
     max_rad_phi            = ds.createVariable( "max_radius_hydrophilic", 'f4', ("hydrophilic",))
     max_rad_phi.units      = "m",
-    max_rad_phi.long_name  = "Maximum radiations of distribution of each hydrophilic aerosol"
+    max_rad_phi.long_name  = "Maximum radius of distribution of hydrophilic aerosols"
 
     growth_f_phi           = ds.createVariable( "growth_factor_hydrophilic", 'f4', s2phi)
     growth_f_phi.units     = "m",
-    growth_f_phi.long_name = "Relativity Humidity growth factor of hydrophilic aerosols"
+    growth_f_phi.long_name = "Relativity humidity growth factor of hydrophilic aerosols"
 
     ri_real_phi            = ds.createVariable( "ref_index_real_hydrophilic", 'f4', s3phi)
     ri_real_phi.units      = "1",
-    ri_real_phi.long_name  = "Real part of refractive index of each hydrophilic aerosols"
+    ri_real_phi.long_name  = "Real part of refractive index of hydrophilic aerosols"
     ri_imag_phi            = ds.createVariable( "ref_index_imag_hydrophilic", 'f4', s3phi)
     ri_imag_phi.units      = "1",
-    ri_imag_phi.long_name  = "Imaginary part of refractive index of each hydrophilic aerosols"
+    ri_imag_phi.long_name  = "Imaginary part of refractive index of hydrophilic aerosols"
 
     mme_phi                = ds.createVariable( "mass_ext_hydrophilic", 'f4', s3phi)
     mme_phi.units          = "m2 kg-1",
-    mme_phi.long_name      = "Mass-extinction coefficient of each hydrophilic aerosols"
+    mme_phi.long_name      = "Mass-extinction coefficient of hydrophilic aerosols"
 
     ssa_phi                = ds.createVariable( "ssa_hydrophilic", 'f4', s3phi)
     ssa_phi.units          = "1",
-    ssa_phi.long_name      = "Single scattering of each hydrophilic aerosols"
+    ssa_phi.long_name      = "Single scattering albedo of hydrophilic aerosols"
 
     asy_phi                = ds.createVariable( "asymmetry_hydrophilic", 'f4', s3phi)
     asy_phi.units          = "1",
-    asy_phi.long_name      = "Asymmetry factor of each hydrophilic aerosols"
+    asy_phi.long_name      = "Asymmetry factor of hydrophilic aerosols"
 
     lid_phi                = ds.createVariable( "lidar_ratio_hydrophilic", 'f4', s3phi)
     lid_phi.units          = "sr",
-    lid_phi.long_name      = "Lidar ratio of each hydrophilic aerosols"
+    lid_phi.long_name      = "Lidar ratio of hydrophilic aerosols"
 
     # Hydrophobic Variables ====================================================
 
@@ -386,42 +389,42 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
 
     code_phobic               = ds.createVariable("code_hydrophobic",'S1', ("hydrophobic","code_str",))
     code_phobic.longname      = "Hydrophobic aerosol code"
-    code_phobic.description   = """DD: Desert dust \n OM: Hydrophobic organic matter  \n BC: Black carbon \n SU: Stratospheric sulfate """
+    code_phobic.description   = """DD: Desert dust \nOM: Hydrophobic organic matter  \nBC: Black carbon \nSU: Stratospheric sulfate """
 
     optmod_phobic             = ds.createVariable("optical_model_hydrophobic",'S1', ("hydrophobic","optical_model_str",))
     optmod_phobic.long_name   = "Hydrophobic aerosol optical model"
     
     min_rad_pho           = ds.createVariable( "min_radius_hydrophobic", 'f4', ("hydrophobic",))
     min_rad_pho.units     = "m",
-    min_rad_pho.long_name = "Minimum radiations of distribution of each hydrophobic aerosol"
+    min_rad_pho.long_name = "Minimum radius of distribution of hydrophobic aerosols"
 
     max_rad_pho           = ds.createVariable( "max_radius_hydrophobic", 'f4', ("hydrophobic",))
     max_rad_pho.units     = "m",
-    max_rad_pho.long_name = "Maximum radiations of distribution of each hydrophobic aerosol"
+    max_rad_pho.long_name = "Maximum radius of distribution of hydrophobic aerosols"
 
     ri_real_pho           = ds.createVariable( "ref_index_real_hydrophobic", 'f4', s2pho)
     ri_real_pho.units     = "1",
-    ri_real_pho.long_name = "Real part of refractive index of each hydrophobic aerosols"
+    ri_real_pho.long_name = "Real part of refractive index of hydrophobic aerosols"
 
     ri_imag_pho           = ds.createVariable( "ref_index_imag_hydrophobic", 'f4', s2pho)
     ri_imag_pho.units     = "1",
-    ri_imag_pho.long_name = "Imaginary part of refractive index of each hydrophobic aerosols"
+    ri_imag_pho.long_name = "Imaginary part of refractive index of hydrophobic aerosols"
 
     mme_pho               = ds.createVariable( "mass_ext_hydrophobic", 'f4', s2pho)
     mme_pho.units         = "m2 kg-1",
-    mme_pho.long_name     = "Mass-extinction coefficient of each hydrophobic aerosols"
+    mme_pho.long_name     = "Mass-extinction coefficient of hydrophobic aerosols"
 
     ssa_pho               = ds.createVariable( "ssa_hydrophobic", 'f4',  s2pho)
     ssa_pho.units         = "1",
-    ssa_pho.long_name     = "Single scattering of each hydrophobic aerosols"
+    ssa_pho.long_name     = "Single scattering albedo of hydrophobic aerosols"
 
     asy_pho               = ds.createVariable( "asymmetry_hydrophobic", 'f4',  s2pho)
     asy_pho.units         = "1",
-    asy_pho.long_name     = "Asymmetry factor of each hydrophobic aerosols"
+    asy_pho.long_name     = "Asymmetry factor of hydrophobic aerosols"
 
     lid_pho               = ds.createVariable( "lidar_ratio_hydrophobic", 'f4',  s2pho)
     lid_pho.units         = "sr",
-    lid_pho.long_name     = "Lidar ratio of each hydrophobic aerosols"
+    lid_pho.long_name     = "Lidar ratio of hydrophobic aerosols"
 
 
     dd_pho = create_hydro_cdf_dict(ifsphobic, "phobic", rev_species, dic_nciaer, ifs)

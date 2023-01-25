@@ -97,7 +97,8 @@ organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , 
 
 [process]
 
-skip=false
+skip=true
+plt=true
 
 # For processing single aerosols you can add them here (we are adding the names in species section)
 single = [ "ss",                            # Sea-Salt
@@ -142,7 +143,7 @@ aer.su_dry  = { species="su"        , type="phobic", position= 14, bin=1 , rhpho
 # New optical models
 aer.dd4     = { species="du4"       , type="phobic", position= 15, bin=3 }
 aer.om_dry  = { species="om"        , type="phobic", position= 18, bin=1 , rhphobic=2} # Check
-aer.bc2     = { species="bc4"       , type="phobic", position= 19, bin=1 }
+aer.bc4     = { species="bc4"       , type="phobic", position= 19, bin=1 }
 
 # === HYDROPHILIC ===
 aer.ss      = { species="ss"        , type="philic", position= 1 , bin=3 }

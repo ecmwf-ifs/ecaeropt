@@ -15,6 +15,7 @@ Welcome to py-ecaeropt's documentation!
    developer
    engines
    ifs
+   optplts
 
    api/modules
 

@@ -218,9 +218,7 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
     d_cdf_hydro={}
 
     for ii in range(nhydro+1):
-        print(ii)
         for ikey in ifs["aer"].keys():
-            print(ikey)
             if ifs["aer"][ikey]["position"]==ii and ifs["aer"][ikey]["type"]==hydro:
                if "rhphobic" in ifs["aer"][ikey].keys():
                     rhphobic=ifs["aer"][ikey]["rhphobic"]

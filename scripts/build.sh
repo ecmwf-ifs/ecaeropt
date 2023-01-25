@@ -45,7 +45,13 @@ echo "..... Checking directories logs and libs"
          mkdir outputnc
      fi
 
-#mkdir $path_Tmatrx"/libs/"
+
+     if [ ! -d "outputplt" ]; then
+     echo "       -> directory outputplt not present."
+	 echo "       -> creating it."
+         mkdir outputplt
+     fi
+
 
 
 

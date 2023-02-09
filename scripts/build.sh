@@ -101,4 +101,7 @@ echo ""
 echo "..... Building the library mie_BB [using f2py3]"
 mieBB $path_mie_BB $path_ecaeropt $date_now
 echo  ""
-
+echo "..... Giving exec. permission to ecaeropt and comparing scripts"
+chmod +x ecaeropt
+chmod +x aeropt/compare_secure.sh
+chmod +x aeropt/compare_secure_noangle.sh

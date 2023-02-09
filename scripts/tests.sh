@@ -14,6 +14,6 @@ echo "    **********************************************************************
 rm tmp/*
 rm outputnc/*
 
-./ecaeropt -t tests/test_single_mixed_original.toml
+./ecaeropt -t tests/settings/test_single_mixed_original.toml
 #echo "**** DONE"
 

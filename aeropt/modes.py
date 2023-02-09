@@ -185,7 +185,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
  
    else:
         print(show.bcolor.FAIL+show.bcolor.BOLD+"   ERROR: "+show.bcolor.ENDC)
-        print(" Setting file $fsetting not found in filesystem. \n")
+        print(" Setting file ",fsetting,"not found in filesystem. \n")
 
    if test==False:
 

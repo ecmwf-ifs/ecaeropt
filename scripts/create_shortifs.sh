@@ -7,6 +7,6 @@ module load python3
 
 source scripts/create_ifs_prepare.sh
 
-./ecaeropt -s settings/short_ifs_example.toml
+./ecaeropt -s tests/settings/short_ifs_example.toml
 
 

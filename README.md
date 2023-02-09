@@ -10,6 +10,7 @@
   - Contacts: ramiro.checa-garcia@ecmwf.int
   - TODO:     stored at TODO.org file
   - History:  open file docs.html for further information (after make build)
+  - **Thanks!**:   Tim Stockdale and Robin Hogan for testing/comments.
 
 ```
      v0.8     Translated from Julia version

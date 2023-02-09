@@ -54,23 +54,26 @@ testdir     = "tests"
 [species]
 
 # These aerosols are not mixed
-du1          = { config = "data/config_toml/config_du1.toml"           ,engine="default", ncname='default', nangle='default'}
-du2          = { config = "data/config_toml/config_du2.toml"           ,engine="default", ncname='default', nangle='default'}
-du3          = { config = "data/config_toml/config_du3.toml"           ,engine="default", ncname='default', nangle='default'}
+du1          = { config = "data/config_toml_CY48R1/config_du1.toml"           , engine="default", ncname='default', nangle='default'}
+du2          = { config = "data/config_toml_CY48R1/config_du2.toml"           , engine="default", ncname='default', nangle='default'}
+du3          = { config = "data/config_toml_CY48R1/config_du3.toml"           , engine="default", ncname='default', nangle='default'}
 
-bc1          = { config = "data/config_toml/config_bc1.toml"           ,engine="default", ncname='default', nangle='default'}
-bc2          = { config = "data/config_toml/config_bc2.toml"           ,engine="default", ncname='default', nangle='default'}
-bc3          = { config = "data/config_toml/config_bc3.toml"           ,engine="default", ncname='default', nangle='default'}
+bc1          = { config = "data/config_toml_CY48R1/config_bc1.toml"           , engine="default", ncname='default', nangle='default'}
+bc2          = { config = "data/config_toml_CY48R1/config_bc2.toml"           , engine="default", ncname='default', nangle='default'}
+bc3          = { config = "data/config_toml_CY48R1/config_bc3.toml"           , engine="default", ncname='default', nangle='default'}
 
-su           = { config = "data/config_toml/config_su.toml"            ,engine="default", ncname='default', nangle='default'}
-ss           = { config = "data/config_toml/config_ss.toml"            ,engine="default", ncname='default', nangle='default'}
+su           = { config = "data/config_toml_CY48R1/config_su.toml"            , engine="default", ncname='default', nangle='default'}
 
-ni_fine      = { config = "data/config_toml/config_ni_fine.toml"       ,engine="default", ncname='default', nangle='default'}
-ni_coarse    = { config = "data/config_toml/config_ni_coarse.toml"     ,engine="default", ncname='default', nangle='default'}
-NH3_fine     = { config = "data/config_toml/config_ammonia_fine.toml"  ,engine="default", ncname='default', nangle='default'}
-SOA1         = { config = "data/config_toml/config_SOA1.toml"          ,engine="default", ncname='default', nangle='default'}
-SOA2         = { config = "data/config_toml/config_SOA2.toml"          ,engine="default", ncname='default', nangle='default'}
+ss           = { config = "data/config_toml_CY48R1/config_ss.toml"            , engine="default", ncname='default', nangle='default'}
 
+ni_fine      = { config = "data/config_toml_CY48R1/config_ni_fine.toml"       , engine="default", ncname='default', nangle='default'}
+ni_coarse    = { config = "data/config_toml_CY48R1/config_ni_coarse.toml"     , engine="default", ncname='default', nangle='default'}
+NH3_fine     = { config = "data/config_toml_CY48R1/config_ammonia_fine.toml"  , engine="default", ncname='default', nangle='default'}
+SOA1         = { config = "data/config_toml_CY48R1/config_SOA1.toml"          , engine="default", ncname='default', nangle='default'}
+SOA2         = { config = "data/config_toml_CY48R1/config_SOA2.toml"          , engine="default", ncname='default', nangle='default'}
+
+
+om           = { config = "data/config_toml_CY48R1/config_om.toml"            , engine="default", ncname='default', nangle='default'}
 
 # Organic is a mixing of aerosols
 # Note: organic is designed to be a mixed aerosol with 3 components, however still it is possible to
@@ -78,9 +81,9 @@ SOA2         = { config = "data/config_toml/config_SOA2.toml"          ,engine="
 #       for mixed species XXX.yyy. The mixed aerosol is XXX and the components are yyy. However by refering
 #       as XXX.yyy still it is possible to perform a calculation as an individual single specie.
 
-organic.waso = { config = "data/config_toml/config_organic_waso.toml"  ,engine="default", ncname='default' , nangle='default'}
-organic.inso = { config = "data/config_toml/config_organic_inso.toml"  ,engine="default", ncname='default' , nangle='default'}
-organic.soot = { config = "data/config_toml/config_organic_soot.toml"  ,engine="default", ncname='default' , nangle='default'}
+organic.waso = { config = "data/config_toml_CY48R1/config_organic_waso.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.inso = { config = "data/config_toml_CY48R1/config_organic_inso.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , engine="default", ncname='default' , nangle='default'}
 
 
 # ============================================================================================================================
@@ -115,7 +118,7 @@ mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to 
 # where to place them. All other should be filled with missing or nan.
 
 netcdfname = "ifs_short_example.nc"
-
+ifs_cycle  = "48R1"
 number     = { philic=10, phobic=14}
 
 rhphobic   = 3 # In some case the phobic is taken from philic at specific RH between 20 and 30%
@@ -141,43 +144,43 @@ aer.nic    = { species="ni_coarse" , type="philic", position= 10, bin=1 }
 
 [info]
 product_version = '48R1'
-comment_string = ("This file provides aerosol scattering properties versus wavenumber for the aerosol \n"
-"species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting \n"
-"System. The aerosols are separated into hydrophobic and hydrophilic types (indicated by \n"
-"suffixes _hydrophobic and _hydrophilic). Descriptions of these types are in the global \n"
-"variables description_hydrophobic and description_hydrophilic. This version is for IFS \n"
-"Cycle ")
+comment_string = """This file provides aerosol scattering properties versus wavenumber for the aerosol \
+species defined by Bozzo et al. (GMD 2020), for use in the ECMWF Integrated Forecasting \
+System. The aerosols are separated into hydrophobic and hydrophilic types (indicated by \
+suffixes _hydrophobic and _hydrophilic). Descriptions of these types are in the global \
+variables description_hydrophobic and description_hydrophilic. This version is for IFS \
+Cycle """
 
 # The information below can be in the configuration files. For example, in du1 we should have the 3 first lines.
 # There are species used for philic and phobic, so we need to write in configuration file.
 # description.philic = 
 # description.phobic = (even the phobic RH used)
-description_hydrophobic.1  = " 1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; "
-description_hydrophobic.2  = " 2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; "
-description_hydrophobic.3  = " 3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987; "
-description_hydrophobic.4  = " 4: Desert dust, bin 1, 0.03-0.55 micron, Fouquart et al 1987 ; "
-description_hydrophobic.5  = " 5: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987 ; "
-description_hydrophobic.6  = " 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart et al 1987 ; "
-description_hydrophobic.7  = " 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2 ; "
-description_hydrophobic.8  = " 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2 ; "
-description_hydrophobic.9  = " 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2 ; " 
-description_hydrophobic.10 = " 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%%) ; "
-description_hydrophobic.11 = " 11: Black carbon, OPAC ; "
-description_hydrophobic.12 = " 12: Black carbon, Bond and Bergstrom 2006 ; "
-description_hydrophobic.13 = " 13: Black carbon, Stier et al 2007 ; "
+description_hydrophobic.1  = " 1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987 "
+description_hydrophobic.2  = " 2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987 "
+description_hydrophobic.3  = " 3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987 "
+description_hydrophobic.4  = " 4: Desert dust, bin 1, 0.03-0.55 micron, Fouquart et al 1987  "
+description_hydrophobic.5  = " 5: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987  "
+description_hydrophobic.6  = " 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart et al 1987  "
+description_hydrophobic.7  = " 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2 "
+description_hydrophobic.8  = " 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2 "
+description_hydrophobic.9  = " 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2 " 
+description_hydrophobic.10 = " 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%%)  "
+description_hydrophobic.11 = " 11: Black carbon, OPAC "
+description_hydrophobic.12 = " 12: Black carbon, Bond and Bergstrom 2006 "
+description_hydrophobic.13 = " 13: Black carbon, Stier et al 2007 "
 description_hydrophobic.14 = " 14: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%%-30%%)"
 
-description_hydrophilic.1  = " 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC; "
-description_hydrophilic.2  = " 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC; "
-description_hydrophilic.3  = " 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC; "
-description_hydrophilic.4  = " 4: Hydrophilic organic matter, OPAC; "
-description_hydrophilic.5  = " 5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ ; "
+description_hydrophilic.1  = " 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC "
+description_hydrophilic.2  = " 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC "
+description_hydrophilic.3  = " 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC "
+description_hydrophilic.4  = " 4: Hydrophilic organic matter, OPAC "
+description_hydrophilic.5  = " 5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ "
 description_hydrophilic.6  = " 6: Secondary organic aerosol - biogenic, Moise et al 2015 ; "
 description_hydrophilic.7 = " 7: Secondary organic aerosol - anthropogenic, Moise et al 2015 ; "
-description_hydrophilic.8 = " 8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ ; "
-description_hydrophilic.9 = " 9: Fine mode Nitrate, GLOMAP ; "
-description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMA "
+description_hydrophilic.8 = " 8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ "
+description_hydrophilic.9 = " 9: Fine mode Nitrate, GLOMAP "
+description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMAP "
 
 contact      = 'ramiro.checa-garcia@ecmwf.int'
 institution  = 'ECMWF'
-experiment   = 'testing new software: ifs_aer_opt.jl'
+experiment   = 'testing new software'

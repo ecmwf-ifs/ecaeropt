@@ -30,8 +30,8 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
-opt_model   = "Hess1988"
+opt_model   = "OPAC"
 aer_type    = "black_carbon_Hess"
-opt_info    = "OPAC"
-ifs         = [ "CY46R1", "CY48R1" ]
-revised     = 2022-11-15
+opt_info    = "Hess1988"
+ifs         = [ "CY46R1", "CY48R1", "CY49R1" ]
+revised     = 2023-02-20

@@ -207,7 +207,7 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
     """
 
-    dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD'
+    dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD', 'dd5':'DD', 'dd6':'DD'
                , 'org_dry': 'OM', 'om_dry': 'OM'
                , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC', 'bc4': 'BC'
                , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
@@ -236,7 +236,7 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
 def create_hydro_ncname_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
-    dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD'
+    dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD','dd5':'DD', 'dd6':'DD'
                , 'org_dry': 'OM', 'om_dry': 'OM'
                , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC'
                , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'

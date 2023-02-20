@@ -77,10 +77,52 @@ def mie_to_aeropt(aerconf, out, engine):
       aeropt  (object) : returns an aerosols optical properties object.
 
     """
-    znr, zni, ext, omg, asy, lidar, mass, ph, qval = out
+    
+    def _check_scaling(lbins):
+       nlbin = lbins[-1]
+       if len(lbins)%nlbin==0:
+           return True
+       else:
+           return False
+       return
+
+
+    znr, zni, ext, omg, asy, lidar, mass, ph, qval = out 
+
+    if aerconf.scaling_file != None:
+        scaling = np.loadtxt(aerconf.scaling_file).T
+        if _check_scaling(scaling[4]):
+           bins    = scaling[4] 
+           nbin    = int(bins[-1])
+           nwl     = int(len(bins)/nbin)
+           sca_wl  = scaling[0].reshape(nwl,nbin) * 1.e-6
+           sca_ext = scaling[1].reshape(nwl,nbin)
+           sca_ssa = scaling[2].reshape(nwl,nbin)
+           sca_asy = scaling[3].reshape(nwl,nbin)
+           wl      = aerconf.lambda_out
+           print(wl)
+           s_ext   = np.zeros((len(wl), nbin))
+           s_ssa   = np.zeros((len(wl), nbin))
+           s_asy   = np.zeros((len(wl), nbin))
+           for nb in range(nbin):
+               s_ext[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_ext[:,nb])
+               s_ssa[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_ssa[:,nb])
+               s_asy[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_asy[:,nb])
+           print(s_ext.shape, ext.shape)
+           print(ext)
+           
+           if len(ext.shape) == 3:
+              for nrh in range(ext.shape[1]):
+                  ext[:,nrh,:] = ext[:,nrh,:] * s_ext[:,:]
+                  omg[:,nrh,:] = omg[:,nrh,:] * s_ssa[:,:]
+                  asy[:,nrh,:] = asy[:,nrh,:] * s_asy[:,:]
+           else:
+               ext[:,:] = ext[:,:] * s_ext[:,:] 
+               omg[:,:] = omy[:,:] * s_ssa[:,:]
+               asy[:,:] = asy[:,:] * s_asy[:,:]
 
     return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
-                       ph, aerconf.angles, aerconf.nmumax, engine)
+                   ph, aerconf.angles, aerconf.nmumax, engine)
 
 class aerosol:
     """Class to store a complete aerosol configuration
@@ -122,7 +164,7 @@ class aerosol:
     def __init__(self, kind, r0 , sigma_g, Ntot, rho, bins_min, bins_max, rh_tab, rh_growth, 
                  ri_file  , aer_type, ext_scaling, lambda_out, ri_nrh, NInp, Ntot_mix,
                  nb_lambda, Ndis, size_bins, rh_int, config_file, wl_file, nmumax, angles,
-                 ri_lambdatb, znr_tab, zni_tab):
+                 ri_lambdatb, znr_tab, zni_tab, scaling_file ):
 
        # It is good to group these also in classes: distribution, bins, properties,....
        self.kind        = kind
@@ -153,6 +195,10 @@ class aerosol:
        self.ri_lambdatab= ri_lambdatb
        self.znr_tab     = znr_tab
        self.zni_tab     = zni_tab
+       # Here we can add a new item: self.scaling => which is one file per bin.
+       # this will not be used until we estimate optical properties
+       # so it is after run the engine.
+       self.scaling_file= scaling_file
 
     def __str__(self):
        a = []
@@ -206,6 +252,8 @@ class aerosol:
        a.append("        ri lambda  dims : " + str(self.ri_lambdatab.shape)) 
        a.append("        ri real    dims : " + str(self.znr_tab.shape     )) 
        a.append("        ri imag    dims : " + str(self.zni_tab.shape     )) 
+       if self.scaling != None:
+            a.append("\n **** SCALING PRESENT ")
        return "\n".join(a)
 
 
@@ -238,6 +286,11 @@ def readconf(config_file, angles, wl_out="none", debug=False):
 
 
     conf = toml.load(config_file, _dict=dict)
+
+    if "scaling_file" in conf["optical"]:
+        scaling_file = conf["optical"]["scaling_file"]
+    else:
+        scaling_file = None
 
     # Distribution ====================================
     dist = conf["distribution"]["lognormal"]
@@ -327,12 +380,14 @@ def readconf(config_file, angles, wl_out="none", debug=False):
 
     Ndis   = len(r0)
     size_bins = len(bins_min)
+    
+
 
     return aerosol(kind, r0 , sigma_g, Ntot, rho, bins_min, bins_max, rh_tab,
                     rh_growth, ri_file  , aer_type, ext_scaling, lambda_out,
                     ri_nrh, NInp, Ntot_mix, nb_lambda, Ndis, size_bins, rh_int,
                     config_file, wl_file, nmumax, np.array(angles), ri_lambdatab,
-                    znr_tab, zni_tab)
+                    znr_tab, zni_tab, scaling_file)
 
 
 

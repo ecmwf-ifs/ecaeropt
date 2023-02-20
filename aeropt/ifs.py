@@ -515,7 +515,8 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
         if dd_phi[iphi][3]=="nobinned":
            bin_hydrophilic[iphi]=dd_phi[iphi][1]
         else:
-           bin_hydrophilic[iphi]=dd_pho[iphi][1]+1
+           bin_hydrophilic[iphi]=dd_phi[iphi][1]+1
+
         optmod_philic[iphi] = to_arr(dd_phi[iphi][0].getncattr("optical_model"),15,'S') 
         code_philic[iphi]=to_arr(dd_phi[iphi][2], 2, 'S')
         if "component" in dd_phi[iphi][0]["size_bin_min"].dimensions:

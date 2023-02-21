@@ -207,13 +207,13 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
     """
 
-    dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD', 'dd5':'DD', 'dd6':'DD'
-               , 'org_dry': 'OM', 'om_dry': 'OM'
-               , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC', 'bc4': 'BC'
-               , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
-               , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
-               , 'soab': 'OB', 'soaa': 'OA'
-               , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI', 'ssu': 'SU'}
+    #dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD', 'dd5':'DD', 'dd6':'DD'
+    #           , 'org_dry': 'OM', 'om_dry': 'OM'
+    #           , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC', 'bc4': 'BC'
+    #           , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
+    #           , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
+    #           , 'soab': 'OB', 'soaa': 'OA'
+    #           , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI', 'ssu': 'SU'}
 
     d_cdf_hydro={}
 
@@ -236,13 +236,13 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
 def create_hydro_ncname_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
 
-    dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD','dd5':'DD', 'dd6':'DD'
-               , 'org_dry': 'OM', 'om_dry': 'OM'
-               , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC'
-               , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
-               , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
-               , 'soab': 'OB', 'soaa': 'OA'
-               , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI', 'ssu': 'SU'}
+    #dic_code = {'dd1': 'DD', 'dd2': 'DD', 'dd3': 'DD', 'dd4': 'DD','dd5':'DD', 'dd6':'DD'
+    #           , 'org_dry': 'OM', 'om_dry': 'OM'
+    #           , 'bc1': 'BC', 'bc2': 'BC', 'bc3': 'BC'
+    #           , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
+    #           , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
+    #           , 'soab': 'OB', 'soaa': 'OA'
+    #           , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI', 'ssu': 'SU'}
 
     d_nc_hydro={}
     for ii in range(nhydro):
@@ -458,6 +458,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
         #print(dd_pho[ipho][0]["ref_idx_img" ][:].shape)
         #print(dd_pho[ipho][0]["ref_idx_img" ].dimensions) 
         optmod_phobic[ipho] = to_arr(dd_pho[ipho][0].getncattr("optical_model"),15,'S')
+
         if dd_pho[ipho][3]=="nobinned":
            bin_hydrophobic[ipho]=dd_pho[ipho][1]
         else:

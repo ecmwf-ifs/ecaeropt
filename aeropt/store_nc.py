@@ -205,7 +205,17 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
        size_bim_max
        angle
     """
-    
+    def _alleq(lst):
+        leq = [False]*len(lst)
+        for i,x in enumerate(lst):
+            if x == lst[0]:
+                leq[i]=True
+        if False in leq:
+            return False
+        else:
+            return True
+
+        return
     aer = laer_conf[0]
 
     num_components = len(laer_conf)
@@ -224,7 +234,18 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
     ds.description = ("Aerosol Optical Properties of a mixed aerosol with "
                      + str(num_components)+" components")
     ds.history     = "Created "+str_today
-    ds.optical_model = "External-Mixing"
+
+    lopticalmodel = [None]*len(laer_conf)
+    for iaer, aerconf in enumerate(laer_conf):    
+        lopticalmodel=toml.load(aerconf.config_file, _dict=dict)["tags"]["opt_model"]
+
+    if _alleq(lopticalmodel):
+        ds.optical_model = lopticalmodel[0]
+    else:
+        print(" ==> INCONSISTENCT in OPTICAL MODEL OF AEROSOL-EXTERNAL MIXTURE")
+        print(" ==> Revise configuration files: ")
+        for ii in [a.config_file for a in laerconf]:
+            print(" -> File: ",ii)
 
     str_config       = "Configuration files   : "+",".join([aer.config_file for aer in laer_conf])
     str_refidx       = "Refractive index files: "+",".join([aer.ri_file for aer in laer_conf])

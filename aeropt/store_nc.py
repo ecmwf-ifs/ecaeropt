@@ -237,16 +237,16 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
 
     lopticalmodel = [None]*len(laer_conf)
     for iaer, aerconf in enumerate(laer_conf):    
-        lopticalmodel=toml.load(aerconf.config_file, _dict=dict)["tags"]["opt_model"]
+        lopticalmodel[iaer]=toml.load(aerconf.config_file, _dict=dict)["tags"]["opt_model"]
 
     if _alleq(lopticalmodel):
         ds.optical_model = lopticalmodel[0]
     else:
         print(" ==> INCONSISTENCT in OPTICAL MODEL OF AEROSOL-EXTERNAL MIXTURE")
         print(" ==> Revise configuration files: ")
-        for ii in [a.config_file for a in laerconf]:
-            print(" -> File: ",ii)
-
+        for ii, optmodel in zip([a.config_file for a in laer_conf], lopticalmodel):
+            print(" -> File: ",ii, optmodel)
+        exit()
     str_config       = "Configuration files   : "+",".join([aer.config_file for aer in laer_conf])
     str_refidx       = "Refractive index files: "+",".join([aer.ri_file for aer in laer_conf])
 

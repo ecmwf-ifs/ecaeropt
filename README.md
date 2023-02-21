@@ -25,7 +25,7 @@
 To have a working version of this tool the steps are:
 
 ```
-git clone ssh://git@git.ecmwf.int/~parc/ecaeropt.git
+git clone ssh://git@git.ecmwf.int/~parc/ecaeropt.git  # This download the master branch (stable version)
 make build
 ```
 
@@ -82,5 +82,5 @@ You can also build documentation directly with `make docum`.
 You can use the code and report any issue or propose any new feature. Please, check also
 the documentation you can open the file **docs/build/html/index.html**
 
-
+If you want to contribute at coding level, there is a dev branch, where changes and implemented and evetually when full tested they are integrated in master branch. When a full set of features is included then we add a tag with the version. 
 

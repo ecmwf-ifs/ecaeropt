@@ -201,8 +201,8 @@ def ifs_testdim(dic_nciaer, runset):
     return dim_rh, dim_wl, ifsphobic, ifsphilic, dic_species
 
 def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
-    """Return a dictionary with the hydro species in the right other and the
-    corresponding ncfiles opened with python-netcdf4.
+    """Return a dictionary with the hydro species in the right order and the
+    corresponding ncfiles opened with python-netcdf4. Must be 2 chars.
 
 
     """
@@ -213,7 +213,7 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
                , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
                , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
                , 'soab': 'OB', 'soaa': 'OA'
-               , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI'}
+               , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI', 'ssu': 'SU'}
 
     d_cdf_hydro={}
 
@@ -225,11 +225,11 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
                else:
                     rhphobic=-1
                if ifs["aer"][ikey]["bin"]==1:
-                   d_cdf_hydro[ii-1]=(NCDataset(dic_nciaer[rev_species[ikey]]), 0, dic_code[ikey], "nobinned", rhphobic)
+                   d_cdf_hydro[ii-1]=(NCDataset(dic_nciaer[rev_species[ikey]]), 0, ifs["aer"][ikey]["code"], "nobinned", rhphobic)
                else:
                    for jj in range(ifs["aer"][ikey]["bin"]): 
                        n = ii+jj-1
-                       d_cdf_hydro[n]=(NCDataset(dic_nciaer[rev_species[ikey]]), jj, dic_code[ikey], "binned", rhphobic)
+                       d_cdf_hydro[n]=(NCDataset(dic_nciaer[rev_species[ikey]]), jj, ifs["aer"][ikey]["code"], "binned", rhphobic)
 
     return d_cdf_hydro
 
@@ -242,18 +242,18 @@ def create_hydro_ncname_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
                , 'su_dry': 'SU', 'ss': 'SS', 'org': 'OM', 'om': 'OM'
                , 'su': 'SU', 'su1': 'SU', 'su2': 'SU'
                , 'soab': 'OB', 'soaa': 'OA'
-               , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI'}
+               , 'ammf': 'AM', 'nif': 'NI', 'nic': 'NI', 'ssu': 'SU'}
 
     d_nc_hydro={}
     for ii in range(nhydro):
         for ikey in keys(ifs["aer"]):
             if ifs["aer"][ikey]["position"]==ii and ifs["aer"][ikey]["type"]==hydro:
                 if ifs["aer"][ikey]["bin"]==1:
-                    d_nc_hydro[ii-1]=(dic_nciaer[rev_species[ikey]],0, dic_code[ikey])
+                    d_nc_hydro[ii-1]=(dic_nciaer[rev_species[ikey]],0, ifs["aer"][ikey]["code"])
                 else:
                     for jj in range(ifs["aer"][ikey]["bin"]):
                        n = ii+jj-1
-                       d_nc_hydro[n]=(dic_nciaer[rev_species[ikey]], jj, dic_code[ikey])
+                       d_nc_hydro[n]=(dic_nciaer[rev_species[ikey]], jj, ifs["aer"][ikey]["code"])
 
     return d_nc_hydro
 
@@ -334,7 +334,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
 
     # Hydrophilic Variables ====================================================
 
-    bin_hydrophilic           = ds.createVariable("bin_hydrophilic", 'f4', ("hydrophilic",))
+    bin_hydrophilic           = ds.createVariable("bin_hydrophilic", 'i4', ("hydrophilic",))
     bin_hydrophilic.long_name = "Hydrophilic aerosol size bin"
     bin_hydrophilic.comment   = "A value of zero indicates that this aerosol type is not partitioned into bins."
     
@@ -381,7 +381,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
 
     # Hydrophobic Variables ====================================================
 
-    bin_hydrophobic           = ds.createVariable("bin_hydrophobic", 'f4', ("hydrophobic",))
+    bin_hydrophobic           = ds.createVariable("bin_hydrophobic", 'i4', ("hydrophobic",))
     bin_hydrophobic.long_name = "Hydrophobic aerosol size bin" ;
     bin_hydrophobic.comment   = "A value of zero indicates that this aerosol type is not partitioned into bins." 
 

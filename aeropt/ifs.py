@@ -225,7 +225,11 @@ def create_hydro_cdf_dict(nhydro, hydro, rev_species, dic_nciaer, ifs):
                else:
                     rhphobic=-1
                if ifs["aer"][ikey]["bin"]==1:
-                   d_cdf_hydro[ii-1]=(NCDataset(dic_nciaer[rev_species[ikey]]), 0, ifs["aer"][ikey]["code"], "nobinned", rhphobic)
+                   if "pbin" in ifs["aer"][ikey].keys():
+                       pbin = ifs["aer"][ikey]["pbin"]
+                   else:
+                       pbin = 0
+                   d_cdf_hydro[ii-1]=(NCDataset(dic_nciaer[rev_species[ikey]]), 0, ifs["aer"][ikey]["code"], "nobinned", rhphobic, pbin)
                else:
                    for jj in range(ifs["aer"][ikey]["bin"]): 
                        n = ii+jj-1
@@ -460,7 +464,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
         optmod_phobic[ipho] = to_arr(dd_pho[ipho][0].getncattr("optical_model"),15,'S')
 
         if dd_pho[ipho][3]=="nobinned":
-           bin_hydrophobic[ipho]=dd_pho[ipho][1]
+           bin_hydrophobic[ipho]=dd_pho[ipho][5]
         else:
            bin_hydrophobic[ipho]=dd_pho[ipho][1]+1
 
@@ -514,7 +518,7 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
     for iphi in range(ifsphilic):
        
         if dd_phi[iphi][3]=="nobinned":
-           bin_hydrophilic[iphi]=dd_phi[iphi][1]
+           bin_hydrophilic[iphi]=dd_phi[iphi][5]
         else:
            bin_hydrophilic[iphi]=dd_phi[iphi][1]+1
 

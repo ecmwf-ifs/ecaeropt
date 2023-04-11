@@ -96,5 +96,29 @@ The mie-core calculates :math:`Q_{e,s,a}` (as well as asymmetry parameter) there
 in the mie-core the important parameter is the mie-size-parameter: :math:`x=\frac{2\pi r}{\lambda}=\frac{D\pi}{\lambda}`
 
 
+In the case of a multimodal lognormal distribution with m modes:
 
+.. math::
+
+   n(r)d(lnr)=\sum_{i=1}^{m} N_{i,tot}\frac{1}{\sqrt{2\pi}ln(\sigma_{i,g})}\exp\left[-\frac{1}{2}\left(\frac{ln(r)-ln(r_{i,0})}{\sigma_{i,g}}\right)^{2}\right]
+
+.. note:: How this is dscribed in the code
+   
+   In each configuration file which described a single aerosol species (either multimodal or unimodal) the parameters of the above equation are:
+   
+   lognormal.r0       
+   lognormal.sigma_g 
+   lognormal.Ntot
+
+   if they are a single value, then we have a unimodal distribution, if they are a list of values then we have a multimodal distribution. For example, in the case
+   of black carbon models we have only one single mode with values:
+
+   lognormal.r0 = 0.0118
+   lognormal.sigma_g = 2.0
+   lognormal.Ntot = 1.0
+   
+   then we are describing: 
+   
+     
+   :math:`1.0\frac{1}{\sqrt{2\pi}ln(2.0)}\exp\left[-\frac{1}{2}\left(\frac{ln(r)-ln(0.0118)}{2}\right)^{2}\right]`
 

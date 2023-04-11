@@ -28,7 +28,8 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
-opt_model= "OPAC"
+#opt_model= "OPAC"
+opt_model="External-Mixing"
 aer_type = "organic_mix"
 ifs      = "CY46R1"
 revised  = 2022-11-15

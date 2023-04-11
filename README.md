@@ -18,6 +18,7 @@
      v1.0     Added IFS-CY49R1 with updated optical models from S. Remy
      v1.1     Added optical automatic plot functionality per specie of optical properties 
               in the setting files. 
+     v1.16    Several fixes of issues reported by Tim
 ```
 
 # How to install

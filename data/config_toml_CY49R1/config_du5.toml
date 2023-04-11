@@ -32,7 +32,7 @@ ext_scaling = 1.0
 scaling_file= "data/non_sphere_scaling/Kandler_nonsphere_scaling"
 
 [tags]
-opt_model= "CompositePhi"
+opt_model= "CompositePhiSca"
 aer_type = "dust_CYR481_philic_scaled"
 ifs      = "CY49R1"
 revised  = 2023-02-10

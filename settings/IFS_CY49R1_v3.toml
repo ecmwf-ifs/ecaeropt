@@ -33,7 +33,7 @@ wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wave
 
 engine      = "mie_Boucher_Bozzo"                   # indicates the default code to calculate the optical properties
 
-nangle      = 180                                   # =0          -> no phase function calculated
+nangle      = 10                                    # =0          -> no phase function calculated
                                                     # =n          -> number of equistant angles for phase function
                                                     # ="filename" -> read angles from file
 
@@ -151,11 +151,11 @@ aer.bc4     = { species="bc4"       , code="BC", type="phobic", position= 19, bi
 aer.ss      = { species="ss"        , code="SS", type="philic", position= 1 , bin=3 }
 aer.org     = { species="organic"   , code="OM", type="philic", position= 4 , bin=1 }
 aer.su      = { species="su"        , code="SU", type="philic", position= 5 , bin=1 }
-aer.soab    = { species="SOA1"      , code="OM", type="philic", position= 6 , bin=1 }
-aer.soaa    = { species="SOA2"      , code="OM", type="philic", position= 7 , bin=1 }
+aer.soab    = { species="SOA1"      , code="OB", type="philic", position= 6 , bin=1 }
+aer.soaa    = { species="SOA2"      , code="OA", type="philic", position= 7 , bin=1 }
 aer.ammf    = { species="NH3_fine"  , code="AM", type="philic", position= 8 , bin=1 }
-aer.nif     = { species="ni_fine"   , code="NI", type="philic", position= 9 , bin=1 }
-aer.nic     = { species="ni_coarse" , code="NI", type="philic", position= 10, bin=1 }
+aer.nif     = { species="ni_fine"   , code="NI", type="philic", position= 9 , bin=1, pbin=1 }
+aer.nic     = { species="ni_coarse" , code="NI", type="philic", position= 10, bin=1, pbin=2 }
 
 # New optical models
 aer.om      = { species="om"        , code="OM", type="philic", position= 11, bin=1 }

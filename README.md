@@ -2,6 +2,15 @@
 # License
   - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE file in main directory.
 
+# External codes included/used:
+
+  - Currently, the code uses the following Fortran codes:
+    - **Mie-Code**: originally developed by Olivier Boucher. This code has been modified to be modular 
+                and a ISO-C-binnding has been added. With the new modular structure tests for the 
+                series of coefficients an and bn, as well as, single sphere has been added. 
+    - **T-Matrix**: code developed by Dr. Michael I. Mishchenko. This code was programmed in F77. It has been also modified
+                to Fortran 90. The COMMON and GOTO statements has been removed.
+
 # Contact Info
 
   - Purpose:  New code to create IFS aerosol optical information
@@ -18,7 +27,7 @@
      v1.0     Added IFS-CY49R1 with updated optical models from S. Remy
      v1.1     Added optical automatic plot functionality per specie of optical properties 
               in the setting files. 
-     v1.16    Several fixes of issues reported by Tim
+     v1.16    Several fixes of issues reported by Tim.
 ```
 
 # How to install

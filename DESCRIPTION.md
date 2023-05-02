@@ -1,6 +1,4 @@
 
-
-
 # Description
 
 Tool to calculate optical properties of different kind of aerosols
@@ -19,31 +17,42 @@ The tool is composed of several elements:
 ## Folder Structure
 ```
 .
-├── README.md             => this file
-├── TODO.org              => todo items to improve code
-├── ecaeropt              => main program executable [executable script]
-├── build.sh              => exectuable script to build the engine libraries
+├── README.md              => GENERAL INFO
+├── DESCRIPTION.md         => THIS file: list of original directories 
+├── TODO.org               => todo items to improve code
+├── ecaeropt               => main program executable [executable script]
+├── Makefile               => easy acces to scripts to build engines and doc, 
+│                             and run several cases.
+├── data                   => data-files
+│   ├── config_toml        => translation to TOML structured files
+│   ├── config_toml_CY46R1 => config TOML files for CY48R1 cycle
+│   ├── config_toml_CY48R1 => new TOML files for CY48R1 cycle
+│   ├── config_toml_CY49R1 => testing TOML files for next cycle
+│   ├── config_toml_new    => new config TOML files for quick test
+│   ├── refr_idx           => refractive index files
+│   ├── non_sphere_scaling => scaling factor for non-spherical particles
+│   └── wavelengths        => wavelengths files
 │
-├── data                  => data-files
-│   ├── config_toml       => translation to TOML structured files
-│   ├── config_toml_tests => new config TOML files for quick tests
-│   ├── refr_idx          => refractive index files
-│   └── wavelengths       => wavelengths files
-│
-├── docs                  => documentation using sphinx
+├── docs                   => documentation using sphinx
 │
 ├── engines
-│   └── mie_Boucher_Bozzo => mie engine in Fortran code
+│   └── mie_Boucher_Bozzo  => mie engine in Fortran code
 │
-├── outputnc              => default folder to store results
-│   │
+├── outputnc               => default folder to store single netcdf results
 │   ├── dust_Dubovik_optics_IFS_2022-09-20.nc
 │   ├── ...
 │   └── sulfate_optics_IFS_2022-09-20.nc
 │
+├── outputplt              => default folder to store plots
+│   ├── ...
+│   └── ....png
+│
 ├── settings              => complete settings files for calculations
-│   ├── test_ifs.toml
-│   └── test_single_mixing.toml
+│   ├── IFS_CY46R1.toml
+│   ├── ...
+│   └── IFS_CY49R1_v3.toml
+│
+├── scripts               => script used for gnu make system
 │
 ├── aeropt                => source code of tool (not engines)
 │  

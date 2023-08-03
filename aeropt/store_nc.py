@@ -1,26 +1,39 @@
+###########################################################################################
+# aeropt/store_nc.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    30-Oct-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#
+#      FUNCTIONS        
+#        * store_nc_single   :
+#        * store_nc_mixture  :
+##########################################################################################
 
-
- #########################################################################################################
- #                                                                                                       #
- # aeropt/store_nc.py                                                                                    #
- #                                                                                                       #
- # author: Ramiro Checa-Garcia                                                                           #
- # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
- #                                                                                                       #
- # history:                                                                                              #
- #                                                                                                       #
- #     26-Oct-2022     Translated from Julia to Python                                                   #
- #                                                                                                       #
- # info:                                                                                                 #
- #    There are two functions that process a given aerosol either single or mixed                        #
- #                                                                                                       #
- #                                                                                                       #
- #########################################################################################################
 
 
 from netCDF4 import Dataset as NCDataset
 from datetime import datetime
-import toml
+
+try:
+    import tomllib as toml
+except ModuleNotFoundError:
+    import toml
 
 def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCDF4"):
     """
@@ -78,11 +91,15 @@ def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCD
 
 
     ds.description               = "Single aerosol netcdf file created with ecaeropt code from ECMWF"
-    ds.history                   = "Created " + str_today
+    ds.history                   = "Created " + str_today+" with the ecaeropt tool v1.0"
+
     ds.source_config             = str_config
     ds.source_refidx             = str_refind
     ds.source_size_distribution  = str_radii+str_sigma+str_densi+str_ntot
     ds.optical_model             = opticalmodel
+
+    ds.institution   = "European Centre for Medium-Range Weather Forecasts (ECMWF)."
+    ds.contact       = "ramiro.checa-garcia@ecmwf.int"
 
     s2 = ("wavelength","rel_hum",)
     s3 = ("wavelength","rel_hum","size_bin",)
@@ -176,7 +193,7 @@ def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCD
 
 
 
-def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCDF4"):
+def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCDF4", opt_model=None):
     """
     Creates a netcdf with the optical properties of a mixture aerosol species based on
     aer and aeropt objects (usually derived from config files)
@@ -233,25 +250,32 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
     # Define a global attribute
     ds.description = ("Aerosol Optical Properties of a mixed aerosol with "
                      + str(num_components)+" components")
-    ds.history     = "Created "+str_today
+    ds.history     = "Created "+str_today+" with the ecaeropt tool v1.0"
 
-    lopticalmodel = [None]*len(laer_conf)
-    for iaer, aerconf in enumerate(laer_conf):    
-        lopticalmodel[iaer]=toml.load(aerconf.config_file, _dict=dict)["tags"]["opt_model"]
+    if opt_model == None:
+        lopticalmodel = [None]*len(laer_conf)
+        for iaer, aerconf in enumerate(laer_conf):    
+            lopticalmodel[iaer]=toml.load(aerconf.config_file, _dict=dict)["tags"]["opt_model"]
 
-    if _alleq(lopticalmodel):
-        ds.optical_model = lopticalmodel[0]
-    else:
-        print(" ==> INCONSISTENCT in OPTICAL MODEL OF AEROSOL-EXTERNAL MIXTURE")
-        print(" ==> Revise configuration files: ")
-        for ii, optmodel in zip([a.config_file for a in laer_conf], lopticalmodel):
-            print(" -> File: ",ii, optmodel)
-        exit()
+        if _alleq(lopticalmodel):
+            ds.optical_model = lopticalmodel[0]
+        else:
+            print(" ==> INCONSISTENCT in OPTICAL MODEL OF AEROSOL-EXTERNAL MIXTURE")
+            print(" ==> Revise configuration files: ")
+            for ii, optmodel in zip([a.config_file for a in laer_conf], lopticalmodel):
+                print(" -> File: ",ii, optmodel)
+            exit()
+    else: 
+        ds.optical_model = opt_model
+
+
     str_config       = "Configuration files   : "+",".join([aer.config_file for aer in laer_conf])
     str_refidx       = "Refractive index files: "+",".join([aer.ri_file for aer in laer_conf])
 
     ds.configuration = str_config
     ds.refr_index    = str_refidx
+    ds.institution   = "European Centre for Medium-Range Weather Forecasts (ECMWF)."
+    ds.contact       = "ramiro.checa-garcia@ecmwf.int"
     #str_radii="Mode radius: ("*join([string(a) for a in aer.r0],",")*") microns "
     #str_sigma="; geometric standard deviation: ("*join([string(a) for a in aer.σ_g],",")*")"
     #str_densi="; density "*string(aer.ρ)*"kg/m3 "

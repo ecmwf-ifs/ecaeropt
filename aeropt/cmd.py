@@ -1,22 +1,36 @@
 
- ###########################################################################################
- #                                                                                         #
- # aeropt/cmd.py                                                                           #
- #                                                                                         #
- # author: Ramiro Checa-Garcia                                                             #
- # email:  ramiro.checa-garcia@ecmwf.int                                                   #
- #                                                                                         #
- # history:                                                                                #
- #    - Nov-2022 [Ramiro Checa-Garcia]      1st tested version                             #
- #                                                                                         #
- # info:                                                                                   #
- #        CLASSES                                                                          #
- #        * runinfo         : encapsulate information of current run                       #
- #                                                                                         #
- #        FUNCTIONS                                                                        #
- #        * fill_runinfo    : creates a runinfo object                                     #
- #        * cli             : uses the argparse library to create a cli application        #                
- ###########################################################################################
+
+###########################################################################################
+# aeropt/cmd.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    02-Nov-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      Provides CLASSES and FUNCTIONS:
+#
+#      CLASSES        
+#        * runinfo         : encapsulate information of current run                       
+#                                                                                         
+#      FUNCTIONS                                                                        
+#        * fill_runinfo    : creates a runinfo object                                     
+#        * cli             : uses the argparse library to create a cli application             
+##########################################################################################
+
 
 
 import os
@@ -65,12 +79,17 @@ def fill_runinfo(codeversion, debug, logfile):
         runinfo (class object)
 
     """
+    import pwd
+    def username():
+        return pwd.getpwuid( os.getuid() )[ 4 ]
+
     today   = datetime.today().strftime('%Y-%m-%d')
     machine = os.uname()[-1]
     try:
-        user    = os.getlogin()
+        user   = username()
     except: 
-        user   = "----"
+        user   = os.getlogin()
+
     version = codeversion
     runpath = os.getcwd()
     gittag  = os.popen("git tag").read()

@@ -1,22 +1,34 @@
 
- ###########################################################################################
- #                                                                                         #
- # aeropt/engine.py                                                                        #
- #                                                                                         #
- # author: Ramiro Checa-Garcia                                                             #
- # email:  ramiro.checa-garcia@ecmwf.int                                                   #
- #                                                                                         #
- # history:                                                                                #
- #    - Nov-2022 [Ramiro Checa-Garcia]      1st tested version                             #
- #                                                                                         #
- # info:                                                                                   #
- #      This file is likely to be extended with new functions, one per inferface/wrapper   #
- #      to external libraries.                                                             # 
- #                                                                                         #
- #      FUNCTIONS                                                                          #
- #        * readconf        : creates an aerosol object based in configuration file        #
- #        * mie_to_aeropt   : creates an aeropt object from outputs of a mie code          #
- ###########################################################################################
+
+##########################################################################################
+# aeropt/aer.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    05-Nov-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      This file is likely to be extended with new functions, one per inferface/wrapper   
+#      to external libraries.                                                              
+#                                                                                         
+#      FUNCTIONS   
+#       * test_approx   : Implemented for future tests 
+#       * test_engine   : Test engine (mie-spherical) for single spheres
+#       * interface_mie : Interface for the external mie code engine.
+###########################################################################################
 
 
 import sys
@@ -24,12 +36,10 @@ import numpy as np
 import pytest
 
 import aeropt.aer as aer
-from engines.mie_Boucher_Bozzo.libs.mie_BB import mie_boucher_bozzo as mieBB
-
+from engines.mie.libs.mie import mie as mie
 
 
 def test_approx(val, ref, tol, info, passed, failed):
-
 
     if val == pytest.approx(ref, tol):
         print("             Passed     : ",info)
@@ -104,7 +114,7 @@ def test_engine(enginename, tol=1.e-7):
 
     return
 
-def interface_mie_Boucher_Bozzo(aerconf, logfile, debug=False, mix=0, verbose=0):
+def interface_mie(aerconf, logfile, debug=False, mix=0, verbose=0):
     """
     Interface to calculate optical properties given an object of aerosol configurations
 
@@ -149,13 +159,13 @@ def interface_mie_Boucher_Bozzo(aerconf, logfile, debug=False, mix=0, verbose=0)
     # tmp/datetime_mieBB.log
 
     sys.stdout.flush()
-    out = mieBB.main_mie_aerosols(aerconf.lambda_out, aerconf.bins_min,
-                                  aerconf.bins_max, aerconf.sigma_g,
-                                  aerconf.r0, aerconf.Ntot, aerconf.rho,
-                                  aerconf.rh_tab, aerconf.rh_growth,
-                                  cutoff_radius, idebug, aerconf.ri_lambdatab,
-                                  aerconf.znr_tab, aerconf.zni_tab,
-                                  aerconf.angles )
+    out = mie.main_mie_aerosols(aerconf.lambda_out, aerconf.bins_min,
+                                aerconf.bins_max, aerconf.sigma_g,
+                                aerconf.r0, aerconf.Ntot, aerconf.rho,
+                                aerconf.rh_tab, aerconf.rh_growth,
+                                cutoff_radius, idebug, aerconf.ri_lambdatab,
+                                aerconf.znr_tab, aerconf.zni_tab,
+                                aerconf.angles )
 
     aeropt = aer.mie_to_aeropt(aerconf, out, "mie_Boucher_Bozzo")
     

@@ -1,30 +1,43 @@
 
-
- ###########################################################################################
- #                                                                                         #
- # aeropt/aer.py                                                                           #
- #                                                                                         #
- # author: Ramiro Checa-Garcia                                                             #
- # email:  ramiro.checa-garcia@ecmwf.int                                                   #
- #                                                                                         #
- # history:                                                                                #
- #    - Oct-2022 [Ramiro Checa-Garcia]      1st tested version                             #
- #                                                                                         #
- # info:                                                                                   #
- #        CLASSES                                                                          #
- #        * aerosol         : one has all the information of the aerosol configuration.    #
- #        * aeropt          : encapsulate the single aerosol optical properties            #
- #                                                                                         #
- #        FUNCTIONS                                                                        #
- #        * readconf        : creates an aerosol object based in configuration file        #
- #        * mie_to_aeropt   : creates an aeropt object from outputs of a mie code          #                
- #        * mixing          : calculates an external mixing aerosol given the aeropt of    #
- #                            the components                                               #
- ###########################################################################################
-
+###########################################################################################
+# aeropt/aer.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    10-Oct-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      Provides CLASSES and FUNCTIONS:
+#
+#      CLASSES                                                                          
+#        * aerosol         : one has all the information of the aerosol configuration.    
+#        * aeropt          : encapsulate the single aerosol optical properties            
+#                                                                                         
+#      FUNCTIONS                                                                        
+#        * readconf        : creates an aerosol object based in configuration file        
+#        * mie_to_aeropt   : creates an aeropt object from outputs of a mie code       
+#        * mixing          : calculates an external mixing aerosol given the aeropt of    
+#                            the components                                               
+##########################################################################################
 
 import numpy as np
-import toml
+try:
+    import tomllib as toml
+except ModuleNotFoundError:
+    import toml
 
 
 class aeropt:
@@ -38,7 +51,7 @@ class aeropt:
        ssa   (np.array): single scattering albedo
        asy   (np.array): asysmetry factor
        mass  (np.array): 
-       lidar (np.array):
+       lidar (np.array): 
        pfun  (np.array): phase function 
        angle (np.array): angles used for phase function
        nmux  (int)     :
@@ -79,7 +92,7 @@ def mie_to_aeropt(aerconf, out, engine):
     """
     
     def _check_scaling(lbins):
-       nlbin = lbins[-1]
+       nlbin = lbins[-1] 
        if len(lbins)%nlbin==0:
            return True
        else:
@@ -112,7 +125,7 @@ def mie_to_aeropt(aerconf, out, engine):
            print(ext)
            
            if len(ext.shape) == 3:
-              for nrh in range(ext.shape[1]):
+              for nrh in ra nge(ext.shape[1]):
                   ext[:,nrh,:] = ext[:,nrh,:] * s_ext[:,:]
                   omg[:,nrh,:] = omg[:,nrh,:] * s_ssa[:,:]
                   asy[:,nrh,:] = asy[:,nrh,:] * s_asy[:,:]
@@ -148,7 +161,7 @@ class aerosol:
        nb_lambda    (integer) : number of output wavelenghts (it would be the length of lambda_out)
        Ndis         (       ) : Ndis (number of modes in the lognormal distribution)
        size_bins    (float)   : size_bins (number of size bins)
-       rh_int       (integer) : size relative humidity arrays 
+       rh_int       (integ er) : size relative humidity arrays 
        config_file  (string)  : filepath of config file : where info and rules for optical properties are detailed
        wl_file      (string)  : filepath of output wavelenghts : lambda_out and nb_lambda are taken from this file.
        nmumax       (      )  : nmumax

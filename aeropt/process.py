@@ -1,20 +1,30 @@
-
- #########################################################################################################
- #                                                                                                       #
- # aeropt/process.py                                                                                     #
- #                                                                                                       #
- # author: Ramiro Checa-Garcia                                                                           #
- # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
- #                                                                                                       #
- # history:                                                                                              #
- #                                                                                                       #
- #     26-Oct-2022     Translated from Julia to Python                                                   #
- #                                                                                                       #
- # info:                                                                                                 #
- #    There are two functions that process a given aerosol either single or mixed                        #
- #                                                                                                       #
- #                                                                                                       #
- #########################################################################################################
+###########################################################################################
+# aeropt/process.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    26-Oct-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      Provides CLASSES and FUNCTIONS:
+#                                                                                         
+#      FUNCTIONS        
+#       * single        :
+#       * mixture       :
+##########################################################################################
 
 
 import sys
@@ -85,7 +95,7 @@ def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozz
     return ncoutname
 
 
-def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"):
+def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none", opt_model=None):
     """
     Process a set configuration files that define an externally mixed aerosol and 
     store  a netcdf file. Again nangle and wl_out  can overrride specific aspect 
@@ -162,7 +172,7 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
     print("\n         Storing results as netcdf with path:")
     print("         ", ncoutname )
 
-    store.store_nc_mixture(mix_aer, aer_mix_opt, rinfo, ncname=ncoutname)
+    store.store_nc_mixture(mix_aer, aer_mix_opt, rinfo, ncname=ncoutname, opt_model=opt_model)
 
 
     return ncoutname

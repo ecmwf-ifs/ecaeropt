@@ -1,3 +1,24 @@
+[comment]: ################################################################################
+[comment]: # README.md
+[comment]: #
+[comment]: #   (C) Copyright 2022- ECMWF.
+[comment]: #  
+[comment]: #   This software is licensed under the terms of the Apache Licence Version 2.0
+[comment]: #   which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+[comment]: # 
+[comment]: #   In applying this licence, ECMWF does not waive the privileges and immunities
+[comment]: #   granted to it by virtue of its status as an intergovernmental organisation
+[comment]: #   nor does it submit to any jurisdiction.
+[comment]: #
+[comment]: #  Author:
+[comment]: #     Ramiro Checa-Garcia. ECMWF
+[comment]: # 
+[comment]: #  Modifications:
+[comment]: #     10-Dec-2022   Ramiro Checa-Garcia    1st. version
+[comment]: #
+[comment]: #################################################################################
+
+
 
 # License
   - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE file in main directory.

@@ -1,27 +1,42 @@
+###########################################################################################
+# aeropt/modes.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    26-Oct-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      Provides the FUNCTIONS:
+#
+#      FUNCTIONS        
+#         * config_file_mode   :
+#         * info_mode          :
+#         * setting_file_mode  :
+#         * test_mode          :
+#         * compare_ifsnc      :
+#         * check_vars_nc      :
+##########################################################################################
 
 
- #########################################################################################################
- # aeropt/modes.py                                                                                       #
- #                                                                                                       #
- # author: Ramiro Checa-Garcia                                                                           #
- # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
- #                                                                                                       #
- # history:                                                                                              #
- #                                                                                                       #
- #    | Date          | Authors             | Short info                                              |  #
- #    |---------------|---------------------|---------------------------------------------------------|  #
- #    | 26-Oct-2022   | R. Checa-Garcia     | Translated from Julia                                   |  #
- #                                                                                                       #
- #                                                                                                       #
- # tested with: python 3.8                                                                               #
- #                                                                                                       #
- # info: define the different kind of run modes in which the code can be used                            #
- #                                                                                                       #
- # how to use:                                                                                           #
- #                                                                                                       #
- #########################################################################################################
+try:
+    import tomllib as toml
+except ModuleNotFoundError:
+    import toml
 
-import toml
+
 import os.path
 import subprocess 
 import numpy as np
@@ -131,7 +146,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
                     nc_mix = run.mixture( rinfo
                                         , aermix["lconf"] , aermix["ncname"]
                                         , aermix["nangles"], aermix["lengine"]
-                                        , wl_out=wl_out_default)
+                                        , wl_out=wl_out_default, opt_model=aermix["opt_model"])
                 if test==False:
                     dicnc_iaer[aermix["mixture"]]=nc_mix
                 else:
@@ -171,6 +186,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
                     print("\n      Aerosol Specie netcdf: ",specie)
                     plt.aerplt("refindex", dicnc_iaer[specie])
                     plt.aerplt("optical",  dicnc_iaer[specie])
+                    plt.aerplt("phasefunction",  dicnc_iaer[specie])
 
             if ifs_flag:
                 ifs_vers = runset["ifs"]["ifs_cycle"]

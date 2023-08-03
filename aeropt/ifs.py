@@ -1,23 +1,37 @@
 
- #########################################################################################################
- #                                                                                                       #
- # create_ifs.jl                                                                                         #
- #                                                                                                       #
- # author: Ramiro Checa-Garcia                                                                           #
- # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
- #                                                                                                       #
- # history:                                                                                              #
- #                                                                                                       #
- #     08-Oct-2022     Added the ifs process to create single netcdf with all species                    #
- #                     this is split in several functions to have also consistency test                  #
- #                                                                                                       #
- # info:                                                                                                 #
- #    There are functions to create a single netcdf with a set of aerosol species                        #
- #    - ifs_testdim           => perform few tests of consistency of rules to create ifs file            #
- #    - create_hydro_xxx_dict => create dictionaries to include aerosols netcdfs into ifs new file       #
- #    - create_ifs            => main function to create ifs netcdf file                                 #
- #                                                                                                       #
- #########################################################################################################
+#############################################################################################################
+# aeropt/ifs.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    10-Nov-2022   R. Checa-Garcia   1st. tested version
+#    12-Nov-2022   R. Checa-Garcia   Added the ifs process to create single netcdf with all species
+#                                    this is split in several functions to have also consistency test   
+#    25-Jan-2023   T. Stockdale      Checked to introduce volcanic aerosols
+#    28-Jan-2023   R. Checa-Garcia   Created function with 49R1 ifs netcdf final format
+#
+#                                                                                         
+# Info: 
+#    There are functions to create a single netcdf with a set of aerosol species   
+#
+#      FUNCTIONS                                                                        
+#        * ifs_testdim           : perform few tests of consistency of rules to create ifs file            
+#        * create_hydro_xxx_dict : create dictionaries to include aerosols netcdfs into ifs new file       
+#        * process_ifs           : main function to create ifs netcdf file                                                                                                    
+#        * process_ifs_49R1      : main function to create ifs netcdf file with 49R1 format           
+###########################################################################################################
 
 from pprint import pprint
 import numpy as np
@@ -271,8 +285,13 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
     ifs = runset["ifs"]
     dim_rh, dim_wl, ifsphobic, ifsphilic, rev_species = ifs_testdim(dic_nciaer, runset)
     str_today = datetime.today().strftime('%Y-%m-%d')
-   
-    outifsnc=ifs["netcdfname"]
+  
+
+    if ifs["netcdfname"]=="standard":
+        outifsnc="outputnc/store_ifsnc/aerosol_ifs_CY"+ifs["ifs_cycle"]+"_"+str_today.replace("-","")+".nc"
+    else:
+        outifsnc=ifs["netcdfname"]
+
     print("\n === Storing all the processed aerosols in a single netcdf \n")
 
     # Opening NC dataset  ======================================================
@@ -295,15 +314,11 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
     # Tuples with dimensions to define variables later on ======================
 
     s1rh = ("relative_humidity",)
-    #s2phi= ("relative_humidity","hydrophilic",)
     s2phi= ("hydrophilic", "relative_humidity",)
-    #s3phi= ("wavenumber","relative_humidity","hydrophilic",)
     s3phi= ("hydrophilic","relative_humidity","wavenumber",)
-    s2pho = ("hydrophobic","wavenumber",)
+    s2pho =("hydrophobic","wavenumber",)
 
     # Dimension variables  =====================================================
-
-    #code          = ds.createVariable("code_str", 'S2', ("code_str",))
 
     ν             = ds.createVariable("wavenumber", 'f4', ("wavenumber",))
     ν.units       = "cm-1",
@@ -313,13 +328,13 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
     rh.units      = "1"
     rh.long_name  = "Central relative humidity"
 
-    phi           = ds.createVariable("hydrophilic", 'f4', ("hydrophilic",))
-    phi.units     = "-"
-    phi.long_name = "hydrophilic index"
+    #phi           = ds.createVariable("hydrophilic", 'f4', ("hydrophilic",))
+    #phi.units     = "-"
+    #phi.long_name = "hydrophilic index"
 
-    pho           = ds.createVariable("hydrophobic", 'f4', ("hydrophobic",))
-    pho.units     = "-"
-    pho.long_name = "hydrophobic index"
+    #pho           = ds.createVariable("hydrophobic", 'f4', ("hydrophobic",))
+    #pho.units     = "-"
+    #pho.long_name = "hydrophobic index"
 
     # Defining variables  ======================================================
 
@@ -562,14 +577,13 @@ def process_ifs_49R1(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF3_CLAS
     description_hydrophilic = []
     for ihydro in range(ifsphilic):
         description_hydrophilic.append(metainfo["description_hydrophilic"][str(ihydro+1)])
-    ds.description_hydrophilic = " \n ".join(description_hydrophilic)
+    ds.description_hydrophilic = "\n ".join(description_hydrophilic)
 
     description_hydrophobic = []
     for ihydro in range(ifsphobic):
         description_hydrophobic.append(metainfo["description_hydrophobic"][str(ihydro+1)])
-    ds.description_hydrophobic = " \n ".join(description_hydrophobic)
+    ds.description_hydrophobic = "\n ".join(description_hydrophobic)
     ds.close()
-
 
     print("\n   IFS aerosol optical file stored at ", outifsnc)
 
@@ -585,7 +599,11 @@ def process_ifs(dic_nciaer, runset, fsetting, rinfo, ncformat="NETCDF4"):
     dim_rh, dim_wl, ifsphobic, ifsphilic, rev_species = ifs_testdim(dic_nciaer, runset)
     str_today = datetime.today().strftime('%Y-%m-%d')
 
-    outifsnc=ifs["netcdfname"]
+    if ifs["netcdfname"]=="standard":
+        outifsnc="outputnc/store_ifsnc/aerosol_ifs_CY"+ifs["ifs_cycle"]+"_"+str_today.replace("-","")+".nc"
+    else:
+        outifsnc=ifs["netcdfname"]
+
     print("\n === Storing all the processed aerosols in a single netcdf \n")
 
     # Opening NC dataset  ======================================================

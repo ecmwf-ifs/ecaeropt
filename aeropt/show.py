@@ -1,27 +1,35 @@
 
-
- #########################################################################################################
- #                                                                                                       #
- # aeropt/show.py                                                                                        #
- #                                                                                                       #
- # author: Ramiro Checa-Garcia                                                                           #
- # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
- #                                                                                                       #
- # history:                                                                                              #
- #                                                                                                       #
- #    | Date          | Authors             | Short info                                              |  #
- #    |---------------|---------------------|---------------------------------------------------------|  #
- #    | 26-Oct-2022   | R. Checa-Garcia     | Translated from Julia to Python                         |  #
- #                                                                                                       #
- #                                                                                                       #
- # info:                                                                                                 #
- #                                                                                                       #
- # how to use:                                                                                           #
- #     IMPORTANT: function run_header depends on global variables.                                       #
- #                                                                                                       #
- #                                                                                                       #
- #                                                                                                       #
- #########################################################################################################
+###########################################################################################
+# aeropt/show.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    30-Oct-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      Note: function run_header depends on global variables.
+#
+#      CLASSES
+#        * bcolor
+#
+#      FUNCTIONS        
+#        * add_header   :
+#        * add_footer   :
+#        * add_info     :
+##########################################################################################
 
 
 import aeropt.engine as engine 
@@ -35,8 +43,8 @@ def add_footer():
 
 def add_info():
 
-    mie_BB="""
-  - Mie-Boucher-Bonzo:
+    mie_="""
+  - Mie-Spherical Distributions:
      Engine based in Fortran 90 code. It assumed log-normal distribution. It estimates
      the aerosol opt. per bin based on an integral with 999 intervals between bin-min
      and bin-max (and function is the log-normal distribution). The number of maximum
@@ -45,7 +53,7 @@ def add_info():
     print("\n Engines implemented:\n", mie_BB)
     print("     Quick tests of Mie Code")
     
-    engine.test_engine("MieBB")
+    engine.test_engine("Mie")
 
 
     return

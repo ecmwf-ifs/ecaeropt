@@ -1,25 +1,49 @@
+###########################################################################################
+# aeropt/parsetoml.py
+#
+# (C) Copyright 2022- ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+#
+#
+# Author:
+#    Ramiro Checa-Garcia. ECMWF
+#
+# Modifications:
+#    10-Oct-2022   Ramiro Checa-Garcia    1st. version
+#
+#                                                                                         
+# Info: 
+#      Provides CLASSES and FUNCTIONS:
+#
+#                                                                                         
+#      FUNCTIONS                                                                        
+#        * nangle         :
+#        * ncname         :
+#        * select_ncname  : 
+#        * check_toml     :
+#        * toml_single    :
+#        * each_mixture   : 
+#        * toml_mixing    :
+##########################################################################################
 
 
- #########################################################################################################
- #                                                                                                       #
- # aeropt/parsetoml.py                                                                                   #
- #                                                                                                       #
- # author: Ramiro Checa-Garcia                                                                           #
- # email:  ramiro.checa-garcia@ecmwf.int                                                                 #
- #                                                                                                       #
- # history:                                                                                              #
- #                                                                                                       #
- #          Nov-2022   R. Checa-Garcia   Translated from Julia. Tested                                   #
- #                                                                                                       #
- #                                                                                                       #
- #                                                                                                       #
- #########################################################################################################
 
 
 import os
 import os.path
 import numpy as np
-import toml
+
+try:
+    import tomllib as toml
+except ModuleNotFoundError:
+    import toml
+
 from datetime import datetime
 
 def nangle(nangle):
@@ -39,7 +63,7 @@ def nangle(nangle):
         angles = np.array([])
      
      if isinstance(nangle, int) and nangle>0:
-        angles = np.linspace(180.0, 0.0, nangle) 
+        angles = np.linspace(0.0, 180.0, nangle) 
      
 
      if isinstance(nangle, str): 
@@ -235,6 +259,7 @@ def toml_mixing(runset):
     l_aer_engine = []
     outncname    = ""
     aerconf_mix  = []
+    l_opt_model  = []
 
     dic_run_mixing = runset["process"]["mixing"]
     dic_species    = runset["species"]
@@ -249,14 +274,24 @@ def toml_mixing(runset):
                                    mixture, defaultnc, 
                                    outncdir,  mix=True, 
                                    skip=skip )
-
         aerconf_mix.append(mixture)
+        if "opt_model" in dic_run_mixing[mixture].keys():
+            l_opt_model.append(dic_run_mixing[mixture]["opt_model"])
+        else:
+            l_opt_model.append(None)
+
+    # Here there is a kind of inconsistency as this is outside of the loop.
+    # this code will not work with more than one mixing case.
+
+    # Here we also want to check that opt_model is present before this
+
 
     aermix = { "lconf":l_aer_config, 
                "lengine":l_aer_engine,
                "ncname":outncname,
                "nangles":nangles, 
-               "mixture":aerconf_mix[0] }
+               "mixture":aerconf_mix[0],
+               "opt_model": l_opt_model[0] }
 
     return aermix # l_aer_config, l_aer_engine, outncname, nangles, aerconf_mix[0]
     

@@ -35,6 +35,6 @@ ext_scaling = 1.0
 [tags]
 #opt_model= "OPAC" # Tim's 
 opt_model= "External-Mixing" # 
-aer_type = "organic_mix"
+aer_type = "organic_inso"    # before named organic_mix 
 ifs      = "CY46R1"
 revised  = 2022-11-15

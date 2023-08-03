@@ -1,24 +1,35 @@
 #/bin/bash
 
-# ================================================================
-# Dependencies checking script for engine libraries
+################################################################################
+# scripts/check_dependencies.sh
 #
-# Date: 2022-Nov-09
-# Author: Ramiro Checa-Garcia
-# Contact: ramiro.checa-garcia at ecmwf.int
+#   (C) Copyright 2022- ECMWF.
+#  
+#   This software is licensed under the terms of the Apache Licence Version 2.0
+#   which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+# 
+#   In applying this licence, ECMWF does not waive the privileges and immunities
+#   granted to it by virtue of its status as an intergovernmental organisation
+#   nor does it submit to any jurisdiction.
 #
-# INFO: Code is organized with functions, each function is doing
-#       the build. TODO change this for  gnu-make
+#  Author:
+#     Ramiro Checa-Garcia. ECMWF
+# 
+#  Modifications:
+#     10-Dec-2022   Ramiro Checa-Garcia    1st. version
 #
-# ================================================================
+#  Info: 
+#       * Dependencies checking script for engine libraries
+#       * Code is organized with functions,
+#################################################################################
 
-
+#
 # (0) Variables needed for this script.
 #     We assume that user did not change directories structure.
 
 path_ecaeropt=$(pwd)
 
-path_mie_BB=$path_ecaeropt"/engines/mie_Boucher_Bozzo"
+path_mie=$path_ecaeropt"/engines/mie_code"
 path_Tmatrx=$path_ecaeropt"/engines/tmatrix_mischenko"
 
 
@@ -38,10 +49,10 @@ echo "..... Checking directories logs, tmp, outputnc, libs"
          mkdir tmp
      fi
 
-     if [ ! -d $path_mie_BB"/libs" ]; then
-         echo "       -> directory libs for mie_BB not present."
+     if [ ! -d $path_mie"/libs" ]; then
+         echo "       -> directory libs for Mie code not present."
          echo "       -> creating it."
-         mkdir $path_mie_BB"/libs/"
+         mkdir $path_mie"/libs/"
      fi
 
 

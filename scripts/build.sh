@@ -18,9 +18,9 @@
 #  Modifications:
 #     10-Dec-2022   Ramiro Checa-Garcia    1st. version
 #
-# INFO: Code is organized with functions, each function is doing
-#       the build. TODO change this for  gnu-make
-#
+#  Info: 
+#       * Code is organized with functions, each function is doing one build 
+#         for external optical libraries.
 #
 #################################################################################
 
@@ -43,10 +43,10 @@ echo "..... Checking directories logs and libs"
          mkdir logs
      fi
 
-     if [ ! -d $path_mie_BB"/libs" ]; then
-         echo "       -> directory libs for mie_BB not present."
+     if [ ! -d $path_mie"/libs" ]; then
+         echo "       -> directory libs for Mie code not present."
          echo "       -> creating it."
-         mkdir $path_mie_BB"/libs/"
+         mkdir $path_mie"/libs/"
      fi
 
 
@@ -68,32 +68,27 @@ echo "..... Checking directories logs and libs"
 
 # (1) Mie-code
 
-function mie {
+function mielib {
     #
     # Needs three arguments
     #       $1=path of library
     #       $2=path_ecaeropt
     #       $3=date string for log file
     
-    logfile=$2"/logs/build_mieBB"$3".log"
+    logfile=$2"/logs/build_mie_code"$3".log"
     
     cd $1"/src"
 
+    # mie_aerosols_struc.f90      => new version structured
 
-    # new_mie_aerosols.f90            => legacy version
-    # new_mie_aerosols_struc.f90      => new version structured
-    # new_mie_aerosols_openmp_vec.f90 => dev version with OpemMP
-
-    #f2py3 -c -m mie_BB parkind1.F90 new_mie_aerosols.f90 interp_ri.f90 &> $logfile
-    f2py3 -c -m mie_BB parkind1.F90 new_mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
-    #f2py3 --f90flags=-fopenmp -lgomp -c -m mie_BB parkind1.F90 new_mie_aerosols_openmp_dev.f90 interp_ri.f90 &> $logfile
+    f2py3 -c -m mie parkind1.F90 mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
 
     status=$?
 
     case $status in
          0)
-         echo "      -> Successfully built mie_BB in current computer."
-         mv mie_BB*.so $path_mie_BB/libs/
+         echo "      -> Successfully built Mie library in current computer."
+         mv mie*.so $path_mie/libs/
          ;;
          127)
          echo "      -> There was a problem."
@@ -109,8 +104,8 @@ function mie {
 
 }
 echo ""
-echo "..... Building the library mie_BB [using f2py3]"
-mieBB $path_mie_BB $path_ecaeropt $date_now
+echo "..... Building the Mie code library [using f2py3]"
+mielib $path_mie $path_ecaeropt $date_now
 echo  ""
 echo "..... Giving exec. permission to ecaeropt and comparing scripts"
 chmod +x ecaeropt

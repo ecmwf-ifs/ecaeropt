@@ -21,7 +21,7 @@
 
 
 echo ""
-echo "... Building the documentation ..."
+echo ".... Building the documentation ...."
 cd docs
 echo "    * documentation in html "
 make html     &>   ../logs/build_docum.log 

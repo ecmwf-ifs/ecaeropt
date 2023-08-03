@@ -3,37 +3,39 @@
 
 
 
-module mie_Boucher_Bozzo
+module mie_code
 
-  !====================================================================================
-  ! author:  Ramiro Checa-Garcia                                                      !
-  ! email:   ramiro.checa-garcia@ecmwf.int                                            !
-  ! history:                                                                          !
-  !          Sep-2022 -------> First implmentation and testing                        !
-  !                                                                                   !
-  ! sources: it is using a subroutine from O.Boucher and A.Bozzo with                 !
-  !          several modifications and a complete refactory                           !
-  !                                                                                   !
-  ! info:    The original code of Boucher and Bozzo has been changed to a module      !
-  !          and it is created a wrapper of the fortran subroutine using              !
-  !          iso_c_bindings which allows the access of the mie_aerosols subroutine    !
-  !          from different languages.                                                !
-  !                                                                                   !
-  !                                                                                   !
-  ! Also rather than use the KIND defined in parkind for the in and out               !
-  ! variables it is real(8) and int(4)                                                !
-  !                                                                                   !
-  !                                                                                   !
-  ! TODO:                                                                             !
-  !    - [DONE] evaluate the impact of real(8) and int(4) in the code by comparing    !
-  !      with the original results. The difference between both codes gives 0.0       !
-  !      in all the variables.                                                        !
-  !                                                                                   !
-  !====================================================================================
+!---------------------------------------------------------------------------------------------
+! engines/mie_code/src/mie_aerosols_struct.f90
+!
+! (C) Copyright 1996-2023 CNRS (Author: Olivier Boucher) 
+! (C) Copyright 2022- ECMWF
+!
+! This software is licensed under the terms of the Apache Licence Version 2.0
+! which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+!
+! In applying this licence, ECMWF does not waive the privileges and immunities
+! granted to it by virtue of its status as an intergovernmental organisation
+! nor does it submit to any jurisdiction.
+!
+! Author:
+!    Olivier Boucher.      CNRS    Original code for Mie homogenous spheres
+!    Alessio Bozzo.       ECMWF    1st implementation in ECMWF
+!    Ramiro Checa-Garcia. ECMWF    Changes/improvements for ecaeropt
+!
+! Modifications:
+!    10-Oct-2022   R. Checa-Garcia  The original code of Boucher/Bozzo has been changed
+!                                   to a module and it is created a wrapper of the fortran 
+!                                   subroutine using iso_c_bindings which allows the access 
+!                                   of the mie_aerosols subroutine from different languages
+!    26-Nov-2022   R. Checa-Garcia  using iso_fortran_env / code tests also in Julia.
+!    26-Nov-2022   R. Checa-Garcia  Refactor to an structured code. Tests for an, bn done
+!                                   Test for single sphere. Distribution methods programmed
+!                                   as functions. Modif. refractive index input (now array)
+!---------------------------------------------------------------------------------------------
 
   use iso_c_binding
   use iso_fortran_env
-  !use OMP_LIB
 
   use parkind1, only : JPIM, JPRB 
   implicit none
@@ -58,6 +60,7 @@ module mie_Boucher_Bozzo
         integer(KIND=c_int) , intent(IN) :: size_bins
         integer(KIND=c_int) , intent(IN) :: rh_int
         integer(KIND=c_int) , intent(IN) :: Ndis
+  !                                     tested an and bn coefficients.
         integer(KIND=c_int) , intent(IN) :: nb_lambda
         integer(KIND=c_int) , intent(IN) :: ri_nrh
         integer(KIND=c_int) , intent(IN) :: NInp, nmumax, verbose
@@ -111,6 +114,7 @@ module mie_Boucher_Bozzo
             print *, ' nb_lambda  ', nb_lambda
             print *, ' lambda_out ', lambda_out(:)
             print *, ' Ndis       ', Ndis
+  !                                     tested an and bn coefficients.
             print *, ' size_bins  ', size_bins
             print *, ' ri_nrh     ', ri_nrh
             print *, ' ri_lamb_tab', zlambtab(:)
@@ -166,22 +170,11 @@ module mie_Boucher_Bozzo
 
       IMPLICIT NONE
 
-
   !-------Mie computations for a size distribution of homogeneous spheres---------------------------
   !
   !-------Ref : Toon and Ackerman, Applied Optics, 1981
   !             Stephens, CSIRO, 1979
   !
-  ! AUTHOR: Olivier Boucher
-  !
-  ! MODIFICATIONS: 
-  !         Alessio Bozzo       2017
-  !         Ramiro Checa-Garcia 2022 => code changes, added wrapper, refrac index info
-  !                                     is passed by arrays not by reading files.
-  !                                     changes also about KIND fortran specification.
-  !         Ramiro Checa-Garcia 2022 => refactor in subroutines to an structured code.
-  !                                     added a test single sphere case.
-  !                                     tested an and bn coefficients.
   !------------------------------------------------------------------------------------------------
   !
   ! Input/configuration parameters:
@@ -234,15 +227,15 @@ module mie_Boucher_Bozzo
     ! intent(in) 19 objects
 
     ! output quantities (per specie size bin, per wavelength, per rh(if present))
-    REAL(8),INTENT(OUT)    :: znr(nb_lambda,rh_int),zni(nb_lambda,rh_int)
-    REAL(8),INTENT(OUT)    :: ext_stored(nb_lambda,rh_int,size_bins)
-    REAL(8),INTENT(OUT)    :: omg_stored(nb_lambda,rh_int,size_bins)
-    REAL(8),INTENT(OUT)    :: asy_stored(nb_lambda,rh_int,size_bins)
-    REAL(8),INTENT(OUT)    :: mass_stored(rh_int,size_bins)
-    REAL(8),INTENT(OUT)    :: lidar_ratio_stored(nb_lambda,rh_int,size_bins)
-    REAL(8),INTENT(OUT)    :: ph_stored(nb_lambda,rh_int,size_bins,Nmumax)    
-    REAL(8),INTENT(OUT)    :: test_single_sphere(4)
-    REAL(8),INTENT(INOUT)  :: ph_ang(Nmumax)
+    REAL(8),    INTENT(OUT)    :: znr(nb_lambda,rh_int),zni(nb_lambda,rh_int)
+    REAL(8),    INTENT(OUT)    :: ext_stored(nb_lambda,rh_int,size_bins)
+    REAL(8),    INTENT(OUT)    :: omg_stored(nb_lambda,rh_int,size_bins)
+    REAL(8),    INTENT(OUT)    :: asy_stored(nb_lambda,rh_int,size_bins)
+    REAL(8),    INTENT(OUT)    :: mass_stored(rh_int,size_bins)
+    REAL(8),    INTENT(OUT)    :: lidar_ratio_stored(nb_lambda,rh_int,size_bins)
+    REAL(8),    INTENT(OUT)    :: ph_stored(nb_lambda,rh_int,size_bins,Nmumax)
+    REAL(8),    INTENT(OUT)    :: test_single_sphere(4)
+    REAL(8),    INTENT(INOUT)  :: ph_ang(Nmumax)
 
     ! INTERNAL VARIABLES
     INTEGER(4)             :: Nbin_points
@@ -391,7 +384,7 @@ module mie_Boucher_Bozzo
            radius2   = 0.0_JPRB
            rgv       = 0.0_JPRB
            rgn       = 0.0_JPRB
-           PP(:)     = 0.0
+           PP(:)     = 0.0_JPRB
 
 
            if(rmin.eq.rmax) Nbin_points=0
@@ -625,6 +618,8 @@ module mie_Boucher_Bozzo
     COMPLEX(KIND=JPRB)             :: s1, s2, nn
     INTEGER(4)                     :: Nmu, n  
 
+
+
     DO Nmu=1, Nmumax
        ! before we had Num=0, Nmumax because the eq. for the
        !angles uses Nmu=0, but now when we pass an array
@@ -735,6 +730,10 @@ module mie_Boucher_Bozzo
     k3=CMPLX(1.0,0.0)
     z2=CMPLX(x,0.0)
     z1=m*z2
+
+
+
+
 
     IF (0.0.LE.x.AND.x.LE.8.) THEN
        Nmax=INT(x+4*x**(1./3.)+1.)+2

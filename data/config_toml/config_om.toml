@@ -1,0 +1,32 @@
+# ORGANIC AEROSOLS (Brown et al 2018)
+#
+# Last update: 2022-11-16
+# Contact:     ramiro.checa-garcia@ecmwf.int
+#              Samuel Rémy <sr@hygeos.com>
+
+[distribution]
+# Properties of Size Distribution
+# Units:
+lognormal.r0 = 0.09
+lognormal.sigma_g = 1.6
+lognormal.Ntot = 1.0
+
+[bins]
+min    = 0.005
+max    = 20.0
+
+[properties]
+rho       = 1.3e03
+rh.tab    = [ 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 85.0, 90.0, 95.0]
+rh.growth = [ 1.0, 1.0,  1.0,  1.0,  1.0,  1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.40]
+
+[optical]
+ri_file     = "data/refr_idx/om_ri_table_Brown"
+wl_out_file = "data/wavelengths/wl_out_IFS.txt"
+ext_scaling = 1.0
+
+[tags]
+opt_model= "Brown2018"
+aer_type = "organic_CY48R1"
+ifs      = "CY48R1"
+revised  = 2022-11-15

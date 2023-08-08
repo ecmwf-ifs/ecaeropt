@@ -54,26 +54,26 @@ testdir     = "tests"
 [species]
 
 # These aerosols are not mixed
-du1          = { config = "data/config_toml_CY48R1/config_du1.toml"           , engine="default", ncname='default', nangle='default'}
-du2          = { config = "data/config_toml_CY48R1/config_du2.toml"           , engine="default", ncname='default', nangle='default'}
-du3          = { config = "data/config_toml_CY48R1/config_du3.toml"           , engine="default", ncname='default', nangle='default'}
+du1          = { config = "data/config_toml/config_du1.toml"           , engine="default", ncname='default', nangle='default'}
+du2          = { config = "data/config_toml/config_du2.toml"           , engine="default", ncname='default', nangle='default'}
+du3          = { config = "data/config_toml/config_du3.toml"           , engine="default", ncname='default', nangle='default'}
 
-bc1          = { config = "data/config_toml_CY48R1/config_bc1.toml"           , engine="default", ncname='default', nangle='default'}
-bc2          = { config = "data/config_toml_CY48R1/config_bc2.toml"           , engine="default", ncname='default', nangle='default'}
-bc3          = { config = "data/config_toml_CY48R1/config_bc3.toml"           , engine="default", ncname='default', nangle='default'}
+bc1          = { config = "data/config_toml/config_bc1.toml"           , engine="default", ncname='default', nangle='default'}
+bc2          = { config = "data/config_toml/config_bc2.toml"           , engine="default", ncname='default', nangle='default'}
+bc3          = { config = "data/config_toml/config_bc3.toml"           , engine="default", ncname='default', nangle='default'}
 
-su           = { config = "data/config_toml_CY48R1/config_su.toml"            , engine="default", ncname='default', nangle='default'}
+su           = { config = "data/config_toml/config_su.toml"            , engine="default", ncname='default', nangle='default'}
 
-ss           = { config = "data/config_toml_CY48R1/config_ss.toml"            , engine="default", ncname='default', nangle='default'}
+ss           = { config = "data/config_toml/config_ss.toml"            , engine="default", ncname='default', nangle='default'}
 
-ni_fine      = { config = "data/config_toml_CY48R1/config_ni_fine.toml"       , engine="default", ncname='default', nangle='default'}
-ni_coarse    = { config = "data/config_toml_CY48R1/config_ni_coarse.toml"     , engine="default", ncname='default', nangle='default'}
-NH3_fine     = { config = "data/config_toml_CY48R1/config_ammonia_fine.toml"  , engine="default", ncname='default', nangle='default'}
-SOA1         = { config = "data/config_toml_CY48R1/config_SOA1.toml"          , engine="default", ncname='default', nangle='default'}
-SOA2         = { config = "data/config_toml_CY48R1/config_SOA2.toml"          , engine="default", ncname='default', nangle='default'}
+ni_fine      = { config = "data/config_toml/config_ni_fine.toml"       , engine="default", ncname='default', nangle='default'}
+ni_coarse    = { config = "data/config_toml/config_ni_coarse.toml"     , engine="default", ncname='default', nangle='default'}
+NH3_fine     = { config = "data/config_toml/config_ammonia_fine.toml"  , engine="default", ncname='default', nangle='default'}
+SOA1         = { config = "data/config_toml/config_SOA1.toml"          , engine="default", ncname='default', nangle='default'}
+SOA2         = { config = "data/config_toml/config_SOA2.toml"          , engine="default", ncname='default', nangle='default'}
 
 
-om           = { config = "data/config_toml_CY48R1/config_om.toml"            , engine="default", ncname='default', nangle='default'}
+om           = { config = "data/config_toml/config_om.toml"            , engine="default", ncname='default', nangle='default'}
 
 # Organic is a mixing of aerosols
 # Note: organic is designed to be a mixed aerosol with 3 components, however still it is possible to
@@ -81,9 +81,9 @@ om           = { config = "data/config_toml_CY48R1/config_om.toml"            , 
 #       for mixed species XXX.yyy. The mixed aerosol is XXX and the components are yyy. However by refering
 #       as XXX.yyy still it is possible to perform a calculation as an individual single specie.
 
-organic.waso = { config = "data/config_toml_CY48R1/config_organic_waso.toml"  , engine="default", ncname='default' , nangle='default'}
-organic.inso = { config = "data/config_toml_CY48R1/config_organic_inso.toml"  , engine="default", ncname='default' , nangle='default'}
-organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.waso = { config = "data/config_toml/config_organic_waso.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.inso = { config = "data/config_toml/config_organic_inso.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.soot = { config = "data/config_toml/config_organic_soot.toml"  , engine="default", ncname='default' , nangle='default'}
 
 
 # ============================================================================================================================

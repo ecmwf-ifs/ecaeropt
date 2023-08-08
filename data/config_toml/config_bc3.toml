@@ -30,8 +30,9 @@ wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
 
 [tags]
-aer_type    = "black_carbon_BondBergstrom"
-ifs      = "CY48R1"
-revised  = 2022-10-27
+opt_model= "Bond2006"
+aer_type = "black_carbon_BondBergstrom"
+ifs      = "CY46R1"
+revised  = 2022-11-15
 
 

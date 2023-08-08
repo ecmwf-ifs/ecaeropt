@@ -41,6 +41,10 @@ from netCDF4 import stringtoarr as to_arr
 import sys
 from datetime import datetime
 
+
+from aeropt.ifs_store_49R1   import process_ifs_49R1
+from aeropt.ifs_store_legacy import process_ifs
+
 def ifs_testdim(dic_nciaer, runset):
     """ Evaluates the consistency between a ifs setting and a set of netcdf files used to build it.
 

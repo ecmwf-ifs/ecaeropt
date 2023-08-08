@@ -21,11 +21,11 @@
 #SBATCH --job-name=ecaeropt-ifs-test
 #SBATCH --output=logs/calc.ifs_CY49R1.%j.out
 
-module load python3/old
+module load python3/3.8.8-01
 module load nco
 
 source scripts/create_ifs_prepare.sh
 
-./ecaeropt -s settings/IFS_CY49R1_v4.toml
+./ecaeropt -s settings/IFS_CY49R1.toml
 
 

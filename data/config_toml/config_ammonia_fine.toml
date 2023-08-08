@@ -32,6 +32,7 @@ ext_scaling = 1.0
 
 
 [tags]
+opt_model   = "GACP"
 aer_type    = "ammonia_fine"
-ifs         = "CY48R1"
-revised     = 2022-10-27
+ifs         = "CY46R1"
+revised     = 2022-11-15

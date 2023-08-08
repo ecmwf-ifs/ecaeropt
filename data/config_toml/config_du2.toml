@@ -31,6 +31,7 @@ aer_type    = "dust_Woodward"
 ext_scaling = 1.0
 
 [tags]
+opt_model="Woodward2001"
 aer_type = "dust_Woodward"
-ifs      = "CY48R1"
-revised  = 2022-10-27
+ifs      = "CY46R1"
+revised  = 2022-11-15

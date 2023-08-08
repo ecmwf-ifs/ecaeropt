@@ -36,7 +36,9 @@ import numpy as np
 import pytest
 
 import aeropt.aer as aer
-from engines.mie.libs.mie import mie as mie
+#from engines.mie_code.libs.mie import mie as mie
+
+from  engines.mie_code.libs.mie import mie_code as mie
 
 
 def test_approx(val, ref, tol, info, passed, failed):
@@ -82,7 +84,7 @@ def test_engine(enginename, tol=1.e-7):
 
    
     print("          Non-absorbing sphere...(tolerance +-",tol,")")
-    out_noabs = mieBB.main_mie_aerosols(lambda_out, bins_min,
+    out_noabs = mie.main_mie_aerosols(lambda_out, bins_min,
                                   bins_max, sigma_g,
                                   r0, Ntot, rho,
                                   rh_tab,rh_growth,
@@ -96,7 +98,7 @@ def test_engine(enginename, tol=1.e-7):
 
     print("          Absorbing sphere...    (tolerence +-",tol,")")
     zni_tab_abs  = np.array([+0.01])
-    out_abs = mieBB.main_mie_aerosols(lambda_out, bins_min,
+    out_abs = mie.main_mie_aerosols(lambda_out, bins_min,
                                   bins_max, sigma_g,
                                   r0, Ntot, rho,
                                   rh_tab,rh_growth,
@@ -143,7 +145,7 @@ def interface_mie(aerconf, logfile, debug=False, mix=0, verbose=0):
     #cutoff_radius = 7.5
 
     print("                     calculation of optical properties")
-    print("                     engine: [Boucher-Bozzo code]")
+    print("                     engine: [Mie code]")
     print("                     ...calculating optical properties...")
 
     if debug==False:
@@ -156,7 +158,7 @@ def interface_mie(aerconf, logfile, debug=False, mix=0, verbose=0):
 
     # With this two number is possible to reconstruct the filename in Fortran.
     # Rather than add to the default log file we can create
-    # tmp/datetime_mieBB.log
+    # tmp/datetime_mie.log
 
     sys.stdout.flush()
     out = mie.main_mie_aerosols(aerconf.lambda_out, aerconf.bins_min,
@@ -167,6 +169,6 @@ def interface_mie(aerconf, logfile, debug=False, mix=0, verbose=0):
                                 aerconf.znr_tab, aerconf.zni_tab,
                                 aerconf.angles )
 
-    aeropt = aer.mie_to_aeropt(aerconf, out, "mie_Boucher_Bozzo")
+    aeropt = aer.mie_to_aeropt(aerconf, out, "mie")
     
     return aeropt

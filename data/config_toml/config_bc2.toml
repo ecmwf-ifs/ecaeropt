@@ -31,6 +31,7 @@ ext_scaling = 1.0
 
 
 [tags]
-aer_type    = "black_carbon_Stier"
-ifs      = "CY48R1"
-revised  = 2022-10-27
+opt_model= "Stier2007"
+aer_type = "black_carbon_Stier"
+ifs      = "CY46R1"
+revised  = 2022-11-15

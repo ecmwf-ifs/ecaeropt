@@ -113,7 +113,6 @@ def mie_to_aeropt(aerconf, out, engine):
            sca_ssa = scaling[2].reshape(nwl,nbin)
            sca_asy = scaling[3].reshape(nwl,nbin)
            wl      = aerconf.lambda_out
-           print(wl)
            s_ext   = np.zeros((len(wl), nbin))
            s_ssa   = np.zeros((len(wl), nbin))
            s_asy   = np.zeros((len(wl), nbin))
@@ -121,11 +120,9 @@ def mie_to_aeropt(aerconf, out, engine):
                s_ext[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_ext[:,nb])
                s_ssa[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_ssa[:,nb])
                s_asy[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_asy[:,nb])
-           print(s_ext.shape, ext.shape)
-           print(ext)
            
            if len(ext.shape) == 3:
-              for nrh in ra nge(ext.shape[1]):
+              for nrh in range(ext.shape[1]):
                   ext[:,nrh,:] = ext[:,nrh,:] * s_ext[:,:]
                   omg[:,nrh,:] = omg[:,nrh,:] * s_ssa[:,:]
                   asy[:,nrh,:] = asy[:,nrh,:] * s_asy[:,:]

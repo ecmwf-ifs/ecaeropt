@@ -33,6 +33,7 @@ ext_scaling = 1.0
 
 
 [tags]
+opt_model= "Moise2015"
 aer_type = "soa_anthropogenic"
-ifs      = "CY48R1"
-revised  = 2022-10-27
+ifs      = "CY46R1"
+revised  = 2022-11-15

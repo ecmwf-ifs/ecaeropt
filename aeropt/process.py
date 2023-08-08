@@ -42,7 +42,7 @@ import aeropt.store_nc as store
 import aeropt.aer      as aer
 
 
-def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozzo", wl_out="none"):          
+def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie", wl_out="none"):          
     """
     Process a configuration file to create a netcdf file for a single aerosol the arguments wl_out,
     and angles can overrride specific aspect of the configuration file (usually using a setting
@@ -80,8 +80,8 @@ def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie_Boucher_Bozz
        logging.debug("\n\n")
        logging.debug(aer_conf)
     
-    if aerengine=="mie_Boucher_Bozzo":
-        aer_opt = engine.interface_mie_Boucher_Bozzo(aer_conf, rinfo.logfile, debug=rinfo.debug)
+    if aerengine=="mie":
+        aer_opt = engine.interface_mie(aer_conf, rinfo.logfile, debug=rinfo.debug)
     else:
         print("---- ERROR ---- ", aerengine , " not yet implemented")
         sys.exit()
@@ -148,8 +148,8 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
             logging.debug("\n\n")
             logging.debug(aer_conf)
 
-        if component_engine=="mie_Boucher_Bozzo":
-            aer_opt = engine.interface_mie_Boucher_Bozzo(aer_conf, rinfo.logfile, mix=len(laerengine))
+        if component_engine=="mie":
+            aer_opt = engine.interface_mie(aer_conf, rinfo.logfile, mix=len(laerengine))
         else:
             print("---- ERROR ---- ", component_engine , " not yet implemented")
             sys.exit()

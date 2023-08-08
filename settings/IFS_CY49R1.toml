@@ -14,7 +14,7 @@
 #          3.2 info          => here we can add information to the final netcdfs as global attribute (metadata).             #
 #                                                                                                                            #
 # Version:                                                                                                                   #
-#    1.1.0    15-Jan-2022                                                                                                    #
+#   1.0.0  Jul-2023                                                                                                          #
 #                                                                                                                            #
 # Contact: Ramiro Checa-Garcia                                                                                               #
 #          ramiro.checa-garcia@ecmwf.int                                                                                     #
@@ -27,13 +27,13 @@
 # specific information in the config files or in the process section
 
 [default]
-wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wavelengths for output files this
+wavelengths = "data/wavelengths/wl_out_TEST_15.txt"     # indicates the default wavelengths for output files this
                                                     # will override the value in the configuration files!!
                                                     # if you want to keep conf. files value remove this.
 
-engine      = "mie_Boucher_Bozzo"                   # indicates the default code to calculate the optical properties
+engine      = "mie"                   # indicates the default code to calculate the optical properties
 
-nangle      = 180                                   # =0          -> no phase function calculated
+nangle      = 20                                    # =0          -> no phase function calculated
                                                     # =n          -> number of equistant angles for phase function
                                                     # ="filename" -> read angles from file
 
@@ -54,29 +54,35 @@ testdir     = "tests"
 [species]
 
 # These aerosols are not mixed
-du1          = { config = "data/config_toml_CY48R1/config_du1.toml"           , engine="default", ncname='default', nangle='default'}
-du2          = { config = "data/config_toml_CY48R1/config_du2.toml"           , engine="default", ncname='default', nangle='default'}
-du3          = { config = "data/config_toml_CY48R1/config_du3.toml"           , engine="default", ncname='default', nangle='default'}
-du4          = { config = "data/config_toml_CY48R1/config_du4.toml"           , engine="default", ncname='default', nangle='default'}
+du1          = { config = "data/config_toml/config_du1.toml"           , engine="default", ncname='default', nangle='default'}
+du2          = { config = "data/config_toml/config_du2.toml"           , engine="default", ncname='default', nangle='default'}
+du3          = { config = "data/config_toml/config_du3.toml"           , engine="default", ncname='default', nangle='default'}
+du4          = { config = "data/config_toml/config_du4.toml"           , engine="default", ncname='default', nangle='default'}
+du5          = { config = "data/config_toml/config_du5.toml"           , engine="default", ncname='default', nangle='default'}
+du6          = { config = "data/config_toml/config_du6.toml"           , engine="default", ncname='default', nangle='default'}
 
-bc1          = { config = "data/config_toml_CY48R1/config_bc1.toml"           , engine="default", ncname='default', nangle='default'}
-bc2          = { config = "data/config_toml_CY48R1/config_bc2.toml"           , engine="default", ncname='default', nangle='default'}
-bc3          = { config = "data/config_toml_CY48R1/config_bc3.toml"           , engine="default", ncname='default', nangle='default'}
+# du5 is scaled
+# du6 is non-scaled
 
-su           = { config = "data/config_toml_CY48R1/config_su.toml"            , engine="default", ncname='default', nangle='default'}
-su1          = { config = "data/config_toml_CY48R1/config_su1.toml"           , engine="default", ncname='default', nangle='default'}
-su2          = { config = "data/config_toml_CY48R1/config_su2.toml"           , engine="default", ncname='default', nangle='default'}
+bc1          = { config = "data/config_toml/config_bc1.toml"           , engine="default", ncname='default', nangle='default'}
+bc2          = { config = "data/config_toml/config_bc2.toml"           , engine="default", ncname='default', nangle='default'}
+bc3          = { config = "data/config_toml/config_bc3.toml"           , engine="default", ncname='default', nangle='default'}
+bc4          = { config = "data/config_toml/config_bc4.toml"           , engine="default", ncname='default', nangle='default'}
 
-ss           = { config = "data/config_toml_CY48R1/config_ss.toml"            , engine="default", ncname='default', nangle='default'}
+su           = { config = "data/config_toml/config_su.toml"            , engine="default", ncname='default', nangle='default'}
+su1          = { config = "data/config_toml/config_su1.toml"           , engine="default", ncname='default', nangle='default'}
+su2          = { config = "data/config_toml/config_su2.toml"           , engine="default", ncname='default', nangle='default'}
 
-ni_fine      = { config = "data/config_toml_CY48R1/config_ni_fine.toml"       , engine="default", ncname='default', nangle='default'}
-ni_coarse    = { config = "data/config_toml_CY48R1/config_ni_coarse.toml"     , engine="default", ncname='default', nangle='default'}
-NH3_fine     = { config = "data/config_toml_CY48R1/config_ammonia_fine.toml"  , engine="default", ncname='default', nangle='default'}
-SOA1         = { config = "data/config_toml_CY48R1/config_SOA1.toml"          , engine="default", ncname='default', nangle='default'}
-SOA2         = { config = "data/config_toml_CY48R1/config_SOA2.toml"          , engine="default", ncname='default', nangle='default'}
+ss           = { config = "data/config_toml/config_ss.toml"            , engine="default", ncname='default', nangle='default'}
+
+ni_fine      = { config = "data/config_toml/config_ni_fine.toml"       , engine="default", ncname='default', nangle='default'}
+ni_coarse    = { config = "data/config_toml/config_ni_coarse.toml"     , engine="default", ncname='default', nangle='default'}
+NH3_fine     = { config = "data/config_toml/config_ammonia_fine.toml"  , engine="default", ncname='default', nangle='default'}
+SOA1         = { config = "data/config_toml/config_SOA1.toml"          , engine="default", ncname='default', nangle='default'}
+SOA2         = { config = "data/config_toml/config_SOA2.toml"          , engine="default", ncname='default', nangle='default'}
 
 
-om           = { config = "data/config_toml_CY48R1/config_om.toml"            , engine="default", ncname='default', nangle='default'}
+om           = { config = "data/config_toml/config_om.toml"            , engine="default", ncname='default', nangle='default'}
 
 # Organic is a mixing of aerosols
 # Note: organic is designed to be a mixed aerosol with 3 components, however still it is possible to
@@ -84,9 +90,9 @@ om           = { config = "data/config_toml_CY48R1/config_om.toml"            , 
 #       for mixed species XXX.yyy. The mixed aerosol is XXX and the components are yyy. However by refering
 #       as XXX.yyy still it is possible to perform a calculation as an individual single specie.
 
-organic.waso = { config = "data/config_toml_CY48R1/config_organic_waso.toml"  , engine="default", ncname='default' , nangle='default'}
-organic.inso = { config = "data/config_toml_CY48R1/config_organic_inso.toml"  , engine="default", ncname='default' , nangle='default'}
-organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.waso = { config = "data/config_toml/config_organic_waso.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.inso = { config = "data/config_toml/config_organic_inso.toml"  , engine="default", ncname='default' , nangle='default'}
+organic.soot = { config = "data/config_toml/config_organic_soot.toml"  , engine="default", ncname='default' , nangle='default'}
 
 
 # ============================================================================================================================
@@ -97,25 +103,25 @@ organic.soot = { config = "data/config_toml_CY48R1/config_organic_soot.toml"  , 
 [process]
 
 skip=false
-
+plt=true
 
 # For processing single aerosols you can add them here (we are adding the names in species section)
-single = [ "ss",                     # Sea-salt
-           "du1", "du2", "du3",      # Mineral dust
-           "bc1", "bc2", "bc3",      # Black-Carbon
-           "su",                     # Sulfate
-           "ni_fine", "ni_coarse",   # Nitrate
-           "NH3_fine",               # Ammonium
-           "SOA1", "SOA2"     ]      # Secondary Organics           
+single = [ "ss",                                     # Sea-Salt
+           "du1", "du2", "du3", "du4", "du5", "du6", # Mineral-Dust
+           "bc1", "bc2", "bc3", "bc4",               # Black-Carbon
+           "su", "su1", "su2",                       # Sulfate
+           "ni_fine", "ni_coarse",                   # Nitrate
+           "NH3_fine",                               # Ammonium
+           "SOA1", "SOA2", "om"      ]               # Secondary Organics       
 
 # For mixing config files the syntax is more complex. First the elements are defined in [species] as usual config files but
 # we name them with the syntax xxxx.yyyy (yyyy is a component of the mixture xxxx)
 # Then in this section we use the notation
 # mixing.xxxx.conf and for options like ncname we can use mixing.xxxx.ncname
 
-mixing.organic.conf   = "organic"                             # This will process the composite species organic
-mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to specific the final name MANDATORY
-
+mixing.organic.conf      = "organic"                             # This will process the composite species organic
+mixing.organic.ncname    = ["organic", "optics_IFS", "C:today"]  # here we have to specific the final name MANDATORY
+mixing.organic.opt_model = "OPAC"
 [ifs]
 # Now we give some rules to build a single IFS netcdf. 
 # We define here a table with the information needed. The aer.XX, XX is the tag of the aerosol.
@@ -125,33 +131,41 @@ mixing.organic.ncname = ["organic", "optics_IFS", "C:today"]  # here we have to 
 # where to place them. All other should be filled with missing or nan.
 
 ifs_cycle  = "49R1"
-netcdfname = "outputnc/store_ifsnc/ifs_CY49R1.nc"
-nc_ref     = "tests/references/ifs_nc/aerosol_ifs_49R1.nc"
+netcdfname = "standard"  #"outputnc/store_ifsnc/aerosols_ifs_CY49R1_v3.nc"
 
-number     = { philic=10, phobic=14}
+number     = { philic=19, phobic=19}
 
 # === HYDROPHOBIC ===
-aer.dd1     = { species="du1"       , type="phobic", position= 1 , bin=3 }
-aer.dd2     = { species="du3"       , type="phobic", position= 4 , bin=3 }
-aer.dd3     = { species="du2"       , type="phobic", position= 7 , bin=3 }
-aer.org_dry = { species="organic"   , type="phobic", position= 10, bin=1 , rhphobic=2}
-aer.bc1     = { species="bc1"       , type="phobic", position= 11, bin=1 }
-aer.bc3     = { species="bc3"       , type="phobic", position= 12, bin=1 }
-aer.bc2     = { species="bc2"       , type="phobic", position= 13, bin=1 }
-aer.su_dry  = { species="su"        , type="phobic", position= 14, bin=1 , rhphobic=3}
+aer.dd1     = { species="du1"       , code="DD", type="phobic", position= 1 , bin=3 }
+aer.dd2     = { species="du3"       , code="DD", type="phobic", position= 4 , bin=3 }
+aer.dd3     = { species="du2"       , code="DD", type="phobic", position= 7 , bin=3 }
+aer.org_dry = { species="organic"   , code="OM", type="phobic", position= 10, bin=1 , rhphobic=2}
+aer.bc1     = { species="bc1"       , code="BC", type="phobic", position= 11, bin=1 }
+aer.bc3     = { species="bc3"       , code="BC", type="phobic", position= 12, bin=1 }
+aer.bc2     = { species="bc2"       , code="BC", type="phobic", position= 13, bin=1 }
+aer.su_dry  = { species="su"        , code="SU", type="phobic", position= 14, bin=1 , rhphobic=3}
 
+# New optical models
+aer.dd4     = { species="du4"       , code="DD", type="phobic", position= 15, bin=3 }
+aer.om_dry  = { species="om"        , code="OM", type="phobic", position= 18, bin=1 , rhphobic=2} # Check
+aer.bc4     = { species="bc4"       , code="BC", type="phobic", position= 19, bin=1 }
 
 # === HYDROPHILIC ===
-aer.ss      = { species="ss"        , type="philic", position= 1 , bin=3 }
-aer.org     = { species="organic"   , type="philic", position= 4 , bin=1 }
-aer.su      = { species="su"        , type="philic", position= 5 , bin=1 }
-aer.soab    = { species="SOA1"      , type="philic", position= 6 , bin=1 }
-aer.soaa    = { species="SOA2"      , type="philic", position= 7 , bin=1 }
-aer.ammf    = { species="NH3_fine"  , type="philic", position= 8 , bin=1 }
-aer.nif     = { species="ni_fine"   , type="philic", position= 9 , bin=1 }
-aer.nic     = { species="ni_coarse" , type="philic", position= 10, bin=1 }
+aer.ss      = { species="ss"        , code="SS", type="philic", position= 1 , bin=3 }
+aer.org     = { species="organic"   , code="OM", type="philic", position= 4 , bin=1 }
+aer.su      = { species="su"        , code="SU", type="philic", position= 5 , bin=1 }
+aer.soab    = { species="SOA1"      , code="OB", type="philic", position= 6 , bin=1 }
+aer.soaa    = { species="SOA2"      , code="OA", type="philic", position= 7 , bin=1 }
+aer.ammf    = { species="NH3_fine"  , code="AM", type="philic", position= 8 , bin=1 }
+aer.nif     = { species="ni_fine"   , code="NI", type="philic", position= 9 , bin=1, pbin=1 }
+aer.nic     = { species="ni_coarse" , code="NI", type="philic", position= 10, bin=1, pbin=2 }
 
-
+# New optical models
+aer.om      = { species="om"        , code="OM", type="philic", position= 11, bin=1 }
+aer.su1     = { species="su1"       , code="SU", type="philic", position= 12, bin=1 }
+aer.su2     = { species="su2"       , code="SU", type="philic", position= 13, bin=1 }
+aer.dd5     = { species="du5"       , code="DD", type="philic", position= 14, bin=3 }
+aer.dd6     = { species="du6"       , code="DD", type="philic", position= 17, bin=3 }
 
 
 [info]
@@ -168,32 +182,46 @@ Cycle """
 # There are species used for philic and phobic, so we need to write in configuration file.
 # description.philic = 
 # description.phobic = (even the phobic RH used)
-description_hydrophobic.1  = " 1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987 "
-description_hydrophobic.2  = " 2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987 "
-description_hydrophobic.3  = " 3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987 "
-description_hydrophobic.4  = " 4: Desert dust, bin 1, 0.03-0.55 micron, Fouquart et al 1987  "
-description_hydrophobic.5  = " 5: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987  "
-description_hydrophobic.6  = " 6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart et al 1987  "
-description_hydrophobic.7  = " 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2  "
-description_hydrophobic.8  = " 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2  "
-description_hydrophobic.9  = " 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2  " 
-description_hydrophobic.10 = " 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%)  "
-description_hydrophobic.11 = " 11: Black carbon, OPAC  "
-description_hydrophobic.12 = " 12: Black carbon, Bond and Bergstrom 2006  "
-description_hydrophobic.13 = " 13: Black carbon, Stier et al 2007  "
-description_hydrophobic.14 = " 14: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%%-30%%)"
+description_hydrophobic.1  = "1: Desert dust, bin 1, 0.03-0.55 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987"
+description_hydrophobic.2  = "2: Desert dust, bin 2, 0.55-0.90 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987"
+description_hydrophobic.3  = "3: Desert dust, bin 3, 0.90-20.0 micron, (SW) Dubovik et al. 2002 (LW) Fouquart et al. 1987"
+description_hydrophobic.4  = "4: Desert dust, bin 1, 0.03-0.55 micron, Fouquart et al 1987"
+description_hydrophobic.5  = "5: Desert dust, bin 2, 0.55-0.90 micron, Fouquart et al 1987"
+description_hydrophobic.6  = "6: Desert dust, bin 3, 0.90-20.0 micron, Fouquart et al 1987"
+description_hydrophobic.7  = "7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2"
+description_hydrophobic.8  = "8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2"
+description_hydrophobic.9  = "9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2" 
+description_hydrophobic.10 = "10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%)"
+description_hydrophobic.11 = "11: Black carbon, OPAC"
+description_hydrophobic.12 = "12: Black carbon, Bond and Bergstrom 2006"
+description_hydrophobic.13 = "13: Black carbon, Stier et al 2007"
+description_hydrophobic.14 = "14: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%-30%)"
+description_hydrophobic.15 = "15: Desert dust, bin 1, 0.03-0.55 micron, Composite (Balkanski et 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophobic.16 = "16: Desert dust, bin 2, 0.55-0.90 micron, Composite (Balkanski el 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophobic.17 = "17: Desert dust, bin 3, 0.90-20.0 micron, Composite (Balkanski el 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophobic.18 = "18: Hydrophobic organic matter, Brown et al 2018 (hydrophilic at RH=20%)"
+description_hydrophobic.19 = "19: Black carbon, Williams 2007"
 
-description_hydrophilic.1  = " 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC "
-description_hydrophilic.2  = " 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC "
-description_hydrophilic.3  = " 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC "
-description_hydrophilic.4  = " 4: Hydrophilic organic matter, OPAC "
-description_hydrophilic.5  = " 5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
-description_hydrophilic.6  = " 6: Secondary organic aerosol - biogenic, Moise et al 2015  "
-description_hydrophilic.7  = " 7: Secondary organic aerosol - anthropogenic, Moise et al 2015  "
-description_hydrophilic.8  = " 8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/  "
-description_hydrophilic.9  = " 9: Fine mode Nitrate, GLOMAP  "
-description_hydrophilic.10 = " 10: Coarse mode Nitrate, GLOMAP "
+description_hydrophilic.1  = "1: Sea salt, bin 1, 0.03-0.5 micron, OPAC"
+description_hydrophilic.2  = "2: Sea salt, bin 2, 0.50-5.0 micron, OPAC"
+description_hydrophilic.3  = "3: Sea salt, bin 3, 5.0-20.0 micron, OPAC"
+description_hydrophilic.4  = "4: Hydrophilic organic matter, OPAC"
+description_hydrophilic.5  = "5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/"
+description_hydrophilic.6  = "6: Secondary organic aerosol - biogenic, Moise et al 2015"
+description_hydrophilic.7  = "7: Secondary organic aerosol - anthropogenic, Moise et al 2015"
+description_hydrophilic.8  = "8: Fine mode Ammonium sulfate (for ammonia), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/"
+description_hydrophilic.9  = "9: Fine mode Nitrate, GLOMAP"
+description_hydrophilic.10 = "10: Coarse mode Nitrate, GLOMAP"
+description_hydrophilic.11 = "11: Hydrophilic organic matter, Brown et al 2018"
+description_hydrophilic.12 = "12: Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/"
+description_hydrophilic.13 = "13: Sulfate, GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/ with modified size distribution"
+description_hydrophilic.14 = "14: Desert dust, bin 1, 0.03-0.55 micron, Composite-Philic Non-Sphere-Scaling-Kandler (Balkanski et 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophilic.15 = "15: Desert dust, bin 2, 0.55-0.90 micron, Composite-Philic Non-Sphere-Scaling-Kandler (Balkanski el 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophilic.16 = "16: Desert dust, bin 3, 0.90-20.0 micron, Composite-Philic Non-Sphere-Scaling-Kandler (Balkanski el 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophilic.17 = "17: Desert dust, bin 1, 0.03-0.55 micron, Composite-Philic (Balkanski et 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophilic.18 = "18: Desert dust, bin 2, 0.55-0.90 micron, Composite-Philic (Balkanski el 2007 , Di Baggio 2017, Ryder et al 2019)"
+description_hydrophilic.19 = "19: Desert dust, bin 3, 0.90-20.0 micron, Composite-Philic (Balkanski el 2007 , Di Baggio 2017, Ryder et al 2019)"
 
 contact      = 'Ramiro Checa-Garcia: ramiro.checa-garcia at ecmwf.int'
 institution  = 'European Centre for Medium-Range Weather Forecasts (ECMWF)'
-experiment   = 'using the sofware tool: ecaeropt v1.0'
+experiment   = 'using the sofware tool: ecaeropt'

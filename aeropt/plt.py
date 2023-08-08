@@ -111,9 +111,11 @@ def one_col(axs, ds, varnames):
         else:
             addlegend=True
         if 'size_bin' in ds[varnames[ii]].dims:
-           ds[varnames[ii]].isel(size_bin=0).plot.line(ax=axs[ii], xscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
+           ds[varnames[ii]].isel(size_bin=0).plot.line(ax=axs[ii], xscale='log', 
+                                                       hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
         else:
-           ds[varnames[ii]].plot.line(ax=axs[ii], xscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
+           ds[varnames[ii]].plot.line(ax=axs[ii], xscale='log', hue="rel_hum", 
+                                      add_legend=addlegend, **{'lw':0.5})
         axs[ii].set_title("")
         if ii != len(axs)-1:
                 axs[ii].set_xlabel("")
@@ -134,7 +136,8 @@ def few_col(axs, ds, varnames):
                 addlegend=True
             else:
                 addlegend=False
-            ds[varnames[ii]].isel(size_bin=jj).plot.line(ax=axs[ii,jj], xscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
+            ds[varnames[ii]].isel(size_bin=jj).plot.line(ax=axs[ii,jj], xscale='log', 
+                                                         hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
             axs[ii,jj].set_title("")
             if ii!=axs0-1:
                 axs[ii,jj].set_xlabel("")
@@ -156,15 +159,17 @@ def phase_col(axs, ds, varname):
     iwl = [0,8,14]
     for ii in range(axs0):
         for jj in range(axs1):
-            print(ii,jj, axs.shape)
             if ii==0 and jj==axs1-1:
                 addlegend=True
             else:
                 addlegend=False
-                #ds[varname[ii]].plot.line(ax=axs[ii], xscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
-            dtplot = ds[varname[0]].isel(size_bin=ii, wavelength=iwl[jj]).plot.line(ax=axs[ii,jj], yscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
+            dtplot = ds[varname[0]].isel(size_bin=ii, wavelength=iwl[jj]).plot.line(ax=axs[ii,jj], 
+                                                                                    yscale='log', 
+                                                                                    hue="rel_hum",
+                                                                                    add_legend=addlegend, **{'lw':0.5})
             stitle = " bin ="+str(ii)+"\n wl ="+str(wl[iwl[jj]])+' nm'
-            axs[ii,jj].text(0.99, 0.95, stitle, horizontalalignment='right', verticalalignment='top', transform=axs[ii,jj].transAxes)
+            axs[ii,jj].text(0.99, 0.95, stitle, horizontalalignment='right', 
+                            verticalalignment='top', transform=axs[ii,jj].transAxes)
             axs[ii,jj].set_title("")
             if ii!=axs0-1:
                 axs[ii,jj].set_xlabel("")
@@ -184,13 +189,14 @@ def phase_one(axs, ds, varname):
     iwl = [0,8,14]
     ii  = 0
     for jj in range(axs0):
-            print(ii,jj, axs.shape)
             if ii==0 and jj==axs0-1:
                 addlegend=True
             else:
                 addlegend=False
-                #ds[varname[ii]].plot.line(ax=axs[ii], xscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
-            dtplot = ds[varname[0]].isel(size_bin=ii, wavelength=iwl[jj]).plot.line(ax=axs[jj], yscale='log', hue="rel_hum", add_legend=addlegend, **{'lw':0.5})
+            dtplot = ds[varname[0]].isel(size_bin=ii, wavelength=iwl[jj]).plot.line(ax=axs[jj],
+                                                                                    yscale='log',
+                                                                                    hue="rel_hum",
+                                                                                    add_legend=addlegend, **{'lw':0.5})
             stitle = str(wl[iwl[jj]])+' nm'
             axs[jj].text(0.99, 0.97, stitle, horizontalalignment='right', verticalalignment='top', transform=axs[jj].transAxes)
             axs[jj].set_title("")
@@ -251,7 +257,6 @@ def plt_nc_phasefunction(data, extra, pformat="png"):
         else:
             phase_one(axs, ds, varnames)
             plt.subplots_adjust(left=0.2, top=0.75, bottom=0.2)
-            #plt.tight_layout()
         plt.savefig(sname)
         plt.close(fig)
     else:
@@ -260,6 +265,3 @@ def plt_nc_phasefunction(data, extra, pformat="png"):
 
 
 
-#for fname in glob.glob("../outputnc/*.nc"):
-#    aerplt("refindex",fname)
-#    aerplt("optical",fname)]

@@ -60,19 +60,11 @@ IFS-CY48R1: IFS-sbatch
 
 IFS-CY49R1: IFS-sbatch
 	@echo " === IFS-CY49R1 ==="
-	sbatch scripts/create_ifs-cy49r1.sh
+	sbatch scripts/create_ifs-cy49r1.sh 
 
-IFS-CY49R1-v2: IFS-sbatch
-	@echo " === IFS-CY49R1-v2 ==="
-	sbatch scripts/create_ifs-cy49r1_v2.sh
-
-IFS-CY49R1-v3: IFS-sbatch
-	@echo " === IFS-CY49R1-v3 ==="
-	sbatch scripts/create_ifs-cy49r1_v3.sh
-
-IFS-CY49R1-v4: IFS-sbatch
-	@echo " === IFS-CY49R1-v4 ==="
-	sbatch scripts/create_ifs-cy49r1_v4.sh
-
+IFS-CY49R1-McClear: IFS-sbatch
+	@echo " === IFS-CY49R1-McClear ==="
+	sbatch scripts/create_ifs_McClear.sh
+	
 
 

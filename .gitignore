@@ -3,9 +3,12 @@ docs.html
 tmp
 logs
 outputnc
+outputplt
+data/to_remove
+scripts/previous_checks
 aeropt/__pycache__/*
 docs/build/*
-engines/mie_Boucher_Bozzo/libs/*
-engines/mie_Boucher_Bozzo/src/dev/*
-pyecaeropt.pdf
+engines/mie_code/libs/*
+engines/tmatrix*
+*.pdf
 

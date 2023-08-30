@@ -1,36 +1,34 @@
-
-
-###########################################################################################
-# aeropt/cmd.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    02-Nov-2022   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#      Provides CLASSES and FUNCTIONS:
-#
-#      CLASSES        
-#        * runinfo         : encapsulate information of current run                       
-#                                                                                         
-#      FUNCTIONS                                                                        
-#        * fill_runinfo    : creates a runinfo object                                     
-#        * cli             : uses the argparse library to create a cli application             
-##########################################################################################
-
+#  +----------------------------------------------------------------------------------------+
+#  | aeropt/cmd.py                                                                          |
+#  |                                                                                        |
+#  | (C) Copyright 2022- ECMWF.                                                             |
+#  |                                                                                        |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0            |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+#  |                                                                                        |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities           |
+#  | granted to it by virtue of its status as an intergovernmental organisation             |
+#  | nor does it submit to any jurisdiction.                                                |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Author:                                                                                |
+#  |    Ramiro Checa-Garcia. ECMWF                                                          |
+#  |                                                                                        |
+#  | Modifications:                                                                         |
+#  |    02-Nov-2022   Ramiro Checa-Garcia    Added documentation to funcion/classes         |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Info:                                                                                  |
+#  |      Provides CLASSES and FUNCTIONS:                                                   |
+#  |                                                                                        |
+#  |      CLASSES                                                                           |
+#  |        * runinfo         : encapsulate information of current run                      |
+#  |                                                                                        |
+#  |      FUNCTIONS                                                                         |
+#  |        * fill_runinfo    : creates a runinfo object                                    |
+#  |        * cli             : uses the argparse library to create a cli application       |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 
 import os

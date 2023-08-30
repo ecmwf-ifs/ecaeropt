@@ -30,14 +30,14 @@
 
 default.wavelengths = "data/wavelengths/wl_out_TEST_10.txt"  # indicates the default wavelengths for output files this
                                                              # will override the value in the configuration files!!
-                                                            # if you want to keep conf. files value remove this.
+                                                             # if you want to keep conf. files value remove this.
 
-default.engine      = "mie_Boucher_Bozzo"                # indicates the default code to calculate the optical properties
+default.engine      = "mie"                                  # indicates the default code to calculate the optical properties
 
 
 # add option of bands (in a future)
 
-default.nangle      = 1201                               # =0          -> no phase function calculated
+default.nangle      = [-180,180,1201]                    # =0          -> no phase function calculated
                                                          # =n          -> number of equistant angles for phase function
                                                          # ="filename" -> read angles from file
 
@@ -103,7 +103,6 @@ skip=false # Most of the cases this will be false, unless you have already the n
 single = [  "test_du1" , "test_su"            ]               # This will process the specie du1_test and su
                                                              # with default settings AT SPECIES
 
-
 # For mixing config files the syntax is more complex. First the elements are defined in [species] as usual config files but
 # we name them with the syntax xxxx.yyyy (yyyy is a component of the mixture xxxx)
 # Then in this section we use the notation
@@ -130,10 +129,10 @@ number     = { philic=2, phobic=3}
 
 rhphobic   = 3 # In some case the phobic is taken from philic at specific RH between 20 and 30%
 
-aer.dd1    = { species="test_du1"       , type="phobic", position= 1 , bin=2 }
-aer.om     = { species="test_organic"   , type="philic", position= 1 , bin=1 }
-aer.su     = { species="test_su"        , type="philic", position= 2 , bin=1 }
-aer.su_dry = { species="test_su"        , type="phobic", position= 3 , bin=1 }
+aer.dd1    = { species="test_du1"       , code = "DD", type="phobic", position= 1 , bin=2 }
+aer.om     = { species="test_organic"   , code = "OM", type="philic", position= 1 , bin=1 }
+aer.su     = { species="test_su"        , code = "SU", type="philic", position= 2 , bin=1 }
+aer.su_dry = { species="test_su"        , code = "SU", type="phobic", position= 3 , bin=1 }
 
 [info]
 product_version = '48R1'

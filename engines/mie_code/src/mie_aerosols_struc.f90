@@ -1,39 +1,38 @@
 
 
-
-
-
 module mie_code
 
-!---------------------------------------------------------------------------------------------
-! engines/mie_code/src/mie_aerosols_struct.f90
-!
-! (C) Copyright 1996-2023 CNRS (Author: Olivier Boucher) 
-! (C) Copyright 2022- ECMWF
-!
-! This software is licensed under the terms of the Apache Licence Version 2.0
-! which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-!
-! In applying this licence, ECMWF does not waive the privileges and immunities
-! granted to it by virtue of its status as an intergovernmental organisation
-! nor does it submit to any jurisdiction.
-!
-! Author:
-!    Olivier Boucher.      CNRS    Original code for Mie homogenous spheres
-!    Alessio Bozzo.       ECMWF    1st implementation in ECMWF
-!    Ramiro Checa-Garcia. ECMWF    Changes/improvements for ecaeropt
-!
-! Modifications:
-!    10-Oct-2022   R. Checa-Garcia  The original code of Boucher/Bozzo has been changed
-!                                   to a module and it is created a wrapper of the fortran 
-!                                   subroutine using iso_c_bindings which allows the access 
-!                                   of the mie_aerosols subroutine from different languages
-!    26-Nov-2022   R. Checa-Garcia  using iso_fortran_env / code tests also in Julia.
-!    26-Nov-2022   R. Checa-Garcia  Refactor to an structured code. Tests for an, bn done
-!                                   Test for single sphere. Distribution methods programmed
-!                                   as functions. Modif. refractive index input (now array)
-!---------------------------------------------------------------------------------------------
-
+! +----------------------------------------------------------------------------------------+
+! | engines/mie_code/src/mie_aerosols_struct.f90                                           |
+! |                                                                                        |
+! | (C) Copyright 1996-2023 CNRS (Author: Olivier Boucher)                                 |
+! | (C) Copyright 2022- ECMWF                                                              |
+! |                                                                                        |
+! | This software is licensed under the terms of the Apache Licence Version 2.0            |
+! | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+! |                                                                                        |
+! | In applying this licence, ECMWF does not waive the privileges and immunities           |
+! | granted to it by virtue of its status as an intergovernmental organisation             |
+! | nor does it submit to any jurisdiction.                                                |
+! |                                                                                        |
+! | Author:                                                                                |
+! |    Olivier Boucher.      CNRS    Original code for Mie homogenous spheres              |
+! |    Alessio Bozzo.       ECMWF    1st implementation in ECMWF                           |
+! |    Ramiro Checa-Garcia. ECMWF    Changes/improvements for ecaeropt                     |
+! |                                                                                        |
+! | Modifications:                                                                         |
+! |    10-Oct-2022   R. Checa-Garcia  The original code of Boucher/Bozzo has been changed  |
+! |                                   to a module and it is created a wrapper of the       |
+! |                                   fortran subroutine using iso_c_bindings which allows |
+! |                                   the access of the mie_aerosols subroutine from       |
+! |                                   different languages                                  |
+! |    26-Nov-2022   R. Checa-Garcia  using iso_fortran_env / code tests also in Julia.    |
+! |    28-Nov-2022   R. Checa-Garcia  Refactor to an structured code. Tests for an,bn done |
+! |                                   Test for single sphere. Distribution methods         |
+! |                                   programmed as functions. Modif. refract. index input |
+! |                                   (now array)                                          |
+! |                                                                                        |
+! +----------------------------------------------------------------------------------------+
   use iso_c_binding
   use iso_fortran_env
 
@@ -60,7 +59,6 @@ module mie_code
         integer(KIND=c_int) , intent(IN) :: size_bins
         integer(KIND=c_int) , intent(IN) :: rh_int
         integer(KIND=c_int) , intent(IN) :: Ndis
-  !                                     tested an and bn coefficients.
         integer(KIND=c_int) , intent(IN) :: nb_lambda
         integer(KIND=c_int) , intent(IN) :: ri_nrh
         integer(KIND=c_int) , intent(IN) :: NInp, nmumax, verbose
@@ -114,7 +112,6 @@ module mie_code
             print *, ' nb_lambda  ', nb_lambda
             print *, ' lambda_out ', lambda_out(:)
             print *, ' Ndis       ', Ndis
-  !                                     tested an and bn coefficients.
             print *, ' size_bins  ', size_bins
             print *, ' ri_nrh     ', ri_nrh
             print *, ' ri_lamb_tab', zlambtab(:)

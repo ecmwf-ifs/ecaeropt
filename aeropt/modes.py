@@ -1,34 +1,35 @@
-###########################################################################################
-# aeropt/modes.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    26-Oct-2022   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#      Provides the FUNCTIONS:
-#
-#      FUNCTIONS        
-#         * config_file_mode   :
-#         * info_mode          :
-#         * setting_file_mode  :
-#         * test_mode          :
-#         * compare_ifsnc      :
-#         * check_vars_nc      :
-##########################################################################################
+#  +----------------------------------------------------------------------------------------+
+#  | aeropt/modes.py                                                                        |
+#  |                                                                                        |
+#  | (C) Copyright 2022- ECMWF.                                                             |
+#  |                                                                                        |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0            |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+#  |                                                                                        |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities           |
+#  | granted to it by virtue of its status as an intergovernmental organisation             |
+#  | nor does it submit to any jurisdiction.                                                |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Author:                                                                                |
+#  |    Ramiro Checa-Garcia. ECMWF                                                          |
+#  |                                                                                        |
+#  | Modifications:                                                                         |
+#  |    26-Nov-2022   Ramiro Checa-Garcia    Added check_vars_nc                            |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Info:                                                                                  |
+#  |      Provides the FUNCTIONS:                                                           |
+#  |                                                                                        |
+#  |      FUNCTIONS                                                                         |
+#  |         * config_file_mode   :                                                         |
+#  |         * info_mode          :                                                         |
+#  |         * setting_file_mode  :                                                         |
+#  |         * test_mode          :                                                         |
+#  |         * compare_ifsnc      :                                                         |
+#  |         * check_vars_nc      :                                                         |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 
 try:
@@ -108,6 +109,7 @@ def setting_file_mode(rinfo, fsetting, test=False):
 
    """
 
+   cwarn = (show.bcolor.WARN +show.bcolor.BOLD,show.bcolor.ENDC)
    show.add_header(rinfo, fsetting)
 
    if os.path.isfile(fsetting):
@@ -116,9 +118,10 @@ def setting_file_mode(rinfo, fsetting, test=False):
        runset = None
 
    if test==False:
-       print("\n   RUN in SETTING FILE MODE: \n")
+       print("\n   RUN in SETTING FILE MODE\n")
    else:
-       print("\n   RUN in TEST MODE        : \n")
+
+       print("\n   RUN in "+cwarn[0]+"TEST MODE"+cwarn[1]+"\n")
    
    
    dicnc_iaer = {}
@@ -250,8 +253,10 @@ def test_mode(rinfo, fsetting):
 
     runset = toml.load(fsetting)
     if "ifs" in runset.keys():
-        if runset["ifs"]["nc_ref"] != None:
-           compare_ifsnc(runset,"IFS-netcdf")
+
+       if "nc_ref" in runset["ifs"].keys():
+          if runset["ifs"]["nc_ref"] != None:
+             compare_ifsnc(runset,"IFS-netcdf")
 
     show.add_footer()
     
@@ -296,7 +301,7 @@ def check_vars_nc(ncdiff, iaer, pathnctest, pathncref):
     print("            netcdf to test   : ", pathnctest)
     print("            netcdf reference : ", pathncref,"\n")
     print("")
-    str_vars = ["code_hydrophilic", "code_hydrophobic", "optical_model_hydrophilic", "optical_model_hydrophobic"]
+    str_vars = ["phase_function","code_hydrophilic", "code_hydrophobic", "optical_model_hydrophilic", "optical_model_hydrophobic"]
     passing=True
     for varname in ds.variables:
         if varname not in str_vars:

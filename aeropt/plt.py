@@ -1,39 +1,40 @@
-###########################################################################################
-# aeropt/plt.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    10-Jan-2023   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#      Provides CLASSES and FUNCTIONS:
-#                                                                                         
-#      FUNCTIONS        
-#       * aerplt               :
-#       * plt_csv              :
-#       * plt_csv_refind       :
-#       * plt_nc               :
-#       * plt_nc_refindex      :
-#       * one_col              :
-#       * few_col              :
-#       * phase_col            :
-#       * phase_one            :
-#       * plt_nc_optical       : 
-#       * plt_nc_phasefunction :
-##########################################################################################
+#  +----------------------------------------------------------------------------------------+
+#  | aeropt/plt.py                                                                          |
+#  |                                                                                        |
+#  | (C) Copyright 2022- ECMWF.                                                             |
+#  |                                                                                        |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0            |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+#  |                                                                                        |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities           |
+#  | granted to it by virtue of its status as an intergovernmental organisation             |
+#  | nor does it submit to any jurisdiction.                                                |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Author:                                                                                |
+#  |    Ramiro Checa-Garcia. ECMWF                                                          |
+#  |                                                                                        |
+#  | Modifications:                                                                         |
+#  |    10-Fev-2023   Ramiro Checa-Garcia    Added plotting of phase function               |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Info:                                                                                  |
+#  |      Provides CLASSES and FUNCTIONS:                                                   |
+#  |                                                                                        |
+#  |      FUNCTIONS                                                                         |
+#  |       * aerplt               :                                                         |
+#  |       * plt_csv              :                                                         |
+#  |       * plt_csv_refind       :                                                         |
+#  |       * plt_nc               :                                                         |
+#  |       * plt_nc_refindex      :                                                         |
+#  |       * one_col              :                                                         |
+#  |       * few_col              :                                                         |
+#  |       * phase_col            :                                                         |
+#  |       * phase_one            :                                                         |
+#  |       * plt_nc_optical       :                                                         |
+#  |       * plt_nc_phasefunction :                                                         |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 
 

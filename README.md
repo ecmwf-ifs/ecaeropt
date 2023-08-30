@@ -10,9 +10,7 @@
 
 # Description
 
-Tool to calculate optical properties of atmospheric particles and store as netcdf files. It is designed to support
-different methodologies and input information for each specie uses human-readable files. 
-The tool also can produce input netcdf files for the aerosols optical models used by IFS numerical weather prediction model and IFS/CAMs.
+Tool to calculate optical properties of atmospheric particles and store as netcdf files. It is designed to support different methodologies and input information for each specie uses human-readable files. The tool also can produce input netcdf files for the aerosols optical models used by IFS numerical weather prediction model and IFS/CAMs.
 
 # License
   - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE file in main directory.
@@ -33,7 +31,6 @@ The tool also can produce input netcdf files for the aerosols optical models use
     - **Mie-Code**: originally developed by Olivier Boucher. This code has been modified to be modular 
                 and a ISO-C-binnding has been added. With the new modular structure tests for the 
                 series of coefficients an and bn, as well as, single sphere has been added. 
-
 
 # History
 
@@ -112,4 +109,5 @@ You can use the code and report any issue or propose any new feature. Please, ch
 the documentation you can open the file **docs/build/html/index.html**
 
 If you want to contribute at coding level, there is a dev branch, where changes and implemented and evetually when full tested they are integrated in master branch. When a full set of features is included then we add a tag with the version. 
+
 

@@ -1,25 +1,25 @@
 
-##############################################################################################################################
-# Settings file for to create ifs-netcdf for IFS CY48R1                                                                      #
-#                                                                                                                            #
-#                                                                                                                            #
-# INFO:  The file has an the following sections:                                                                             #
-#       1. default           => here few defaults values can be set up                                                       #
-#       2. species           => core of the settings: each species has a config file, and engine and a ncname for the output #
-#                               if engine or ncname is set up as default the default section will be used.                   #
-#       3. Processing        => here is where we indicate the process for an specific calculation. It has to parts:          #
-#          3.1 process       => here we indicate which single aerosols should be processed and which mixed aerosols.         #
-#                               for this we will just use the names of the fields in [species]                               #
-#          3.2 ifs           => section describing the information to build propertly the ifs-netcdf file                    #
-#          3.2 info          => here we can add information to the final netcdfs as global attribute (metadata).             #
-#                                                                                                                            #
-# Version:                                                                                                                   #
-#    1.0.0    15-Nov-2022                                                                                                    #
-#                                                                                                                            #
-# Contact: Ramiro Checa-Garcia                                                                                               #
-#          ramiro.checa-garcia@ecmwf.int                                                                                     #
-##############################################################################################################################
-
+#  +--------------------------------------------------------------------------------------------------------------------------------+
+#  | Settings file for to create ifs-netcdf for IFS CY48R1                                                                          |
+#  |                                                                                                                                |
+#  |                                                                                                                                |
+#  | INFO:  The file has an the following sections:                                                                                 |
+#  |       1. default           => here few defaults values can be set up                                                           |
+#  |       2. species           => core of the settings: each species has a config file, and engine and a ncname for the output     |
+#  |                               if engine or ncname is set up as default the default section will be used.                       |
+#  |       3. Processing        => here is where we indicate the process for an specific calculation. It has to parts:              |
+#  |          3.1 process       => here we indicate which single aerosols should be processed and which mixed aerosols.             |
+#  |                               for this we will just use the names of the fields in [species]                                   |
+#  |          3.2 ifs           => section describing the information to build propertly the ifs-netcdf file                        |
+#  |          3.2 info          => here we can add information to the final netcdfs as global attribute (metadata).                 |
+#  |                                                                                                                                |
+#  | Version:                                                                                                                       |
+#  |    1.0.0    15-Nov-2022                                                                                                        |
+#  |                                                                                                                                |
+#  | Contact: Ramiro Checa-Garcia                                                                                                   |
+#  |          ramiro.checa-garcia@ecmwf.int                                                                                         |
+#  |                                                                                                                                |
+#  +--------------------------------------------------------------------------------------------------------------------------------+
 
 
 # DEFAULTs SECTION ===========================================================================================================

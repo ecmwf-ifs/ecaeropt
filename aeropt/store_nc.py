@@ -1,30 +1,30 @@
-###########################################################################################
-# aeropt/store_nc.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    30-Oct-2022   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#
-#      FUNCTIONS        
-#        * store_nc_single   :
-#        * store_nc_mixture  :
-##########################################################################################
-
+#  +----------------------------------------------------------------------------------------+
+#  | aeropt/store_nc.py                                                                     |
+#  |                                                                                        |
+#  | (C) Copyright 2022- ECMWF.                                                             |
+#  |                                                                                        |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0            |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+#  |                                                                                        |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities           |
+#  | granted to it by virtue of its status as an intergovernmental organisation             |
+#  | nor does it submit to any jurisdiction.                                                |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Author:                                                                                |
+#  |    Ramiro Checa-Garcia. ECMWF                                                          |
+#  |                                                                                        |
+#  | Modifications:                                                                         |
+#  |    30-Oct-2022   Ramiro Checa-Garcia    Added documentation to functions               |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Info:                                                                                  |
+#  |                                                                                        |
+#  |      FUNCTIONS                                                                         |
+#  |        * store_nc_single   :                                                           |
+#  |        * store_nc_mixture  :                                                           |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 
 from netCDF4 import Dataset as NCDataset
@@ -235,6 +235,7 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
         return
     aer = laer_conf[0]
 
+
     num_components = len(laer_conf)
     str_today = rinfo.date
     # Opening NC dataset  =================================================
@@ -260,7 +261,7 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
         if _alleq(lopticalmodel):
             ds.optical_model = lopticalmodel[0]
         else:
-            print(" ==> INCONSISTENCT in OPTICAL MODEL OF AEROSOL-EXTERNAL MIXTURE")
+            print(" ==> INCONSISTENCY in OPTICAL MODEL OF AEROSOL-EXTERNAL MIXTURE")
             print(" ==> Revise configuration files: ")
             for ii, optmodel in zip([a.config_file for a in laer_conf], lopticalmodel):
                 print(" -> File: ",ii, optmodel)
@@ -365,5 +366,5 @@ def store_nc_mixture(laer_conf, aeropt, rinfo, ncname="output_test.nc", ncformat
 
     ds.close()
 
-    return
+    return 
 

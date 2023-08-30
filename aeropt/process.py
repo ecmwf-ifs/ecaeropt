@@ -1,31 +1,31 @@
-###########################################################################################
-# aeropt/process.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    26-Oct-2022   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#      Provides CLASSES and FUNCTIONS:
-#                                                                                         
-#      FUNCTIONS        
-#       * single        :
-#       * mixture       :
-##########################################################################################
-
+#  +----------------------------------------------------------------------------------------+
+#  | aeropt/process.py                                                                      |
+#  |                                                                                        |
+#  | (C) Copyright 2022- ECMWF.                                                             |
+#  |                                                                                        |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0            |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+#  |                                                                                        |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities           |
+#  | granted to it by virtue of its status as an intergovernmental organisation             |
+#  | nor does it submit to any jurisdiction.                                                |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Author:                                                                                |
+#  |    Ramiro Checa-Garcia. ECMWF                                                          |
+#  |                                                                                        |
+#  | Modifications:                                                                         |
+#  |    27-Nov-2022   Ramiro Checa-Garcia    Added documentation                            |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Info:                                                                                  |
+#  |      Provides CLASSES and FUNCTIONS:                                                   |
+#  |                                                                                        |
+#  |      FUNCTIONS                                                                         |
+#  |       * single        :                                                                |
+#  |       * mixture       :                                                                |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 import sys
 import os
@@ -86,9 +86,9 @@ def single(rinfo, path_conf_file, ncoutname, angles, aerengine="mie", wl_out="no
         print("---- ERROR ---- ", aerengine , " not yet implemented")
         sys.exit()
    
-    print("                     =>   optical prop. calculated")
+    print("                     ... optical prop. calculated")
     print("               Storing results as netcdf with path:")
-    print("               ",ncoutname," \n")
+    print("              ",ncoutname," \n")
 
     store.store_nc_single(aer_conf, aer_opt, rinfo, ncname=ncoutname)
 
@@ -154,7 +154,7 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
             print("---- ERROR ---- ", component_engine , " not yet implemented")
             sys.exit()
 
-        print("                     => component calculated")
+        print("                     ...component calculated")
 
         mix_aer_obj.append(aer_conf)
         mix_aer_opt.append(aer_opt)
@@ -170,7 +170,7 @@ def mixture(rinfo, path_conf_files, ncoutname, nangle, laerengine, wl_out="none"
                                       mix_ri_itab, num_component)
 
     print("\n         Storing results as netcdf with path:")
-    print("         ", ncoutname )
+    print(  "        ", ncoutname )
 
     store.store_nc_mixture(mix_aer, aer_mix_opt, rinfo, ncname=ncoutname, opt_model=opt_model)
 

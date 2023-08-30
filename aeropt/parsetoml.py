@@ -1,38 +1,37 @@
-###########################################################################################
-# aeropt/parsetoml.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    10-Oct-2022   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#      Provides CLASSES and FUNCTIONS:
-#
-#                                                                                         
-#      FUNCTIONS                                                                        
-#        * nangle         :
-#        * ncname         :
-#        * select_ncname  : 
-#        * check_toml     :
-#        * toml_single    :
-#        * each_mixture   : 
-#        * toml_mixing    :
-##########################################################################################
-
-
+#  +----------------------------------------------------------------------------------------+
+#  | aeropt/parsetoml.py                                                                    |
+#  |                                                                                        |
+#  | (C) Copyright 2022- ECMWF.                                                             |
+#  |                                                                                        |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0            |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+#  |                                                                                        |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities           |
+#  | granted to it by virtue of its status as an intergovernmental organisation             |
+#  | nor does it submit to any jurisdiction.                                                |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Author:                                                                                |
+#  |    Ramiro Checa-Garcia. ECMWF                                                          |
+#  |                                                                                        |
+#  | Modifications:                                                                         |
+#  |    06-Dec-2022   Ramiro Checa-Garcia    Added check_toml                               |
+#  |                                                                                        |
+#  |                                                                                        |
+#  | Info:                                                                                  |
+#  |      Provides CLASSES and FUNCTIONS:                                                   |
+#  |                                                                                        |
+#  |                                                                                        |
+#  |      FUNCTIONS                                                                         |
+#  |        * nangle         :                                                              |
+#  |        * ncname         :                                                              |
+#  |        * select_ncname  :                                                              |
+#  |        * check_toml     :                                                              |
+#  |        * toml_single    :                                                              |
+#  |        * each_mixture   :                                                              |
+#  |        * toml_mixing    :                                                              |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 
 import os
@@ -65,6 +64,11 @@ def nangle(nangle):
      if isinstance(nangle, int) and nangle>0:
         angles = np.linspace(0.0, 180.0, nangle) 
      
+     if isinstance(nangle, list) and len(nangle)==3:
+         angles= np.linspace(nangle[0],nangle[1],nangle[2])
+     else:
+         print("\n    ERROR: ****** Inconsistency in nangle specification in input file *******")
+         exit()
 
      if isinstance(nangle, str): 
         angles = np.loadtext(nangle, skiprows=1)

@@ -30,14 +30,14 @@
 
 default.wavelengths = "data/wavelengths/wl_out_TEST_10.txt"  # indicates the default wavelengths for output files this
                                                              # will override the value in the configuration files!!
-                                                            # if you want to keep conf. files value remove this.
+                                                             # if you want to keep conf. files value remove this.
 
-default.engine      = "mie_Boucher_Bozzo"                # indicates the default code to calculate the optical properties
+default.engine      = "mie"                                  # indicates the default code to calculate the optical properties
 
 
 # add option of bands (in a future)
 
-default.nangle      = 1201                               # =0          -> no phase function calculated
+default.nangle      = [-180,180,1201]                    # =0          -> no phase function calculated
                                                          # =n          -> number of equistant angles for phase function
                                                          # ="filename" -> read angles from file
 

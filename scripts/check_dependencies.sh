@@ -1,29 +1,29 @@
 #/bin/bash
 
-################################################################################
-# scripts/check_dependencies.sh
-#
-#   (C) Copyright 2022- ECMWF.
-#  
-#   This software is licensed under the terms of the Apache Licence Version 2.0
-#   which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-# 
-#   In applying this licence, ECMWF does not waive the privileges and immunities
-#   granted to it by virtue of its status as an intergovernmental organisation
-#   nor does it submit to any jurisdiction.
-#
-#  Author:
-#     Ramiro Checa-Garcia. ECMWF
-# 
-#  Modifications:
-#     10-Dec-2022   Ramiro Checa-Garcia    1st. version
-#
-#  Info: 
-#       * Dependencies checking script for engine libraries
-#       * Code is organized with functions,
-#################################################################################
+#  +----------------------------------------------------------------------------------------+
+#  | scripts/check_dependencies.sh                                                          |
+#  |                                                                                        |
+#  |   (C) Copyright 2022- ECMWF.                                                           |
+#  |                                                                                        |
+#  |   This software is licensed under the terms of the Apache Licence Version 2.0          |
+#  |   which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                 |
+#  |                                                                                        |
+#  |   In applying this licence, ECMWF does not waive the privileges and immunities         |
+#  |   granted to it by virtue of its status as an intergovernmental organisation           |
+#  |   nor does it submit to any jurisdiction.                                              |
+#  |                                                                                        |
+#  |  Author:                                                                               |
+#  |     Ramiro Checa-Garcia. ECMWF                                                         |
+#  |                                                                                        |
+#  |  Modifications:                                                                        |
+#  |     10-Dec-2022   Ramiro Checa-Garcia    1st. version                                  |
+#  |                                                                                        |
+#  |  Info:                                                                                 |
+#  |       * Dependencies checking script for engine libraries                              |
+#  |       * Code is organized with functions.                                              |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
-#
 # (0) Variables needed for this script.
 #     We assume that user did not change directories structure.
 
@@ -56,11 +56,11 @@ echo "..... Checking directories logs, tmp, outputnc, libs"
      fi
 
 
-     if [ ! -d $path_Tmatrx"/libs" ]; then
-         echo "       -> directory libs for T-matrix Mischenko not present."
-         echo "       -> creating it."
-         mkdir $path_Tmatrx"/libs/"
-     fi
+#     if [ ! -d $path_Tmatrx"/libs" ]; then
+#         echo "       -> directory libs for T-matrix Mischenko not present."
+#         echo "       -> creating it."
+#         mkdir $path_Tmatrx"/libs/"
+#     fi
 
      if [ ! -d "outputnc" ]; then
          echo "       -> directory outputnc not present."

@@ -1,27 +1,28 @@
 
 subroutine interp_ri(nin,zlambtab, z_n_r_tab, z_n_i_tab, nout, lambda_int,znr,zni,verbose)
 
-!---------------------------------------------------------------------------------------------
-! engines/mie_code/src/interp_ri.f90
-!
-! (C) Copyright 2018- ECMWF.
-!
-! This software is licensed under the terms of the Apache Licence Version 2.0
-! which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-!
-! In applying this licence, ECMWF does not waive the privileges and immunities
-! granted to it by virtue of its status as an intergovernmental organisation
-! nor does it submit to any jurisdiction.
-!
-! Author:
-!    Alessio Bozzo.       ECMWF
-!    Ramiro Checa-Garcia. ECMWF
-!
-! Modifications:
-!    10-May-2018   Alessio Bozzo    1st. version
-!    10-Oct-2022   R. Checa-Garcia  Adapted for ecaeropt.
-!
-!---------------------------------------------------------------------------------------------
+! +----------------------------------------------------------------------------------------+
+! | engines/mie_code/src/interp_ri.f90                                                     |
+! |                                                                                        |
+! | (C) Copyright 2018- ECMWF.                                                             |
+! |                                                                                        |
+! | This software is licensed under the terms of the Apache Licence Version 2.0            |
+! | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                   |
+! |                                                                                        |
+! | In applying this licence, ECMWF does not waive the privileges and immunities           |
+! | granted to it by virtue of its status as an intergovernmental organisation             |
+! | nor does it submit to any jurisdiction.                                                |
+! |                                                                                        |
+! | Author:                                                                                |
+! |    Alessio Bozzo.       ECMWF                                                          |
+! |    Ramiro Checa-Garcia. ECMWF                                                          |
+! |                                                                                        |
+! | Modifications:                                                                         |
+! |    10-May-2018   Alessio Bozzo    1st. version                                         |
+! |    10-Oct-2022   R. Checa-Garcia  Adapted for ecaeropt.                                |
+! |                                                                                        |
+! |                                                                                        |
+! +----------------------------------------------------------------------------------------+
 
 
 

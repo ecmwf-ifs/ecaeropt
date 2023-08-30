@@ -1,28 +1,28 @@
 #/bin/bash
 
-################################################################################
-# scripts/build_docs.sh
-#
-#   (C) Copyright 2022- ECMWF.
-#  
-#   This software is licensed under the terms of the Apache Licence Version 2.0
-#   which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-# 
-#   In applying this licence, ECMWF does not waive the privileges and immunities
-#   granted to it by virtue of its status as an intergovernmental organisation
-#   nor does it submit to any jurisdiction.
-#
-#  Author:
-#     Ramiro Checa-Garcia. ECMWF
-# 
-#  Modifications:
-#     10-Dec-2022   Ramiro Checa-Garcia    1st. version
-#
-#  Info: 
-#       * Code is organized with functions, each function is doing one build 
-#         for external optical libraries.
-#
-#################################################################################
+#  +----------------------------------------------------------------------------------------+
+#  | scripts/build_docs.sh                                                                  |
+#  |                                                                                        |
+#  |   (C) Copyright 2022- ECMWF.                                                           |
+#  |                                                                                        |
+#  |   This software is licensed under the terms of the Apache Licence Version 2.0          |
+#  |   which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.                 |
+#  |                                                                                        |
+#  |   In applying this licence, ECMWF does not waive the privileges and immunities         |
+#  |   granted to it by virtue of its status as an intergovernmental organisation           |
+#  |   nor does it submit to any jurisdiction.                                              |
+#  |                                                                                        |
+#  |  Author:                                                                               |
+#  |     Ramiro Checa-Garcia. ECMWF                                                         |
+#  |                                                                                        |
+#  |  Modifications:                                                                        |
+#  |     10-Dec-2022   Ramiro Checa-Garcia    1st. version                                  |
+#  |                                                                                        |
+#  |  Info:                                                                                 |
+#  |       * Code is organized with functions, each function is doing one build             |
+#  |         for external optical libraries.                                                |
+#  |                                                                                        |
+#  +----------------------------------------------------------------------------------------+
 
 # (0) Variables needed for this script.
 #     We assume that user did not change directories structure.
@@ -31,7 +31,6 @@ path_ecaeropt=$(pwd)
 date_now=$(date "+%Y%m%d_%H%M")
 
 path_mie=$path_ecaeropt"/engines/mie_code/"
-path_Tmatrx=$path_ecaeropt"/engines/tmatrix_mischenko"
 
 
 echo ""
@@ -81,7 +80,7 @@ function mielib {
 
     # mie_aerosols_struc.f90      => new version structured
 
-    f2py3 -c -m mie parkind1.F90 mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
+    f2py3 -c -m mie parkind1.F90 new_mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
 
     status=$?
 

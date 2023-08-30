@@ -1,37 +1,37 @@
+#  +------------------------------------------------------------------------------------+
+#  | aeropt/aer.py                                                                      |
+#  |                                                                                    |
+#  | (C) Copyright 2022- ECMWF.                                                         |
+#  |                                                                                    |
+#  | This software is licensed under the terms of the Apache Licence Version 2.0        |
+#  | which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.               |
+#  |                                                                                    |
+#  | In applying this licence, ECMWF does not waive the privileges and immunities       |
+#  | granted to it by virtue of its status as an intergovernmental organisation         |
+#  | nor does it submit to any jurisdiction.                                            |
+#  |                                                                                    |
+#  | Author:                                                                            |
+#  |    Ramiro Checa-Garcia. ECMWF                                                      |
+#  |                                                                                    |
+#  | Modifications:                                                                     |
+#  |    10-Oct-2022   Ramiro Checa-Garcia    Added documentation                        |
+#  |    15-Jan-2023   Ramiro Checa-Garcia    Added scaling option for shape             |
+#  |                                                                                    |
+#  | Info:                                                                              |
+#  |      Provides CLASSES and FUNCTIONS:                                               |
+#  |                                                                                    |
+#  |      CLASSES                                                                       |
+#  |        * aerosol         : it has all the information of erosol configuration      |
+#  |        * aeropt          : encapsulate the single aerosol optical properties       |
+#  |                                                                                    |
+#  |      FUNCTIONS                                                                     |
+#  |        * readconf        : creates an aerosol object based in configuration file   |
+#  |        * mie_to_aeropt   : creates an aeropt object from outputs of a mie code     |
+#  |        * mixing          : calculates an external  mixing aerosol given the aeropt |
+#  |                            of the components                                       |
+#  |                                                                                    |
+#  +------------------------------------------------------------------------------------+
 
-###########################################################################################
-# aeropt/aer.py
-#
-# (C) Copyright 2022- ECMWF.
-#
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-#
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation
-# nor does it submit to any jurisdiction.
-#
-#
-# Author:
-#    Ramiro Checa-Garcia. ECMWF
-#
-# Modifications:
-#    10-Oct-2022   Ramiro Checa-Garcia    1st. version
-#
-#                                                                                         
-# Info: 
-#      Provides CLASSES and FUNCTIONS:
-#
-#      CLASSES                                                                          
-#        * aerosol         : one has all the information of the aerosol configuration.    
-#        * aeropt          : encapsulate the single aerosol optical properties            
-#                                                                                         
-#      FUNCTIONS                                                                        
-#        * readconf        : creates an aerosol object based in configuration file        
-#        * mie_to_aeropt   : creates an aeropt object from outputs of a mie code       
-#        * mixing          : calculates an external mixing aerosol given the aeropt of    
-#                            the components                                               
-##########################################################################################
 
 import numpy as np
 try:

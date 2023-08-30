@@ -39,6 +39,7 @@ default.engine      = "mie"                                  # indicates the def
 
 default.nangle      = [-180,180,1201]                    # =0          -> no phase function calculated
                                                          # =n          -> number of equistant angles for phase function
+						         # =[a,b,c]    -> c values between a and b.
                                                          # ="filename" -> read angles from file
 
 default.ncname      = ["C:aer_type",  "C:today",         # C: means that the string after C: will be find in config files

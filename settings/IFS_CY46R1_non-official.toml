@@ -27,14 +27,15 @@
 # specific information in the config files or in the process section
 
 [default]
-wavelengths = "data/wavelengths/wl_out_TEST_2.txt"     # indicates the default wavelengths for output files this
+wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wavelengths for output files this
                                                     # will override the value in the configuration files!!
                                                     # if you want to keep conf. files value remove this.
 
 engine      = "mie"                                 # indicates the default code to calculate the optical properties
 
-nangle      = 10                                    # =0          -> no phase function calculated
+nangle      = [-180,180,10]                         # =0          -> no phase function calculated
                                                     # =n          -> number of equistant angles for phase function
+						    # =[a,b,c]    -> c values between a and b.
                                                     # ="filename" -> read angles from file
 
 ncname      = ["C:aer_type",  "C:today",            # C: means that the string after C: will be find in config files

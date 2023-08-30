@@ -31,7 +31,7 @@ wavelengths = "data/wavelengths/wl_out_IFS.txt"     # indicates the default wave
                                                     # will override the value in the configuration files!!
                                                     # if you want to keep conf. files value remove this.
 
-engine      = "mie"                   # indicates the default code to calculate the optical properties
+engine      = "mie"                                 # indicates the default code to calculate the optical properties
 
 nangle      = [-180, 180, 10]                       # =0          -> no phase function calculated
                                                     # =n          -> number of equistant angles for phase function

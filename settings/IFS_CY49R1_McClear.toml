@@ -31,8 +31,9 @@ wavelengths = "data/wavelengths/wl_out_McClear.txt" # indicates the default wave
                                                     # will override the value in the configuration files!!
                                                     # if you want to keep conf. files value remove this.
 
-engine      = "mie"                   # indicates the default code to calculate the optical properties
+engine      = "mie"                                 # indicates the default code to calculate the optical properties
 
+# IMPORTANT with this setting the LIDAR ratio is not correct, it needs that 1st angle is -180.
 nangle      = [0,180,3600]                          # =0          -> no phase function calculated
                                                     # =n          -> number of equistant angles for phase function
 						    # =[a,b,c]    -> c values between a and b.

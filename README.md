@@ -21,9 +21,9 @@ Tool to calculate optical properties of atmospheric particles and store as netcd
                   contributions of other authors via Mie Scattering Codes.
   - Contacts:     ramiro.checa-garcia@ecmwf.int
   - Contributors:
-      - Tims Stockfale: for testing/comments.
-      - Robin Hogan: for testing/comments.
-      - Samuel Remy: info of several optical models.
+      - Tim Stockdale : for testing/comments.
+      - Robin Hogan   : for testing/comments.
+      - Samuel Remy   : info of several optical models.
 
 # External codes included/used:
 

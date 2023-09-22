@@ -64,7 +64,9 @@ IFS-CY49R1: IFS-sbatch
 
 IFS-CY49R1-McClear: IFS-sbatch
 	@echo " === IFS-CY49R1-McClear ==="
-	sbatch scripts/create_ifs_McClear.sh
+	sbatch scripts/create_McClear.sh
 	
-
+IFS-CY49R1-GRASP: IFS-sbatch
+	@echo " === IFS-CY49R1-GRASP ==="
+	sbatch scripts/create_Grasp.sh
 

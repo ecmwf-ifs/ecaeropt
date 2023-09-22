@@ -40,7 +40,6 @@ import aeropt.aer as aer
 
 from  engines.mie_code.libs.mie import mie_code as mie
 
-
 def test_approx(val, ref, tol, info, passed, failed):
 
     if val == pytest.approx(ref, tol):

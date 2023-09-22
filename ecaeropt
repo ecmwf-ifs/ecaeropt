@@ -28,12 +28,12 @@ import argparse
 import logging
 from datetime import datetime as dt
 
-ecaeropt_version= "1.16"
+ecaeropt_version= "1.20"
 
 dtstr   = dt.now().strftime("%y%m%d%H%M%S")
 logfile ='tmp/'+dtstr+'.log'
 
-args  = aeropt.cmd.cli()
+args  = aeropt.cmd.cli(ecaeropt_version)
 
 rinfo = aeropt.cmd.fill_runinfo(ecaeropt_version, args.debug, logfile)
 

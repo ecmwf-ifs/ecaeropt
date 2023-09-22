@@ -95,7 +95,7 @@ def fill_runinfo(codeversion, debug, logfile):
     return runinfo(today, machine, gittag, runpath, version, user, debug, logfile)
 
 
-def cli():
+def cli(ecaeropt_version):
     """
     Creates a parser for the cli arguments given by user. Relies on argparse module of
     standard python library.
@@ -114,7 +114,7 @@ def cli():
 
     """
 
-    str_prog    = "\033[1m ecaeropt v1.15 \033[0m"
+    str_prog    = "\033[1m ecaeropt v"+ecaeropt_version+"\033[0m"
     str_descrip = "\033[95m ECMWF tool to calculate aerosol optical properties (ecaeropt) \033[0m"
     str_epilog  = "Contact: Ramiro Checa-Garcia <ramiro.checa-garcia at ecmwf.int>\n"
     str_setting = "Calculations based on a SETTING toml file (stored results defined in SETTING file)"

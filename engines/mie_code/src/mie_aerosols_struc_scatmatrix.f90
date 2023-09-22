@@ -51,7 +51,7 @@ module mie_code
           & znr,zni,                                              &   ! 2
           & ext_stored, omg_stored, asy_stored,                   &   ! 3 + 4 below => 9
           & lidar_ratio_stored, mass_stored, ph_stored, ph_ang,   &
-          & test_single_sphere)   bind(c, name="mie_aerosols")
+          & test_single_sphere, P11, P12, P33, P34)   bind(c, name="mie_aerosols")
 
 
         implicit none
@@ -85,6 +85,10 @@ module mie_code
         real(KIND=c_double) , intent(OUT)  :: ph_stored(nb_lambda,rh_int,size_bins,Nmumax)
         real(KIND=c_double) , intent(INOUT):: ph_ang(Nmumax) ! this has been changed and we have to include
                                                               ! input angles in the code
+        real(KIND=c_double) , intent(OUT)  :: P11(nb_lambda,rh_int,size_bins,Nmumax)
+        real(KIND=c_double) , intent(OUT)  :: P12(nb_lambda,rh_int,size_bins,Nmumax)
+        real(KIND=c_double) , intent(OUT)  :: P33(nb_lambda,rh_int,size_bins,Nmumax)
+        real(KIND=c_double) , intent(OUT)  :: P34(nb_lambda,rh_int,size_bins,Nmumax)
 
         ! verbose ==2 print some information to check size and values between
         !                   external code and called subrotines
@@ -130,7 +134,7 @@ module mie_code
             & znr,zni,                                              &   ! 2
             & ext_stored, omg_stored, asy_stored,                   &   ! 3
             & lidar_ratio_stored, mass_stored, ph_stored, ph_ang,   &
-            & test_single_sphere)       ! 4 => 9  out)
+            & test_single_sphere, P11, P12, P33, P34)                   ! 4 => 9  out)
 
 
 
@@ -160,7 +164,7 @@ module mie_code
       & znr,zni,                                              &   ! 2
       & ext_stored, omg_stored, asy_stored,                   &   ! 3
       & lidar_ratio_stored, mass_stored, ph_stored, ph_ang,   &
-      & test_single_sphere)       ! 4 => 9  out
+      & test_single_sphere, P11, P12, P33, P34)                   ! 4 => 9  out
 
 
       USE PARKIND1 , ONLY : JPIM, JPRB
@@ -233,9 +237,19 @@ module mie_code
     REAL(8),    INTENT(OUT)    :: ph_stored(nb_lambda,rh_int,size_bins,Nmumax)
     REAL(8),    INTENT(OUT)    :: test_single_sphere(4)
     REAL(8),    INTENT(INOUT)  :: ph_ang(Nmumax)
+    real(8),    INTENT(OUT)    :: P11(nb_lambda,rh_int,size_bins,Nmumax)
+    real(8),    INTENT(OUT)    :: P12(nb_lambda,rh_int,size_bins,Nmumax)
+    real(8),    INTENT(OUT)    :: P33(nb_lambda,rh_int,size_bins,Nmumax)
+    real(8),    INTENT(OUT)    :: P34(nb_lambda,rh_int,size_bins,Nmumax)
+    real(8)     :: F11(1:Nmumax)
+    real(8)     :: F12(1:Nmumax)
+    real(8)     :: F33(1:Nmumax)
+    real(8)     :: F34(1:Nmumax)
+
+
 
     ! INTERNAL VARIABLES
-    INTEGER(4)             :: Nbin_points
+    INTEGER(4)             :: Nbin_points 
     REAL(8)                :: rmin,rmax,r_0(Ndis)
 
     INTEGER(4) , PARAMETER :: Nsize =210000  !--- reserved number for complex iterative functions  
@@ -253,6 +267,7 @@ module mie_code
     REAL(8)    :: tot_num_concentration, radius, radius2, mass
     REAL(8)    :: sigma_abs,   Q_abs
     REAL(8)    :: PP(1:Nmumax), phase(1:Nmumax)
+    REAL(8)    :: Fd11(1:Nmumax),  Fd12(1:Nmumax),  Fd33(1:Nmumax),  Fd34(1:Nmumax) 
     REAL(8)    :: Q_ext, Q_sca, g, omega   !--parameters for radius r
     REAL(8)    :: x  !--size parameter
     REAL(8)    :: r  !--radius
@@ -382,10 +397,10 @@ module mie_code
            rgv       = 0.0_JPRB
            rgn       = 0.0_JPRB
            PP(:)     = 0.0_JPRB
-           P11(:)    = 0.0
-           P12(:)    = 0.0
-           P33(:)    = 0.0
-           P34(:)    = 0.0
+           Fd11(:)   = 0.0_JPRB
+           Fd12(:)   = 0.0_JPRB
+           Fd33(:)   = 0.0_JPRB
+           Fd34(:)   = 0.0_JPRB
 
            if(rmin.eq.rmax) Nbin_points=0
            
@@ -448,10 +463,10 @@ module mie_code
               !-- for computation of LR:  phase function / lidar ratio -----------
               DO Nmu=1, Nmumax 
                  PP(Nmu)=PP(Nmu)+Q_sca*phase(Nmu)*numb*(r**2)*deltar
-                 P11(Nmu)=P11(Nmu)+Q_sca*F11(Nmu)*numb*(r**2)*deltar
-                 P12(Nmu)=P12(Nmu)+Q_sca*F12(Nmu)*numb*(r**2)*deltar
-                 P33(Nmu)=P33(Nmu)+Q_sca*F33(Nmu)*numb*(r**2)*deltar
-                 P34(Nmu)=P34(Nmu)+Q_sca*F34(Nmu)*numb*(r**2)*deltar
+                 Fd11(Nmu)=Fd11(Nmu)+Q_sca*F11(Nmu)*numb*(r**2)*deltar
+                 Fd12(Nmu)=Fd12(Nmu)+Q_sca*F12(Nmu)*numb*(r**2)*deltar
+                 Fd33(Nmu)=Fd33(Nmu)+Q_sca*F33(Nmu)*numb*(r**2)*deltar
+                 Fd34(Nmu)=Fd34(Nmu)+Q_sca*F34(Nmu)*numb*(r**2)*deltar
               ENDDO
            
 
@@ -487,6 +502,10 @@ module mie_code
               PP(Nmu)=pi/sigma_sca*PP(Nmu)
               !ph_ang(Nmu+1)=ACOS(Muk(Nmu))*180./pi
               ph_stored(Nwv,IRH,bin,Nmu)=PP(Nmu)
+              P11(Nwv, IRH, bin, Nmu) = Fd11(Nmu)*pi/sigma_sca
+              P12(Nwv, IRH, bin, Nmu) = Fd12(Nmu)*pi/sigma_sca
+              P33(Nwv, IRH, bin, Nmu) = Fd33(Nmu)*pi/sigma_sca
+              P34(Nwv, IRH, bin, Nmu) = Fd34(Nmu)*pi/sigma_sca
            ENDDO
 
            ! now PP(n) begins in PP(1)
@@ -625,15 +644,16 @@ module mie_code
     real(8)       , INTENT(INOUT)  :: F34(1:Nmumax)
     REAL(8)                        :: Muk(1:Nmumax)
     REAL(8)                        :: ang, mu, n_float
-    REAL(8)                        :: ss, tt, rho1, rho2
+    REAL(8)                        :: ss, tt, rho1, rho2, factor
     REAL(8)                        :: wist(1:Nsize), wisp(0:Nsize)
-    COMPLEX(KIND=JPRB)             :: s1, s2, nn
-    INTEGER(4)                     :: Nmu, n  
+    COMPLEX(KIND=JPRB)             :: s1, s2, nn, s1t, s2t, s1c, s2c,s1n,s2n
+    INTEGER(4)                     :: Nmu, n
+
 
 
 
     DO Nmu=1, Nmumax
-       ! before we had Num=0, Nmumax because the eq. for the
+       ! before we had Nmu=0, Nmumax because the eq. for the
        !angles uses Nmu=0, but now when we pass an array
        ! we can keep everything from 1. 
        !ang=pi-pi*DBLE(Nmu)/DBLE(Nmumax)
@@ -672,23 +692,23 @@ module mie_code
           s2=s2+(2.*nn+1.)/nn/(nn+1.)*(b(n)*wisp(n)+a(n)*wist(n))
        ENDDO
 
-       s1=s1*DCONJG(s1)
-       s2=s2*DCONJG(s2)
+       s1n=s1*DCONJG(s1)
+       s2n=s2*DCONJG(s2)
 
-       rho1=4./x**2 * DBLE(s1)/Q_sca
-       rho2=4./x**2 * DBLE(s2)/Q_sca
+       rho1=4./x**2 * DBLE(s1n)/Q_sca
+       rho2=4./x**2 * DBLE(s2n)/Q_sca
        phase(Nmu)=0.5*(rho1+rho2)
        ! here the output should be the Fmatrix
        s1t = s1
        s2t = s2
        s1c = DCONJG(s1)
        s2c = DCONJG(s2)
-       factor = (4./x**2) 
+       factor = (4./x**2)/Q_sca 
        
-       F11(Num)=factor*real(0.5*( real(s1t)**2+aimag(s1t)**2 + real(s2t)**2 +aimag(s2t)**2))
-       F12(Num)=factor*real(0.5*(-real(s1t)**2-aimag(s1t)**2 + real(s2t)**2 +aimag(s2t)**2))
-       F33(Num)=factor*real(0.5*(s2c*s1t+s2t*s1c))       
-       F34(Num)=factor*real(0.5*(s1t*s2c-s2t*S1c)*CMPLX(0,1))
+       F11(Nmu)=factor*real(0.5*( real(s1t)**2+aimag(s1t)**2 + real(s2t)**2 +aimag(s2t)**2))
+       F12(Nmu)=factor*real(0.5*(-real(s1t)**2-aimag(s1t)**2 + real(s2t)**2 +aimag(s2t)**2))
+       F33(Nmu)=factor*real(0.5*(s2c*s1t+s2t*s1c))       
+       F34(Nmu)=factor*real(0.5*(s1t*s2c-s2t*S1c)*CMPLX(0,1))
     ENDDO
 
   endsubroutine 
@@ -752,9 +772,6 @@ module mie_code
     k3=CMPLX(1.0,0.0)
     z2=CMPLX(x,0.0)
     z1=m*z2
-
-
-
 
 
     IF (0.0.LE.x.AND.x.LE.8.) THEN

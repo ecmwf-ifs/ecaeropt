@@ -160,6 +160,39 @@ def store_nc_single(aer, aeropt, rinfo, ncname="output_test.nc", ncformat="NETCD
     rel_hum_growth[:]        = aer.rh_growth
 
 
+    # Defining variables  =============================== Mueller P11    ==
+
+    mueller_p11              = ds.createVariable("p11", 'f4', s4)
+    mueller_p11.units         = "-"
+    mueller_p11.long_name     = "Mueller Matrix p11"
+    mueller_p11.description   = "Mueller Matrix p11. Still we need to check normalization"
+    mueller_p11[:]            = aeropt.p11
+
+    # Defining variables  =============================== Mueller P11    ==
+
+    mueller_p12              = ds.createVariable("p12", 'f4', s4)
+    mueller_p12.units         = "-"
+    mueller_p12.long_name     = "Mueller Matrix p12"
+    mueller_p12.description   = "Mueller Matrix p12. Still we need to check normalization"
+    mueller_p12[:]            = aeropt.p12
+
+    # Defining variables  =============================== Mueller P11    ==
+
+    mueller_p33              = ds.createVariable("p33", 'f4', s4)
+    mueller_p33.units         = "-"
+    mueller_p33.long_name     = "Mueller Matrix p33"
+    mueller_p33.description   = "Mueller Matrix p33. Still we need to check normalization"
+    mueller_p33[:]            = aeropt.p33
+
+    # Defining variables  =============================== Mueller P11    ==
+
+    mueller_p34              = ds.createVariable("p34", 'f4', s4)
+    mueller_p34.units         = "-"
+    mueller_p34.long_name     = "Mueller Matrix p34"
+    mueller_p34.description   = "Mueller Matrix p34. Still we need to check normalization"
+    mueller_p34[:]            = aeropt.p34
+
+
     # Defining variables  =================================== Dimensions ==
 
     wavelength               = ds.createVariable("wavelength", 'f4', ("wavelength",))

@@ -80,7 +80,7 @@ function mielib {
 
     # mie_aerosols_struc.f90      => new version structured
 
-    f2py3 -c -m mie parkind1.F90 mie_aerosols_struc.f90 interp_ri.f90 &> $logfile
+    f2py3 -c -m mie parkind1.F90 mie_aerosols_struc_scatmatrix.f90 interp_ri.f90 &> $logfile
 
     status=$?
 

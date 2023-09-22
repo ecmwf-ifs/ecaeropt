@@ -58,7 +58,7 @@ class aeropt:
 
     """
     def __init__(self, kind, ri_r, ri_i, ext, ssa, asy, mass, lidar,
-                 pfun, pfun_ang, nmux, engine):
+                 pfun, pfun_ang, nmux, engine, p11, p12, p33, p34):
 
         self.kind     = kind  # lognormal, or mixing-logn
         self.ri_r     = ri_r
@@ -72,6 +72,10 @@ class aeropt:
         self.pfun_ang = pfun_ang
         self.nmux     = nmux
         self.engine   = engine
+        self.p11      = p11
+        self.p12      = p12
+        self.p33      = p33
+        self.p34      = p34
 
 
 def mie_to_aeropt(aerconf, out, engine):
@@ -100,7 +104,7 @@ def mie_to_aeropt(aerconf, out, engine):
        return
 
 
-    znr, zni, ext, omg, asy, lidar, mass, ph, qval = out 
+    znr, zni, ext, omg, asy, lidar, mass, ph, qval, p11, p12, p33, p34 = out 
 
     if aerconf.scaling_file != None:
         scaling = np.loadtxt(aerconf.scaling_file).T
@@ -132,7 +136,7 @@ def mie_to_aeropt(aerconf, out, engine):
                asy[:,:] = asy[:,:] * s_asy[:,:]
 
     return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
-                   ph, aerconf.angles, aerconf.nmumax, engine)
+                   ph, aerconf.angles, aerconf.nmumax, engine, p11, p12, p33, p34)
 
 class aerosol:
     """Class to store a complete aerosol configuration
@@ -509,7 +513,10 @@ def mixing(mix_aer, mix_opt, mix_lbtab, mix_ri_rtab, mix_ri_itab, num_components
 
     aer_mix_opt = aeropt("mixing-logn", ri_r_mix, ri_i_mix,
                          ext_mix, ssa_mix, asy_mix, mass_mix,
-                         lidr_mix, pfun_mix, pfun_ang_mix, nmux_mix, mix_opt[0].engine)
+                         lidr_mix, pfun_mix, pfun_ang_mix, nmux_mix, mix_opt[0].engine, 
+                         # currently the p11, p12, p33, p34 is not implemented for mixing aerosols
+                         # so we store just pfun_mix (4 times). 
+                         pfun_mix, pfun_mix, pfun_mix, pfun_mix)
 
     return mix_aer, aer_mix_opt
 

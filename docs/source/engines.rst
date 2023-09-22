@@ -140,3 +140,7 @@ In the case of a multimodal lognormal distribution with m modes:
      
    :math:`1.0\frac{1}{\sqrt{2\pi}ln(2.0)}\exp\left[-\frac{1}{2}\left(\frac{ln(r)-ln(0.0118)}{2}\right)^{2}\right]`
 
+
+The code also calculates the phase function, and the scattering matrix, or more specifically the Mueller matrix. For spherical particles the Mueller matrix has 4 different components
+M11, F12, M33 and M34. It is a 4x4 matrix for each angle, but M44=M33, M43=-M34, M21=M12 and M32=M23=M13=M31=M41=M42=0. The element M11 is basically the phase function, and M12/M11 is
+related to the linear polarization. 

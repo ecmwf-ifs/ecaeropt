@@ -167,7 +167,7 @@ def interface_mie(aerconf, logfile, debug=False, mix=0, verbose=0):
                                 aerconf.rh_tab, aerconf.rh_growth,
                                 cutoff_radius, idebug, aerconf.ri_lambdatab,
                                 aerconf.znr_tab, aerconf.zni_tab,
-                                aerconf.angles )
+                                aerconf.angles)
 
     aeropt = aer.mie_to_aeropt(aerconf, out, "mie")
     

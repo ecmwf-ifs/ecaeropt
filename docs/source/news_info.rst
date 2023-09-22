@@ -29,6 +29,9 @@ Last news anc history
 **ecaeropt** python version is ready for use. Please report any issue to developers.
 
 
+**2023-Sep-20**  (Scattering matrix)
+    Scattering matrix has been implemented and currently stored in per-specie netcdf files. It is 
+    normalized like phase function: P11, P12, P33, P34
 **2023-Jan-25**  (Plotting)
     It has been added an optional plot functionality to setting files to plot optical properties
     and refractive index of each optical model to be integrated on a given IFS netcdf file.

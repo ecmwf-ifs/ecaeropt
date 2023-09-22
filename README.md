@@ -16,9 +16,11 @@ Tool to calculate optical properties of atmospheric particles and store as netcd
   - This software is licensed by ECMWF with an APACHE license. Please check file LICENSE file in main directory.
 
 # Contact Info
+  - Please contact with ramiro.checa-garcia@ecmwf.int with any queries or bug fixes,
+    but note that ECMWF does not commit to providing support to users of this software.
 
   - Authors:      Ramiro Checa-Garcia
-                  contributions of other authors via Mie Scattering Codes.
+                  (with contributions of other authors via Mie Scattering Codes as described in individual files in engine directory)
   - Contacts:     ramiro.checa-garcia@ecmwf.int
   - Contributors:
       - Tim Stockdale : for testing/comments.
@@ -41,10 +43,9 @@ Tool to calculate optical properties of atmospheric particles and store as netcd
      v1.1     Added optical automatic plot functionality per specie of optical properties 
               in the setting files. 
      v1.16    Several fixes of issues reported by Tim.
+     v1.20    Added the output of the phase matrix in per-specie netcdf files. Improved metadata
+              in IFS netcdf with all species.
 ```
-
-  Check docs.html for further information (after make build)
-
 
 # How to install
 
@@ -55,7 +56,7 @@ git clone ssh://git@git.ecmwf.int/~parc/ecaeropt.git  # This download the master
 make build
 ```
 
-Note that need python3 with the standard library and following external libraries, **numpy**, **toml** and **netcdf4** plus **nco tools**. In the server ATOS it is needed to use:
+Note that need python3 with the standard library and following external libraries, **numpy**, **toml** and **netcdf4** plus **nco tools**. If you are working in an HPC system is likely that this would work:
 ```
 module load python3
 module load nco
@@ -72,7 +73,7 @@ make test      # tests including 3 kind of aerosols (about 10 minutes)
 
 ## Create standard IFS model netcdf files
 
-To build ifs standard files you may just type (script using SBATCH is implemented),
+To build ifs standard files you may just type (script using SBATCH is implemented, you may need to adapt to your specific computer setup)
 
 ```
 make ifs-CY46R1
@@ -100,14 +101,11 @@ remember that:
 
 # Documentation
 
-You can have access to a more detailed documentation, by default `make build` will create a documentation and a link in the main folder named docs.html which you can open with any browser (ex. ` > firefox docs.html`)
-You can also build documentation directly with `make docum`. Note that you need to have **sphinx** installed (the python library).
+You can have access to a more detailed documentation, by default `make build` will create a documentation and a link in the main folder named docs.html which you can open with any browser (ex. ` > firefox docs.html`). You can also build documentation directly with `make docum`. Note that you need to have **sphinx** installed (the python library).
 
 # How to contribute
 
-You can use the code and report any issue or propose any new feature. Please, check also
-the documentation you can open the file **docs/build/html/index.html**
+You can use the code and report any issue or propose any new feature. Please, check also the documentation you can open the file **docs/build/html/index.html**
 
-If you want to contribute at coding level, there is a dev branch, where changes and implemented and evetually when full tested they are integrated in master branch. When a full set of features is included then we add a tag with the version. 
 
 

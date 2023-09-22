@@ -141,6 +141,25 @@ In the case of a multimodal lognormal distribution with m modes:
    :math:`1.0\frac{1}{\sqrt{2\pi}ln(2.0)}\exp\left[-\frac{1}{2}\left(\frac{ln(r)-ln(0.0118)}{2}\right)^{2}\right]`
 
 
-The code also calculates the phase function, and the scattering matrix, or more specifically the Mueller matrix. For spherical particles the Mueller matrix has 4 different components
-M11, F12, M33 and M34. It is a 4x4 matrix for each angle, but M44=M33, M43=-M34, M21=M12 and M32=M23=M13=M31=M41=M42=0. The element M11 is basically the phase function, and M12/M11 is
+The code also calculates the phase function, and the scattering matrix, or more specifically the Phase matrix. For spherical particles the Mueller matrix has 4 different components
+F11, F12, F33 and F34. It is a 4x4 matrix for each angle, but F44=F33, F43=-F34, F21=F12 and F32=F23=F13=F31=F41=F42=0. The element M11 is basically the phase function, and F12/F11 is
 related to the linear polarization. 
+
+.. math::
+
+   F11 = \frac{1}{2}\left( S_{1}\dot\S_{1}^{*}+S_{2}\dot\S_{2}^{*} \right)
+
+.. math::
+
+   F12 = \frac{1}{2}\left( S_{1}\dot\S_{1}^{*}-S_{2}\dot\S_{2}^{*} \right)
+
+.. math::
+
+   F33 = \frac{1}{2}\left( S_{1}\dot\S_{2}^{*}+S_{2}\dot\S_{1}^{*} \right)
+
+.. math::
+
+   F34 = \frac{i}{2}\left( S_{1}\dot\S_{2}^{*}-S_{2}\dot\S_{1}^{*} \right)
+
+The normalization of the final matrix P11, P12, P33, P34 is done in such way that P11 has the same normalization than the phase function. Regarding the 
+calculation for a size distribution, we perform an integration for these Pij like it is done for the phase function.

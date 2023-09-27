@@ -61,7 +61,7 @@ module load python3
 module load nco
 ```
 
-We recommend run once the test to check that everthing is working properly (this is just calculating for few wavelengths 3 cases: an externally mixed aerosol with 3 components, an soluble aerosol and an insolube aerosol.
+We recommend run once the test to check that everthing is working properly. This is just calculating for few wavelengths 3 cases: an externally mixed aerosol with 3 components, an soluble aerosol and an insolube aerosol.
 
 ```
 ./ecaeropt -i  # this show simple checks of mie-scatt code for monodisperse case.

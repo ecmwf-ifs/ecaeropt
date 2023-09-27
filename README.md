@@ -49,10 +49,9 @@ Tool to calculate optical properties of atmospheric particles and store as netcd
 
 # How to install
 
-To have a working version of this tool the steps are:
+To have a working version of this tool the steps are (after clonning this repository):
 
 ```
-git clone ssh://git@git.ecmwf.int/~parc/ecaeropt.git  # This download the master branch (stable version)
 make build
 ```
 
@@ -62,11 +61,11 @@ module load python3
 module load nco
 ```
 
-We recommend to run once the test to check everthing is working properly (this is just calculating for few wavelengths 3 cases: an externally mixed aerosol with 3 components, an soluble aerosol and an insolube aerosol.
+We recommend run once the test to check that everthing is working properly (this is just calculating for few wavelengths 3 cases: an externally mixed aerosol with 3 components, an soluble aerosol and an insolube aerosol.
 
 ```
 ./ecaeropt -i  # this show simple checks of mie-scatt code for monodisperse case.
-make test      # tests including 3 kind of aerosols (about 10 minutes)
+make test      # tests including 3 kind of aerosols (about 10 minutes in a desktop computer 2023)
 ```
 
 # How to run

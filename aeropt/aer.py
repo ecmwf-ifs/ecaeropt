@@ -113,7 +113,7 @@ def mie_to_aeropt(aerconf, out, engine):
            bins      = scaling[5] 
            nbin      = int(bins[-1])
            nwl       = int(len(bins)/nbin)
-           sca_wl    = scaling[0].reshape(nbin,nwl) * 1.e-6 # I think this should be the other way round i.e. reshape(nbin,nwvl) 
+           sca_wl    = scaling[0].reshape(nbin,nwl) * 1.e-6 
            sca_ext   = scaling[1].reshape(nbin,nwl)
            sca_ssa   = scaling[2].reshape(nbin,nwl)
            sca_asy   = scaling[3].reshape(nbin,nwl)
@@ -125,8 +125,6 @@ def mie_to_aeropt(aerconf, out, engine):
                s_ssa[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ssa[nb,:])
                s_asy[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_asy[nb,:])
                s_lidar[:,nb] = np.interp(wl, sca_wl[nb,:], sca_lidar[nb,:])
-               print('s_ext=', s_ext)
-               print('s_lidar=', s_lidar)
            
            if len(ext.shape) == 3:
               for nrh in range(ext.shape[1]):

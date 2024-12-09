@@ -16,6 +16,7 @@
 #  | Modifications:                                                                     |
 #  |    10-Oct-2022   Ramiro Checa-Garcia    Added documentation                        |
 #  |    15-Jan-2023   Ramiro Checa-Garcia    Added scaling option for shape             |
+#  |    20-Nov-2024   Peter Hill             Added lidar ratio scaling option for shape |
 #  |                                                                                    |
 #  | Info:                                                                              |
 #  |      Provides CLASSES and FUNCTIONS:                                               |
@@ -108,32 +109,34 @@ def mie_to_aeropt(aerconf, out, engine):
 
     if aerconf.scaling_file != None:
         scaling = np.loadtxt(aerconf.scaling_file).T
-        if _check_scaling(scaling[4]):
-           bins    = scaling[4] 
-           nbin    = int(bins[-1])
-           nwl     = int(len(bins)/nbin)
-           sca_wl  = scaling[0].reshape(nwl,nbin) * 1.e-6
-           sca_ext = scaling[1].reshape(nwl,nbin)
-           sca_ssa = scaling[2].reshape(nwl,nbin)
-           sca_asy = scaling[3].reshape(nwl,nbin)
-           wl      = aerconf.lambda_out
-           s_ext   = np.zeros((len(wl), nbin))
-           s_ssa   = np.zeros((len(wl), nbin))
-           s_asy   = np.zeros((len(wl), nbin))
+        if _check_scaling(scaling[5]):
+           bins      = scaling[5] 
+           nbin      = int(bins[-1])
+           nwl       = int(len(bins)/nbin)
+           sca_wl    = scaling[0].reshape(nbin,nwl) * 1.e-6 
+           sca_ext   = scaling[1].reshape(nbin,nwl)
+           sca_ssa   = scaling[2].reshape(nbin,nwl)
+           sca_asy   = scaling[3].reshape(nbin,nwl)
+           sca_lidar = scaling[4].reshape(nbin,nwl)
+           wl        = aerconf.lambda_out
+           s_ext, s_ssa, s_asy, s_lidar = (np.zeros((len(wl), nbin)) for __ in range(4))
            for nb in range(nbin):
-               s_ext[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_ext[:,nb])
-               s_ssa[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_ssa[:,nb])
-               s_asy[:,nb]  = np.interp(wl, sca_wl[:,nb], sca_asy[:,nb])
+               s_ext[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ext[nb,:])
+               s_ssa[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ssa[nb,:])
+               s_asy[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_asy[nb,:])
+               s_lidar[:,nb] = np.interp(wl, sca_wl[nb,:], sca_lidar[nb,:])
            
            if len(ext.shape) == 3:
               for nrh in range(ext.shape[1]):
-                  ext[:,nrh,:] = ext[:,nrh,:] * s_ext[:,:]
-                  omg[:,nrh,:] = omg[:,nrh,:] * s_ssa[:,:]
-                  asy[:,nrh,:] = asy[:,nrh,:] * s_asy[:,:]
+                  ext[:,nrh,:]   = ext[:,nrh,:] * s_ext[:,:]
+                  omg[:,nrh,:]   = omg[:,nrh,:] * s_ssa[:,:]
+                  asy[:,nrh,:]   = asy[:,nrh,:] * s_asy[:,:]
+                  lidar[:,nrh,:] = lidar[:,nrh,:] * s_lidar[:,:]
            else:
-               ext[:,:] = ext[:,:] * s_ext[:,:] 
-               omg[:,:] = omy[:,:] * s_ssa[:,:]
-               asy[:,:] = asy[:,:] * s_asy[:,:]
+               ext[:,:]   = ext[:,:] * s_ext[:,:] 
+               omg[:,:]   = omy[:,:] * s_ssa[:,:]
+               asy[:,:]   = asy[:,:] * s_asy[:,:]
+               lidar[:,:] = lidar[:,:] * s_lidar[:,:]
 
     return aeropt( aerconf.kind, znr, zni, ext, omg, asy, mass, lidar,
                    ph, aerconf.angles, aerconf.nmumax, engine, p11, p12, p33, p34)

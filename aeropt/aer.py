@@ -35,11 +35,11 @@
 
 
 import numpy as np
-try:
-    import tomllib as toml
-except ModuleNotFoundError:
-    import toml
-
+# try:
+#     import tomllib as toml
+# except ModuleNotFoundError:
+#     import toml
+import toml
 
 class aeropt:
     """Class to store aerosol optical properties
@@ -110,22 +110,38 @@ def mie_to_aeropt(aerconf, out, engine):
     if aerconf.scaling_file != None:
         scaling = np.loadtxt(aerconf.scaling_file).T
         if _check_scaling(scaling[5]):
-           bins      = scaling[5] 
+           bins      = scaling[5]
            nbin      = int(bins[-1])
            nwl       = int(len(bins)/nbin)
-           sca_wl    = scaling[0].reshape(nbin,nwl) * 1.e-6 
-           sca_ext   = scaling[1].reshape(nbin,nwl)
-           sca_ssa   = scaling[2].reshape(nbin,nwl)
-           sca_asy   = scaling[3].reshape(nbin,nwl)
-           sca_lidar = scaling[4].reshape(nbin,nwl)
-           wl        = aerconf.lambda_out
-           s_ext, s_ssa, s_asy, s_lidar = (np.zeros((len(wl), nbin)) for __ in range(4))
-           for nb in range(nbin):
-               s_ext[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ext[nb,:])
-               s_ssa[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ssa[nb,:])
-               s_asy[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_asy[nb,:])
-               s_lidar[:,nb] = np.interp(wl, sca_wl[nb,:], sca_lidar[nb,:])
-           
+           if aerconf.fixed_scaling:
+               sca_wl    = scaling[0].reshape(nbin,nwl) * 1.e-6 
+               sca_ext   = scaling[1].reshape(nbin,nwl)
+               sca_ssa   = scaling[2].reshape(nbin,nwl)
+               sca_asy   = scaling[3].reshape(nbin,nwl)
+               sca_lidar = scaling[4].reshape(nbin,nwl)
+               wl        = aerconf.lambda_out
+               s_ext, s_ssa, s_asy, s_lidar = (np.zeros((len(wl), nbin)) for __ in range(4))
+               for nb in range(nbin):
+                   s_ext[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ext[nb,:])
+                   s_ssa[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_ssa[nb,:])
+                   s_asy[:,nb]   = np.interp(wl, sca_wl[nb,:], sca_asy[nb,:])
+                   s_lidar[:,nb] = np.interp(wl, sca_wl[nb,:], sca_lidar[nb,:])
+           else:
+               # This assumes the wrong order for the array dimensions, but 
+               # since this code was used operationally in 49R1, the option to
+               # reproduce this is included here.
+               sca_wl    = scaling[0].reshape(nwl,nbin) * 1.e-6 
+               sca_ext   = scaling[1].reshape(nwl,nbin)
+               sca_ssa   = scaling[2].reshape(nwl,nbin)
+               sca_asy   = scaling[3].reshape(nwl,nbin)
+               sca_lidar = scaling[4].reshape(nwl,nbin)
+               wl        = aerconf.lambda_out
+               s_ext, s_ssa, s_asy, s_lidar = (np.zeros((len(wl), nbin)) for __ in range(4))
+               for nb in range(nbin):
+                   s_ext[:,nb]   = np.interp(wl, sca_wl[:,nb], sca_ext[:,nb])
+                   s_ssa[:,nb]   = np.interp(wl, sca_wl[:,nb], sca_ssa[:,nb])
+                   s_asy[:,nb]   = np.interp(wl, sca_wl[:,nb], sca_asy[:,nb])
+                   s_lidar[:,nb] = np.interp(wl, sca_wl[:,nb], sca_lidar[:,nb])
            if len(ext.shape) == 3:
               for nrh in range(ext.shape[1]):
                   ext[:,nrh,:]   = ext[:,nrh,:] * s_ext[:,:]
@@ -157,7 +173,7 @@ class aerosol:
        rh_growth    (list)    : rh_growth : growth of particles for the relative humidity values (rh_tab)
        ri_file      (string)  : ri_file : plain text file (csv with spaces as delimiters) with refractive index per wave lenght.
        aer_type     (string)  : aer_type : aerosol type
-       ext_scaling  (float)   : ext_scaling : scaling introduced in extinction after calculation
+       ext_scaling  (float)   : ext_scaling : scaling introduced in extinction after calculation # This seems to be 1.0 in all conf.toml files and never gets used for anything. Redundant??
        lambda_out   (array)   : output wavelenghts : wavelength for optical properties (can be different from ri file)
        ri_nrh       (       ) : ri_nrh
        NInp         (       ) : NInp
@@ -181,7 +197,7 @@ class aerosol:
     def __init__(self, kind, r0 , sigma_g, Ntot, rho, bins_min, bins_max, rh_tab, rh_growth, 
                  ri_file  , aer_type, ext_scaling, lambda_out, ri_nrh, NInp, Ntot_mix,
                  nb_lambda, Ndis, size_bins, rh_int, config_file, wl_file, nmumax, angles,
-                 ri_lambdatb, znr_tab, zni_tab, scaling_file ):
+                 ri_lambdatb, znr_tab, zni_tab, scaling_file, fixed_scaling ):
 
        # It is good to group these also in classes: distribution, bins, properties,....
        self.kind        = kind
@@ -216,6 +232,7 @@ class aerosol:
        # this will not be used until we estimate optical properties
        # so it is after run the engine.
        self.scaling_file= scaling_file
+       self.fixed_scaling=fixed_scaling
 
     def __str__(self):
        a = []
@@ -268,9 +285,10 @@ class aerosol:
        a.append("\n **** REFRACTIVE INDEX ")
        a.append("        ri lambda  dims : " + str(self.ri_lambdatab.shape)) 
        a.append("        ri real    dims : " + str(self.znr_tab.shape     )) 
-       a.append("        ri imag    dims : " + str(self.zni_tab.shape     )) 
-       if self.scaling != None:
+       a.append("        ri imag    dims : " + str(self.zni_tab.shape     ))
+       if self.scaling != None: # Think this should be self.scaling_file? self.scaling is never defined??
             a.append("\n **** SCALING PRESENT ")
+            a.append("\n Scaling bug fixed="+str(bool(self.fixed_scaling)))
        return "\n".join(a)
 
 
@@ -308,6 +326,11 @@ def readconf(config_file, angles, wl_out="none", debug=False):
         scaling_file = conf["optical"]["scaling_file"]
     else:
         scaling_file = None
+
+    if "fixed_scaling" in conf["optical"]:
+        fixed_scaling = conf["optical"]["fixed_scaling"]
+    else:
+        fixed_scaling = 1
 
     # Distribution ====================================
     dist = conf["distribution"]["lognormal"]
@@ -404,7 +427,7 @@ def readconf(config_file, angles, wl_out="none", debug=False):
                     rh_growth, ri_file  , aer_type, ext_scaling, lambda_out,
                     ri_nrh, NInp, Ntot_mix, nb_lambda, Ndis, size_bins, rh_int,
                     config_file, wl_file, nmumax, np.array(angles), ri_lambdatab,
-                    znr_tab, zni_tab, scaling_file)
+                    znr_tab, zni_tab, scaling_file, fixed_scaling)
 
 
 
@@ -523,3 +546,4 @@ def mixing(mix_aer, mix_opt, mix_lbtab, mix_ri_rtab, mix_ri_itab, num_components
 
     return mix_aer, aer_mix_opt
 
+ 

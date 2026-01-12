@@ -35,11 +35,11 @@
 
 
 import numpy as np
-# try:
-#     import tomllib as toml
-# except ModuleNotFoundError:
-#     import toml
-import toml
+try:
+    import tomllib as toml
+except ModuleNotFoundError:
+    import toml
+
 
 class aeropt:
     """Class to store aerosol optical properties

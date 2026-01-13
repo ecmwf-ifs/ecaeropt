@@ -1,6 +1,5 @@
 # Mineral Dust 5 (Info provided by HYGEOS/Samuel Remy)
-#         Hydrophilic version of composite dust
-#         Version with fixed application of non-spherical scaling
+#         Hydrophilic version of composite dust  
 # Last update: 2022-11-16
 # Contact:     ramiro.checa-garcia@ecmwf.int
 #              Samuel Rémy <sr@hygeos.com>
@@ -15,8 +14,8 @@ lognormal.Ntot    = [ 391.0 , 8.39 , 11.6 , 0.000138]
 [bins]
 # Bins for final output
 # Units:
-min = [0.03, 0.55, 0.90]
-max = [0.55, 0.90,  20.0]
+min = [0.03, 0.55, 0.9, 2.5, 5.0, 10.0]
+max = [0.55, 0.9,  2.5, 5.0, 10.0, 20.0]
 
 [properties]        
 # Physical and Chemical properties
@@ -30,12 +29,10 @@ rh.growth   = [1.0, 1.008, 1.016, 1.024, 1.032, 1.038, 1.046, 1.054, 1.062, 1.06
 ri_file     = "data/refr_idx/du_ri_table_composite_philic"
 wl_out_file = "data/wavelengths/wl_out_IFS.txt"
 ext_scaling = 1.0
-scaling_file= "data/non_sphere_scaling/Kandler_nonsphere_scaling"
 
 [tags]
-opt_model= "CompPhiSca_v2"
-aer_type = "dust_CYR481_philic_scaled_v2"
+opt_model= "CompPhi6bins"
+aer_type = "dust_CYR481_philic_nonscaled_6bins"
 ifs      = "CY49R1"
-revised  = 2023-02-10
-
+revised  = 2023-09-04
 
